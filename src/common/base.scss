@@ -1,0 +1,10 @@
+$base-color: #c6538c;
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@mixin transition {
+  // 测试 import 后的 postcss 是否加前缀
+  transition: all .8s;
+}
