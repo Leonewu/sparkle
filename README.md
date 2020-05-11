@@ -43,6 +43,7 @@
 1. 依赖没有加上 vue，等本地起服务再加
 2. output.library 配置，好像没啥作用，我们只要编译成 umd 规范就好了
 3. css-loader 中的 importLoaders 作用： a.css 引入 b.css 的时候，这个时候 a.css 是执行到 css-loader 的，如果不配置 importLoaders(默认值为0) b.css 就是从 css-loader 开始执行的，就会错过其他 loader，所以要手动设置
+4. 构建的过程发现一个工具 mrm, 让你在添加依赖的同时能自动更新工程下的各种配置文件[github mrm](https://github.com/sapegin/mrm)
 
 ## 参考
 

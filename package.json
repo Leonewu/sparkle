@@ -10,8 +10,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 123"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
   },
   "keywords": [
     "vue",
@@ -31,6 +34,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.2.2",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
     "postcss": "^7.0.29",
     "postcss-loader": "^3.0.0",
     "postcss-normalize": "^9.0.0",
