@@ -1,0 +1,11 @@
+
+@import'../../common/base.scss';
+
+.wrapper {
+  color: red;
+  background: $base-color;
+  // transition: all .5s;
+  display: flex;
+  @include transition;
+  @include reset-list;
+}
