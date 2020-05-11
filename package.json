@@ -5,7 +5,13 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "npm run test",
+    "lint": "eslint ./",
     "build": "webpack --config ./build/webpack.config.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 123"
+    }
   },
   "keywords": [
     "vue",
@@ -17,6 +23,14 @@
   "devDependencies": {
     "autoprefixer": "^9.7.6",
     "css-loader": "^3.5.3",
+    "eslint": "^7.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.2.5",
     "postcss": "^7.0.29",
     "postcss-loader": "^3.0.0",
     "postcss-normalize": "^9.0.0",

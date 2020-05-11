@@ -6,7 +6,7 @@ const components = {
 }
 
 const install = function (Vue) {
-  for (name in components) {
+  for (const name in components) {
     Vue.component(name, components[name])
   }
 }
@@ -14,4 +14,3 @@ const install = function (Vue) {
 export default {
   install
 }
-
