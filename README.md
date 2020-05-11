@@ -16,6 +16,21 @@
 11. 构建工具 rollup 或者 webpack?先选择 webpack
 12. css 压缩（OptimizeCssAssetsWebpackPlugin），cssnano
 
+- [x] 基本框架搭建
+- [] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
+- [] eslint, prettier, stylelint，git hooks
+- [] babel
+- [] devserver
+- [] files-loader
+- [] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口
+- [] 单元测试
+- [] 后编译
+- [] 命令生成模板
+- [] 全局 rem 设置
+- [] 文档自动化
+- [] ci
+- [] rollup, ts, vue3.0?
+
 ## 初步任务
 
 1. 框架搭建，vue-cli，配置 eslint，babel，webpack，创建文件目录，输出 npm 包
@@ -38,3 +53,4 @@
 [前端UI组件库搭建指南](https://zhuanlan.zhihu.com/p/94920464)
 <!-- [6个postcss插件推荐](https://juejin.im/post/5c9b3c465188251e1618670a) -->
 [10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
+[别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
