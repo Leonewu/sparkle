@@ -5,7 +5,7 @@ const components = {
   'xiao-button': Button
 }
 
-const install = function (Vue) {
+const install = function(Vue) {
   for (const name in components) {
     Vue.component(name, components[name])
   }

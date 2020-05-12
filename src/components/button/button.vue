@@ -8,14 +8,15 @@
 import './button.scss'
 export default {
   name: 'XiaoButton',
-  data () {
-    return {
-
+  data() {
+    return {}
+  },
+  methods: {
+    c() {
+      console.log(12)
     }
   }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -18,7 +18,8 @@
 
 - [x] 基本框架搭建
 - [] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
-- [] eslint, prettier, stylelint，git hooks
+- [] eslint, prettier,git hooks
+- [] stylint (lint-staged scss,css)
 - [] babel
 - [] devserver
 - [] files-loader
@@ -55,3 +56,4 @@
 <!-- [6个postcss插件推荐](https://juejin.im/post/5c9b3c465188251e1618670a) -->
 [10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
 [别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
+[prettier-Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)
