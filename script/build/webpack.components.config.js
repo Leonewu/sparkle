@@ -1,11 +1,14 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+// TODO 两份配置差异不大可以通过 merge 来合并
 
 module.exports = {
   mode: 'development',
   entry: {
-    // 全量打包，名字要和 package.json main 一致
-    index: './src/index.js'
+    button: './src/components/Button/button.vue',
+    select: './src/components/Select/select.vue'
   },
   output: {
     filename: '[name].js',
@@ -23,7 +26,7 @@ module.exports = {
       {
         test: /\.(scss|css)$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -36,14 +39,25 @@ module.exports = {
               ident: 'postcss',
               plugins: [
                 require('autoprefixer')(),
+                // normalize 还要在css中手动引入 @import-normalize
                 require('postcss-normalize')()
               ]
             }
           },
           'sass-loader'
         ]
+      },
+      {
+        test: /\.js(x)?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
       }
     ]
   },
-  plugins: [new VueLoaderPlugin()]
+  plugins: [
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'style/[name].css'
+    })
+  ]
 }

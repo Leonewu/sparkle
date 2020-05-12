@@ -3,7 +3,7 @@
 
 ## 目标
 
-1. 同时支持按需引入（不重要）/后编译（重要，rem 需要后编译？）
+1. 同时支持按需引入（不重要）/后编译（重要)
 2. 单元测试
 3. travis ci
 4. 全局样式，不用 scoped，module，方便外部覆盖
@@ -15,22 +15,26 @@
 10. ts，vue3.0?
 11. 构建工具 rollup 或者 webpack?先选择 webpack
 12. css 压缩（OptimizeCssAssetsWebpackPlugin），cssnano
+13. 全局公共 css 打包，配合 babel-plugin-component 可以自动引入公共css
 
 - [x] 基本框架搭建
 - [] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
-- [] eslint, prettier,git hooks
+- [x] eslint,git hooks
+- [] prettier 和 eslint-plugin-vue 的 recommended 太多冲突了，所以移除
 - [] stylint (lint-staged scss,css)
-- [] babel
-- [] devserver
+- [x] babel
+- [] devserver,sourceMap
 - [] files-loader
-- [] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口
+- [x] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包
 - [] 单元测试
 - [] 后编译
 - [] 命令生成模板
 - [] 全局 rem 设置
 - [] 文档自动化
 - [] ci
-- [] rollup, ts, vue3.0?
+- [] rollup 导出 es module， treeshaking
+- [] ts
+- [] peerDependencies
 
 ## 初步任务
 
@@ -45,6 +49,24 @@
 2. output.library 配置，好像没啥作用，我们只要编译成 umd 规范就好了
 3. css-loader 中的 importLoaders 作用： a.css 引入 b.css 的时候，这个时候 a.css 是执行到 css-loader 的，如果不配置 importLoaders(默认值为0) b.css 就是从 css-loader 开始执行的，就会错过其他 loader，所以要手动设置
 4. 构建的过程发现一个工具 mrm, 让你在添加依赖的同时能自动更新工程下的各种配置文件[github mrm](https://github.com/sapegin/mrm)
+
+## 使用说明
+
+1. 按需加载配置
+`npm install -D babel-plugin-component`
+
+```
+plugins:[
+  'component',
+  {
+    'libraryName': 'xiao-ui',
+    'styleLibrary': {
+      'name': 'style',
+      'base': false,
+      'path': '[module].css'
+  }
+}]
+```
 
 ## 参考
 
