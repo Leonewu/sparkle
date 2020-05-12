@@ -1,6 +1,8 @@
 > 1%
 last 2 versions
 # remove -ms-
+#ie > 6
 not ie > 0
 not ie_Mob > 0
 # IOS 10+
+IOS > 10

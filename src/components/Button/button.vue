@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="sd"
-    class="wrapper"
-    style=""
-    name=""
-  >
+  <div class="wrapper">
     button component
   </div>
 </template>
