@@ -1,11 +1,12 @@
 
-@import'../../common/base.scss';
+@import '../../common/base.scss';
 
 .wrapper {
-  color: rgb(76, 0, 255);
-  background: $base-color;
-  // transition: all .5s;
-  display: flex;
   @include transition;
   @include reset-list;
+
+  background: $base-color;
+  color: rgb(76, 0, 255);
+  // transition: all .5s;
+  display: flex;
 }

@@ -1,12 +1,13 @@
 @import-normalize;
-
 $base-color: #c6538c;
+
 @mixin reset-list {
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
 }
+
 @mixin transition {
+  transform: all 0.6s;
   // 测试 import 后的 postcss 是否加前缀
-  transition: all .8s;
 }
