@@ -56,16 +56,34 @@
 `npm install -D babel-plugin-component`
 
 ```
-plugins:[
-  'component',
-  {
-    'libraryName': 'xiao-ui',
-    'styleLibrary': {
-      'name': 'style',
-      'base': false,
-      'path': '[module].css'
-  }
-}]
+"plugins":[
+  [
+    "component",
+    {
+      "libraryName": "xiao-ui",
+      "styleLibrary": {
+        "name": "style",
+        "base": false,
+        "path": "[module].css"
+       }
+    }
+  ]
+]
+```
+
+使用
+
+```
+import { Button } from 'xiao-ui'
+Vue.use(Button)
+// 或者 Vue.component(Button.name, Button)
+```
+
+如果全量引入，就不要加按需引入的配置了，没有做处理，所以会报错
+
+```
+import XiaoUI from 'xiao-ui'
+Vue.use(XiaoUI)
 ```
 
 ## 参考

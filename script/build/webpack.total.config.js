@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../', 'lib'),
+    path: path.resolve(__dirname, '../../', 'lib'),
     library: 'xiao',
     // 打包成 umd
     libraryTarget: 'umd'
