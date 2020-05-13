@@ -12,8 +12,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: 'development',
   entry: {
-    button: './src/components/Button/index.js',
-    select: './src/components/Select/select.vue'
+    button: './src/components/button/index.js',
+    select: './src/components/select/select.vue'
   },
   output: {
     filename: '[name].js',

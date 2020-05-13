@@ -1,7 +1,7 @@
 
 #
 
-## 目标
+## 想法
 
 1. 同时支持按需引入（不重要）/后编译（重要)
 2. 单元测试
@@ -16,25 +16,28 @@
 11. 构建工具 rollup 或者 webpack?先选择 webpack
 12. css 压缩（OptimizeCssAssetsWebpackPlugin），cssnano
 13. 全局公共 css 打包，配合 babel-plugin-component 可以自动引入公共css
+14. 对于可能公用的第三方依赖包，如何管理？
 
-- [x] 基本框架搭建
-- [] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
-- [x] eslint,git hooks
-- [] prettier 和 eslint-plugin-vue 的 recommended 太多冲突了，所以移除
-- [] stylint (lint-staged scss,css)
-- [x] babel
-- [] devserver,sourceMap
-- [] files-loader,svg
-- [x] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包
-- [] 单元测试
-- [] 后编译
-- [] 命令生成模板
-- [] 全局 rem 设置
-- [] 文档自动化
-- [] ci
-- [] rollup 导出 es module， treeshaking
-- [] ts
-- [] peerDependencies
+-[x] 基本框架搭建
+-[] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
+-[x] eslint,git hooks
+-[] prettier 和 eslint-plugin-vue 的 recommended 存在无法覆盖的冲突比较多，暂时先移除
+-[] stylint (lint-staged scss,css)
+-[x] babel，验证是否根据 browserlist 正确转码
+-[] devserver,sourceMap
+-[] files-loader,svg
+-[x] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包，并且验证引入之后打包的体积
+-[] 单元测试
+-[] 后编译，直接引入 src 目录下的源码，并验证
+-[] 命令生成模板
+-[] 全局 rem 设置
+-[] 文档自动化，支持搜索,bisheng（好像需要手写一部分）,vue-styleguidist(方便，但是不好看)，vuepress（考虑中）,vuese（嗯...）
+-[] ci
+-[] rollup 导出 es module， treeshaking
+-[] ts
+-[x] peerDependencies ^开头
+-[] logo
+-[] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
 
 ## 初步任务
 
@@ -49,6 +52,7 @@
 2. output.library 配置，好像没啥作用，我们只要编译成 umd 规范就好了
 3. css-loader 中的 importLoaders 作用： a.css 引入 b.css 的时候，这个时候 a.css 是执行到 css-loader 的，如果不配置 importLoaders(默认值为0) b.css 就是从 css-loader 开始执行的，就会错过其他 loader，所以要手动设置
 4. 构建的过程发现一个工具 mrm, 让你在添加依赖的同时能自动更新工程下的各种配置文件[github mrm](https://github.com/sapegin/mrm)
+5. 注意 & 是并行执行哦
 
 ## 使用说明
 
@@ -97,3 +101,4 @@ Vue.use(XiaoUI)
 - [10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
 - [别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
 - [prettier-Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)
+- [Vue组件库搭建实践与探索](https://segmentfault.com/a/1190000020754678)
