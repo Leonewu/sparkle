@@ -24,7 +24,7 @@
 - [] stylint (lint-staged scss,css)
 - [x] babel
 - [] devserver,sourceMap
-- [] files-loader
+- [] files-loader,svg
 - [x] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包
 - [] 单元测试
 - [] 后编译
@@ -38,7 +38,7 @@
 
 ## 初步任务
 
-1. 框架搭建，vue-cli，配置 eslint，babel，webpack，创建文件目录，输出 npm 包
+1. 框架搭建，配置 eslint，babel，webpack，创建文件目录，输出 npm 包
 2. 成功引入，并实现按需加载或者后编译
 3. 跑通测试用例
 4. 生成一份文档
@@ -79,7 +79,7 @@ Vue.use(Button)
 // 或者 Vue.component(Button.name, Button)
 ```
 
-如果全量引入，就不要加按需引入的配置了，没有做处理，所以会报错
+如果全量引入，必须去掉按需引入的配置，没有去掉会报错
 
 ```
 import XiaoUI from 'xiao-ui'
@@ -88,12 +88,12 @@ Vue.use(XiaoUI)
 
 ## 参考
 
-[有赞vant-ui](https://github.com/youzan/vant)
-[owl-ui 开发案例](https://github.com/dengwb1991/owl-ui)
-[infoQ-组件库构建方案演进](https://www.infoq.cn/article/VMA6h6uJzDeljkFERurZ)
-[webpack create library](https://www.webpackjs.com/guides/author-libraries/#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-library)
-[前端UI组件库搭建指南](https://zhuanlan.zhihu.com/p/94920464)
+- [有赞vant-ui](https://github.com/youzan/vant)
+- [owl-ui 开发案例](https://github.com/dengwb1991/owl-ui)
+- [infoQ-组件库构建方案演进](https://www.infoq.cn/article/VMA6h6uJzDeljkFERurZ)
+- [webpack create library](https://www.webpackjs.com/guides/author-libraries/#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-library)
+- [前端UI组件库搭建指南](https://zhuanlan.zhihu.com/p/94920464)
 <!-- [6个postcss插件推荐](https://juejin.im/post/5c9b3c465188251e1618670a) -->
-[10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
-[别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
-[prettier-Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)
+- [10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
+- [别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
+- [prettier-Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)
