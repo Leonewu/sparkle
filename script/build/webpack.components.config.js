@@ -7,12 +7,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
   mode: 'development',
   entry: {
-    button: './src/components/Button/button.vue',
+    button: './src/components/Button/index.js',
     select: './src/components/Select/select.vue'
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../', 'lib'),
+    path: path.resolve(__dirname, '../../', 'lib'),
     library: 'xiao',
     // 打包成 umd
     libraryTarget: 'umd'
