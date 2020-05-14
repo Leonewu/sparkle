@@ -21,7 +21,12 @@ module.exports = {
     path: path.resolve(__dirname, '../../', 'docs')
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json']
+    extensions: ['.js', '.vue', '.json'],
+    mainFiles: ['index']
+  },
+  resolveLoader: {
+    modules: ['node_modules', 'packages'],
+    mainFiles: ['index']
   },
   module: {
     rules: [
@@ -57,6 +62,10 @@ module.exports = {
         test: /\.js(x)?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
+      },
+      {
+        test: /\.md$/,
+        use: ['vue-loader', 'markdown-loader']
       }
     ]
   },

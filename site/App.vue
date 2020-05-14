@@ -53,10 +53,10 @@ export default {
         path: name
       }))
       return {
-        title: 'Vant',
+        title: 'XiaoUI',
         description: 'Mobile UI Components built on Vue',
         logo: 'https://img.yzcdn.cn/vant/logo.png',
-        links: [{ logo: 'https://b.yzcdn.cn/vant/logo/github.svg', url: 'https://github.com/youzan/vant' }],
+        links: [{ logo: 'https://b.yzcdn.cn/vant/logo/github.svg', url: 'https://gitlab.xinghuolive.com/web' }],
         searchConfig: { apiKey: '90067aecdaa2c85220e2783cd305caac', indexName: 'vant', placeholder: 'Search...' },
         nav: [
           // {
