@@ -7,6 +7,13 @@
     "stylelint-scss"
   ],
   "rules": {
-    "scss/at-import-partial-extension-blacklist": "nothing"
-  }
+    "scss/at-import-partial-extension-blacklist": "nothing",
+    "selector-class-pattern": null
+  },
+  "ignoreFiles": [
+    "./mobile/**/*.scss",
+    "./mobile/**/*.vue",
+    "./site/**/*.scss",
+    "./site/**/*.vue"
+  ]
 }
