@@ -10,7 +10,7 @@
 3. travis ci
 4. 全局样式，不用 scoped，module，方便外部覆盖
 5. 版本管理 semver 规范
-6. 兼容性 Android4.0+， IOS10+
+6. 兼容 Android4.0+， IOS10+
 7. 使用 rem，类名遵循 BEM
 8. eslint，babel，styleLint， commit lint
 9. 制定文档模板，文档生成 vuepress?
@@ -40,8 +40,9 @@
 -[x] peerDependencies ^开头
 -[] logo
 -[] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
--[] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下alias，替换vant前缀，去掉百度统计,引入scss，json自动补后缀处理一下
--[] 优化，site 和 mobile 可以再想想优化，还可以再自动化一点，通过解析文件目录生成component配置文件然后解析交给router
+-[] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的
+-[] 优化，site 和 mobile 可以再想想优化，还可以再自动化一点，通过解析文件目录生成 component 配置文件然后解析交给 router
+-[] 优化，iframe 内外可以滚动联动，锚点点击滚动
 
 ## 初步任务
 
