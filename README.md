@@ -1,6 +1,8 @@
 
 #
 
+![vue](https://img.shields.io/badge/vue-2.x-4fc08d.svg?colorA=2c3e50&style=flat-square)
+
 ## 想法
 
 1. 同时支持按需引入（不重要）/后编译（重要)
@@ -22,7 +24,7 @@
 -[] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
 -[x] eslint,git hooks
 -[] prettier 和 eslint-plugin-vue 的 recommended 存在无法覆盖的冲突比较多，暂时先移除
--[] stylint (lint-staged scss,css)
+-[x] stylint (lint-staged scss,css)
 -[x] babel，验证是否根据 browserlist 正确转码
 -[] devserver,sourceMap
 -[] files-loader,svg
@@ -30,14 +32,16 @@
 -[] 单元测试
 -[] 后编译，直接引入 src 目录下的源码，并验证
 -[] 命令生成模板
--[] 全局 rem 设置
--[] 文档自动化，支持搜索,bisheng（好像需要手写一部分）,vue-styleguidist(方便，但是不好看)，vuepress（考虑中）,vuese（嗯...）
+-[] 可选支持 rem，不转 px 就 ok 了
+-[] 文档自动化，支持搜索,组件预览,代码片段展示,bisheng（好像需要手写一部分）,vue-styleguidist(方便，但是不好看，没主题)，vuepress（考虑中）,vuese（嗯...）,都没有移动端的预览窗口，最后选择研究一下有赞的做法
 -[] ci
--[] rollup 导出 es module， treeshaking
+-[] rollup 导出 es module，并且配置 package.json 的 files 选项， treeshaking
 -[] ts
 -[x] peerDependencies ^开头
 -[] logo
 -[] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
+-[] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下alias，替换vant前缀，去掉百度统计,引入scss，json自动补后缀处理一下
+-[] 优化，site 和 mobile 可以再想想优化，还可以再自动化一点，通过解析文件目录生成component配置文件然后解析交给router
 
 ## 初步任务
 

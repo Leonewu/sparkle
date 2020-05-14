@@ -1,0 +1,82 @@
+@import './var.scss';
+
+code {
+  color: $van-doc-code-color;
+  display: block;
+  font-family: $van-doc-code-font-family;
+  font-size: 13.4px;
+  -webkit-font-smoothing: auto;
+  font-weight: 400;
+  line-height: 26px;
+  overflow-x: auto;
+  position: relative;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre {
+  margin: 20px 0 0;
+
+  + p {
+    margin-top: 20px;
+  }
+}
+
+.hljs {
+  background: #fff;
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+.hljs-subst {
+  color: $van-doc-code-color;
+}
+
+.hljs-string,
+.hljs-meta,
+.hljs-symbol,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-addition {
+  color: $van-doc-green;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #999;
+}
+
+.hljs-params,
+.hljs-keyword,
+.hljs-attribute {
+  color: $van-doc-purple;
+}
+
+.hljs-deletion,
+.hljs-variable,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-bullet,
+.hljs-link {
+  color: #eb6f6f;
+}
+
+.hljs-attr,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-section,
+.hljs-built_in,
+.hljs-doctag,
+.hljs-type,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-strong {
+  color: #4994df;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
