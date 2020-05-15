@@ -8,7 +8,8 @@
     "lint": "eslint && stylelint ./**/*.scss",
     "build": "webpack --progress --colors --config ./script/build/webpack.total.config.js && npm run build:components",
     "build:components": "webpack --progress --colors --config ./script/build/webpack.components.config.js",
-    "dev": "webpack-dev-server --progress --colors --config ./script/build/webpack.docs.config.js"
+    "dev": "webpack-dev-server --progress --colors --config ./script/build/webpack.docs.config.js",
+    "build:site": "webpack --progress --colors --config ./script/build/webpack.docs.config.js"
   },
   "husky": {
     "hooks": {
@@ -41,6 +42,7 @@
     "@babel/preset-env": "^7.9.6",
     "autoprefixer": "^9.7.6",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
     "eslint": "^7.0.0",
     "eslint-config-standard": "^14.1.1",

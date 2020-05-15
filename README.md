@@ -40,7 +40,7 @@
 -[x] peerDependencies ^开头
 -[] logo
 -[] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
--[] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的
+-[] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配polyfill
 -[] 优化，site 和 mobile 可以再想想优化，还可以再自动化一点，通过解析文件目录生成 component 配置文件然后解析交给 router
 -[] 优化，iframe 内外可以滚动联动，锚点点击滚动
 -[] 开发时的引入方式
@@ -58,7 +58,8 @@
 2. output.library 配置，好像没啥作用，我们只要编译成 umd 规范就好了
 3. css-loader 中的 importLoaders 作用： a.css 引入 b.css 的时候，这个时候 a.css 是执行到 css-loader 的，如果不配置 importLoaders(默认值为0) b.css 就是从 css-loader 开始执行的，就会错过其他 loader，所以要手动设置
 4. 构建的过程发现一个工具 mrm, 让你在添加依赖的同时能自动更新工程下的各种配置文件[github mrm](https://github.com/sapegin/mrm)
-5. 注意 & 是并行执行哦
+5. 注意 & 是并行执行
+6. Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码，如果要使用需要引入polyfill
 
 ## 使用说明
 

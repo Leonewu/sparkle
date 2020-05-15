@@ -9,7 +9,7 @@ import components from '../components.json'
 
 const routes = components.map(name => ({
   path: `/${name}`,
-  component: () => import(`../src/components/${name}/demo/index.vue`),
+  component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),
   meta: {
     name
   }

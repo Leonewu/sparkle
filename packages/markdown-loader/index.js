@@ -3,13 +3,9 @@
  * */
 const markdown = require('markdown-it')
 const hljs = require('highlight.js')
-const fs = require('fs')
-const path = require('path')
 const wrapCard = require('./card')
 
 function loader(src) {
-  console.log(src)
-  const file = fs.readFileSync(path.resolve(__dirname, './test.md'), 'utf-8')
   const md = markdown({
     typographer: true,
     highlight: function(str, lang) {
@@ -19,7 +15,7 @@ function loader(src) {
       return '' // use external default escaping
     }
   })
-  const content = escape(wrapCard(md.render(file)))
+  const content = escape(wrapCard(md.render(src)))
   return `
     <template>
       <section v-html="content" v-once />
