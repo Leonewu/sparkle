@@ -1,5 +1,5 @@
 <template>
-  <div class="van-doc">
+  <div class="doc">
     <doc-header
       :lang="lang"
       :config="config"
@@ -31,7 +31,7 @@ import DocContainer from './Container.vue'
 import DocSimulator from './Simulator.vue'
 
 export default {
-  name: 'VanDoc',
+  name: 'Doc',
 
   components: {
     DocNav,

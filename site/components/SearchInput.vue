@@ -1,13 +1,13 @@
 <template>
   <input
-    class="van-doc-search"
+    class="doc-search"
     :placeholder="placeholder"
   >
 </template>
 
 <script>
 export default {
-  name: 'VanDocSearch',
+  name: 'DocSearch',
 
   props: {
     lang: String,
@@ -32,7 +32,7 @@ export default {
     if (this.searchConfig) {
       this.docsearchInstance = window.docsearch({
         ...this.searchConfig,
-        inputSelector: '.van-doc-search',
+        inputSelector: '.doc-search',
         algoliaOptions: {
           facetFilters: [`lang:${this.lang}`]
         }
@@ -45,7 +45,7 @@ export default {
 <style lang="scss">
 @import '../common/style/var';
 
-.van-doc-search {
+.doc-search {
   width: 200px;
   height: 60px;
   margin-left: 140px;
@@ -70,7 +70,7 @@ export default {
 
 .algolia-autocomplete {
   .algolia-docsearch-suggestion--highlight {
-    color: $van-doc-blue;
+    color: $doc-blue;
     background-color: transparent;
   }
 
@@ -80,7 +80,7 @@ export default {
 
   .algolia-docsearch-suggestion--text {
     .algolia-docsearch-suggestion--highlight {
-      box-shadow: inset 0 -1px 0 0 $van-doc-blue;
+      box-shadow: inset 0 -1px 0 0 $doc-blue;
     }
   }
 

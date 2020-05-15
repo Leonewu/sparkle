@@ -1,24 +1,24 @@
 <template>
   <div class="app">
-    <van-doc
+    <doc
       :lang="lang"
       :config="config"
       :versions="versions"
       :simulator="simulator"
     >
       <router-view />
-    </van-doc>
+    </doc>
   </div>
 </template>
 
 <script>
-import VanDoc from './components/index.vue'
+import Doc from './components/index.vue'
 // import { config, packageVersion } from 'site-desktop-shared'
 import components from '../components.json'
 
 export default {
   components: {
-    VanDoc
+    Doc
   },
 
   data() {
@@ -111,7 +111,7 @@ export default {
 @import './common/style/base.scss';
 @import './common/style/highlight.scss';
 
-.van-doc-intro {
+.doc-intro {
   padding-top: 20px;
   font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   text-align: center;

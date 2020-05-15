@@ -1,6 +1,6 @@
 <template>
   <section
-    class="van-doc-demo-section"
+    class="doc-demo-section"
     :class="demoName"
   >
     <slot />
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss">
-.van-doc-demo-section {
+.doc-demo-section {
   box-sizing: border-box;
   min-height: calc(100vh - 56px);
   padding-bottom: 20px;

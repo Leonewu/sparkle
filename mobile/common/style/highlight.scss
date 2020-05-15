@@ -1,9 +1,9 @@
 @import './var.scss';
 
 code {
-  color: $van-doc-code-color;
+  color: $doc-code-color;
   display: block;
-  font-family: $van-doc-code-font-family;
+  font-family: $doc-code-font-family;
   font-size: 13.4px;
   -webkit-font-smoothing: auto;
   font-weight: 400;
@@ -30,7 +30,7 @@ pre {
 }
 
 .hljs-subst {
-  color: $van-doc-code-color;
+  color: $doc-code-color;
 }
 
 .hljs-string,
@@ -39,7 +39,7 @@ pre {
 .hljs-template-tag,
 .hljs-template-variable,
 .hljs-addition {
-  color: $van-doc-green;
+  color: $doc-green;
 }
 
 .hljs-comment,
@@ -50,7 +50,7 @@ pre {
 .hljs-params,
 .hljs-keyword,
 .hljs-attribute {
-  color: $van-doc-purple;
+  color: $doc-purple;
 }
 
 .hljs-deletion,

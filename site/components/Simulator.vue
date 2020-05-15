@@ -1,5 +1,5 @@
 <template>
-  <div :class="['van-doc-simulator', { 'van-doc-simulator-fixed': isFixed }]">
+  <div :class="['doc-simulator', { 'doc-simulator-fixed': isFixed }]">
     <iframe
       ref="iframe"
       :src="src"
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'VanDocSimulator',
+  name: 'DocSimulator',
 
   props: {
     src: String
@@ -51,17 +51,17 @@ export default {
 <style lang="scss">
 @import '../common/style/var';
 
-.van-doc-simulator {
+.doc-simulator {
   position: absolute;
-  top: $van-doc-padding + $van-doc-header-top-height;
-  right: $van-doc-padding;
+  top: $doc-padding + $doc-header-top-height;
+  right: $doc-padding;
   z-index: 1;
   box-sizing: border-box;
-  width: $van-doc-simulator-width;
-  min-width: $van-doc-simulator-width;
+  width: $doc-simulator-width;
+  min-width: $doc-simulator-width;
   overflow: hidden;
   background: #fafafa;
-  border-radius: $van-doc-border-radius;
+  border-radius: $doc-border-radius;
   box-shadow: #ebedf0 0 4px 12px;
 
   @media (max-width: 1100px) {
@@ -69,14 +69,14 @@ export default {
     left: 750px;
   }
 
-  @media (min-width: $van-doc-row-max-width) {
+  @media (min-width: $doc-row-max-width) {
     right: 50%;
-    margin-right: -$van-doc-row-max-width / 2 + 40px;
+    margin-right: -$doc-row-max-width / 2 + 40px;
   }
 
   &-fixed {
     position: fixed;
-    top: $van-doc-padding;
+    top: $doc-padding;
   }
 
   iframe {
