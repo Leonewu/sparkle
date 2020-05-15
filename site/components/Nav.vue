@@ -1,23 +1,23 @@
 <template>
   <div
-    class="van-doc-nav"
+    class="doc-nav"
     :style="style"
   >
     <div
       v-for="(group, index) in navConfig"
       :key="index"
-      class="van-doc-nav__group"
+      class="doc-nav__group"
     >
-      <div class="van-doc-nav__title">
+      <div class="doc-nav__title">
         {{ group.title }}
       </div>
       <template v-if="group.items">
         <div
           v-for="(item, groupIndex) in group.items"
           :key="groupIndex"
-          class="van-doc-nav__item"
+          class="doc-nav__item"
         >
-          <van-doc-nav-link
+          <doc-nav-link
             :item="item"
             :base="base"
           />
@@ -31,7 +31,7 @@
 import NavLink from './NavLink.vue'
 
 export default {
-  name: 'VanDocNav',
+  name: 'DocNav',
 
   components: {
     [NavLink.name]: NavLink
@@ -79,22 +79,22 @@ export default {
 <style lang="scss">
 @import '../common/style/var';
 
-.van-doc-nav {
+.doc-nav {
   position: fixed;
   top: 60px;
   bottom: 0;
   left: 0;
   z-index: 1;
-  min-width: $van-doc-nav-width;
-  max-width: $van-doc-nav-width;
+  min-width: $doc-nav-width;
+  max-width: $doc-nav-width;
   padding: 24px 0 72px;
   overflow-y: scroll;
   background-color: #fff;
   box-shadow: 0 8px 12px #ebedf0;
 
-  @media (min-width: $van-doc-row-max-width) {
+  @media (min-width: $doc-row-max-width) {
     left: 50%;
-    margin-left: -($van-doc-row-max-width / 2);
+    margin-left: -($doc-row-max-width / 2);
   }
 
   &::-webkit-scrollbar {
@@ -117,7 +117,7 @@ export default {
   }
 
   &__title {
-    padding: 8px 0 8px $van-doc-padding;
+    padding: 8px 0 8px $doc-padding;
     color: #455a64;
     font-weight: 500;
     font-size: 15px;
@@ -128,7 +128,7 @@ export default {
     a {
       display: block;
       margin: 0;
-      padding: 8px 0 8px $van-doc-padding;
+      padding: 8px 0 8px $doc-padding;
       color: #455a64;
       font-size: 14px;
       line-height: 28px;
@@ -136,7 +136,7 @@ export default {
 
       &:hover,
       &.active {
-        color: $van-doc-green;
+        color: $doc-green;
       }
 
       &.active {

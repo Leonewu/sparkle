@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'VanDocNavLink',
+  name: 'DocNavLink',
 
   props: {
     base: String,
