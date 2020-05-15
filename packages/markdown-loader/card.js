@@ -1,6 +1,14 @@
 
 // 对 h3 到下一个 h3 之间的内容 包上卡片样式
-// var str = '<h3>水电费可接受的</h3><pre>山东矿机防守打法</pre><code>skdfjsdfsdf</code><h3>水电费可2接受的</h3><pre>山东123矿机防守打法</pre><code>skdf3323323jsdfsdf</code></h3>''
-module.exports = function(str) {
-  str.replace(/<h3>((.|\n)*)<h3>/)
+// var str = '<h3>标题1</h3><pre>描述1</pre><code>console.log(1)</code><h3><h3>标题2</h3><pre>描述2</pre><code>console.log(2)</code><h3>'
+module.exports = function wrap(str) {
+  const group = str.replace(/<h3/g, ':::<h3').replace(/<h2/g, ':::<h2').split(':::')
+  return group.reduce((html, fragment) => {
+    if (fragment.indexOf('<h3>') !== -1) {
+      html += `<div class="card">${fragment}</div>`
+    } else {
+      html += fragment
+    }
+    return html
+  }, '')
 }
