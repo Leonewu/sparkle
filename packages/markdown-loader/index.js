@@ -5,6 +5,7 @@ const markdown = require('markdown-it')
 const hljs = require('highlight.js')
 const fs = require('fs')
 const path = require('path')
+const wrapCard = require('./card')
 
 function loader(src) {
   console.log(src)
@@ -12,14 +13,13 @@ function loader(src) {
   const md = markdown({
     typographer: true,
     highlight: function(str, lang) {
-      console.log(lang)
       if (lang && hljs.getLanguage(lang)) {
         return hljs.highlight(lang, str).value
       }
       return '' // use external default escaping
     }
   })
-  const content = md.render(file)
+  const content = escape(wrapCard(md.render(file)))
   return `
     <template>
       <section v-html="content" v-once />
