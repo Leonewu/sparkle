@@ -1,5 +1,5 @@
 
-// 对 h3 到下一个 h3 之间的内容 包上卡片样式
+// 包上卡片样式
 // var str = '<h3>标题1</h3><pre>描述1</pre><code>console.log(1)</code><h3><h3>标题2</h3><pre>描述2</pre><code>console.log(2)</code><h3>'
 module.exports = function wrap(str) {
   const group = str.replace(/<h3/g, ':::<h3').replace(/<h2/g, ':::<h2').split(':::')
