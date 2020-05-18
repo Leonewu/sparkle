@@ -6,7 +6,6 @@ import { scrollToAnchor } from './utils'
 if (process.env.NODE_ENV !== 'production') {
   Vue.config.productionTip = false
 }
-
 new Vue({
   el: '#app',
   mounted() {

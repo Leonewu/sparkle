@@ -14,7 +14,6 @@
 <script>
 import Doc from './components/index.vue'
 // import { config, packageVersion } from 'site-desktop-shared'
-import components from '../components.json'
 
 export default {
   components: {
@@ -48,7 +47,8 @@ export default {
     },
 
     config() {
-      const basicComponents = components.map(name => ({
+      // eslint-disable-next-line no-undef
+      const basicComponents = COMPONENTS.map(name => ({
         title: name,
         path: name
       }))
