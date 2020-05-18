@@ -99,7 +99,6 @@ import './common/iframe-router'
 //   return routes
 // }
 
-// eslint-disable-next-line no-undef
 const routes = COMPONENTS.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/README.md`)

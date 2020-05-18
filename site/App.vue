@@ -47,7 +47,6 @@ export default {
     },
 
     config() {
-      // eslint-disable-next-line no-undef
       const basicComponents = COMPONENTS.map(name => ({
         title: name,
         path: name

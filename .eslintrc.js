@@ -6,7 +6,8 @@ module.exports = {
   extends: ['plugin:vue/recommended', 'standard'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
+    COMPONENTS: 'readonly'
   },
   parserOptions: {
     ecmaVersion: 11,
