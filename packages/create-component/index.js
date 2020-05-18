@@ -36,7 +36,26 @@ function replaceName(str, componentName) {
     .replace(/Example/g, capitalizeName)
 }
 
-// begin
+function updateComponentsJson() {
+  // 根据文件目录更新 components.json 文件
+  const filePath = path.resolve(__dirname, '../../src/components')
+  const components = fs.readdirSync(filePath)
+    .sort((a, b) =>
+      fs.statSync(filePath + '/' + a).birthtimeMs - fs.statSync(filePath + '/' + b).birthtimeMs)
+  const content = components.reduce((sum, cur, idx) => {
+    if (idx < components.length - 1) {
+      sum += `  "${cur}",\n`
+    } else {
+      sum += `  "${cur}"\n`
+    }
+    return sum
+  }, '')
+  fs.writeFileSync(path.resolve(__dirname, '../../components.json'), `[\n${content}]`)
+}
+
+// main programe begin
+// 无论怎样先更新 components.json 文件，把这个命令当成是默认更新 components.json 的
+updateComponentsJson()
 const components = fs.readdirSync(path.resolve(__dirname, '../../src/components'))
 if (!process.argv[2]) {
   console.log(chalk.red('请输入组件名称，npm run create [component name]'))
@@ -51,11 +70,14 @@ const src = path.resolve(__dirname, './example')
 const dest = path.resolve(__dirname, `../../src/components/${name}`)
 childProcess.spawnSync('cp', ['-r', src, dest])
 replaceFile(dest, name)
+updateComponentsJson()
+// end
 
 console.log(chalk.magenta(`组件 ${name} 创建成功!`))
 // │ └ ├ ─
 console.log(chalk.cyan(
   '├── src\n' +
+  '├────└──components.json' + chalk.yellow(' (已更新)\n') +
   '├────└──components\n' +
   `├────────└── ${name}\n` +
   '├─────────────└── demo\n' +
