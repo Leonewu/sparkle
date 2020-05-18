@@ -15,6 +15,7 @@
     "./mobile/**/*.scss",
     "./mobile/**/*.vue",
     "./site/**/*.scss",
-    "./site/**/*.vue"
+    "./site/**/*.vue",
+    "./lib/**/*.css"
   ]
 }

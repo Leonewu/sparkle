@@ -5,9 +5,9 @@ import VueRouter from 'vue-router'
 // import { demos, config } from 'site-mobile-shared'
 // import { getLang, setDefaultLang } from '../common/locales'
 import './common/iframe-router'
-import components from '../components.json'
 
-const routes = components.map(name => ({
+// eslint-disable-next-line no-undef
+const routes = COMPONENTS.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),
   meta: {

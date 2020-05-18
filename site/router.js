@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 // import { config, documents } from 'site-desktop-shared'
 // import { getLang, setDefaultLang } from '../common/locales'
 import './common/iframe-router'
-import components from '../components.json'
 
 // if (isMobile) {
 //   console.log('mobile')
@@ -100,7 +99,8 @@ import components from '../components.json'
 //   return routes
 // }
 
-const routes = components.map(name => ({
+// eslint-disable-next-line no-undef
+const routes = COMPONENTS.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/README.md`)
 }))
