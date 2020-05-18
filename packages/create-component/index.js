@@ -1,44 +1,66 @@
 #! /usr/bin/env node
-// npm run new --name=button
-// component.json 添加上组件名
-// 新建组件的文件夹，添加对应的 scss，vue，README，demo
+// npm run create button
 
-const glob = require('glob')
-// eslint-disable-next-line no-unused-vars
 const chalk = require('chalk')
 const fs = require('fs')
 const path = require('path')
-// const childProcess = require('child_process')
-// function renameFile(src) {
+const childProcess = require('child_process')
 
-// }
-glob('src/components/*', {}, function(er, files) {
-  if (!process.argv[2]) {
-    console.log(chalk.red('请输入组件名称，npm run create [component name]'))
-  } else {
-    const components = files.map(file => file.match(/(?<=src\/components\/)(.*)/)[0])
-    const name = process.argv[2].toLowerCase()
-    if (components.includes(name)) {
-      console.log(chalk.red(`组件 ${name} 已存在`))
-      return
+function replaceFile(dir, componentName) {
+  // 读取文件目录并且替换文件内容，重命名
+  fs.readdirSync(dir).forEach(file => {
+    const filePath = `${dir}/${file}`
+    const newPath = `${dir}/${file.replace('example', componentName)}`
+    const stat = fs.statSync(filePath)
+    if (stat.isFile()) {
+      const fd = fs.readFileSync(filePath)
+      const content = replaceName(fd.toString(), componentName)
+      fs.writeFileSync(filePath, content)
+      fs.renameSync(filePath, newPath)
+    } else if (stat.isDirectory()) {
+      const subDir = path.resolve(dir, file)
+      replaceFile(subDir, componentName)
     }
-    try {
-      // fs.mkdirSync(path.resolve(`../../src/components/${name}`))
-      // fs.copyFileSync(path.resolve('./example'), path.resolve(`../../src/components/${name}`)))
-      const src = path.resolve(__dirname, './example')
-      const dest = path.resolve(__dirname, `../../src/components/${name}`)
-      // childProcess.spawnSync('cp', ['-r', src, dest])
-      fs.readdirSync(src).forEach(file => {
-        const stat = fs.statSync(`${dest}/${file}`)
-        console.log(stat.isFile())
-      })
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
-  // 创建文件夹
-  //   // files is an array of filenames.
-  //   // If the `nonull` option is set, and nothing
-  //   // was found, then files is ["**/*.js"]
-  //   // er is an error object or null.
-})
+  })
+}
+
+function replaceName(str, componentName) {
+  // 替换字符串
+  const capitalizeName = componentName[0].toUpperCase() + componentName.slice(1)
+  return str
+    .replace(/xiao-example/g, `xiao-${componentName}`)
+    .replace(/XiaoExample/g, `Xiao${capitalizeName}`)
+    // .replace(/(example)(\.vue|\.scss)/, `${componentName}$2`)
+    .replace(/example/g, componentName)
+    .replace(/Example/g, capitalizeName)
+}
+
+// begin
+const components = fs.readdirSync(path.resolve(__dirname, '../../src/components'))
+if (!process.argv[2]) {
+  console.log(chalk.red('请输入组件名称，npm run create [component name]'))
+  process.exit()
+}
+const name = process.argv[2].toLowerCase()
+if (components.includes(name)) {
+  console.log(chalk.red(`组件 ${name} 已存在`))
+  process.exit()
+}
+const src = path.resolve(__dirname, './example')
+const dest = path.resolve(__dirname, `../../src/components/${name}`)
+childProcess.spawnSync('cp', ['-r', src, dest])
+replaceFile(dest, name)
+console.log(chalk.magenta(`组件 ${name} 创建成功!`))
+// │ └ ├ ─
+console.log(chalk.cyan(
+  '├── src\n' +
+  '├────└──components\n' +
+  `├────────└── ${name}\n` +
+  '├─────────────└── demo\n' +
+  '├──────────────────└── index.vue\n' +
+  `├─────────────└── ${name}.vue\n` +
+  `├─────────────└── ${name}.scss\n` +
+  '└─────────────└── index.js'))
+console.log(chalk.yellow('Getting started with ' + chalk.magenta.italic('`npm run dev`')))
+console.log(chalk.yellow(`移动端预览: http://127.0.0.1:2333/mobile.html/${name}`))
+console.log(chalk.yellow(`网站预览: http://127.0.0.1:2333/index.html/${name}`))
