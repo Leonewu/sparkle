@@ -6,7 +6,6 @@ import VueRouter from 'vue-router'
 // import { getLang, setDefaultLang } from '../common/locales'
 import './common/iframe-router'
 
-// eslint-disable-next-line no-undef
 const routes = COMPONENTS.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),
