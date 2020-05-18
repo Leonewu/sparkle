@@ -1,5 +1,5 @@
-import example from './example.vue'
-example.install = function(Vue) {
-  Vue.component(example.name, example)
+import Example from './example.vue'
+Example.install = function(Vue) {
+  Vue.component(Example.name, Example)
 }
-export default example
+export default Example

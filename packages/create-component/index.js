@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 // npm run create button
-
+// 把 example 的文件复制到组件目录，并修改内容
 const chalk = require('chalk')
 const fs = require('fs')
 const path = require('path')
@@ -26,7 +26,8 @@ function replaceFile(dir, componentName) {
 
 function replaceName(str, componentName) {
   // 替换字符串
-  const capitalizeName = componentName[0].toUpperCase() + componentName.slice(1)
+  const capitalizeName = componentName.split('-').map(str => str[0].toUpperCase() + str.slice(1)).join('')
+  console.log(capitalizeName)
   return str
     .replace(/xiao-example/g, `xiao-${componentName}`)
     .replace(/XiaoExample/g, `Xiao${capitalizeName}`)
@@ -50,6 +51,7 @@ const src = path.resolve(__dirname, './example')
 const dest = path.resolve(__dirname, `../../src/components/${name}`)
 childProcess.spawnSync('cp', ['-r', src, dest])
 replaceFile(dest, name)
+
 console.log(chalk.magenta(`组件 ${name} 创建成功!`))
 // │ └ ├ ─
 console.log(chalk.cyan(
