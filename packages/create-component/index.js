@@ -73,7 +73,6 @@ console.log(chalk.magenta(`组件 ${name} 创建成功!`))
 // │ └ ├ ─
 console.log(chalk.cyan(
   '├── src\n' +
-  '├────└──components.json' + chalk.yellow(' (已更新)\n') +
   '├────└──components\n' +
   `├────────└── ${name}\n` +
   '├─────────────└── demo\n' +

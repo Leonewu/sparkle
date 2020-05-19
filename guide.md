@@ -39,7 +39,7 @@
 │   │   └── base.scss (公共css，css全局变量)
 │   ├── components (组件目录)
 │   └── utils (工具函数)
-└── test (测试)
-└── site (文档网站)
+├── test (测试)
+├── site (文档网站)
 └── mobile (移动端展示)
 ```
