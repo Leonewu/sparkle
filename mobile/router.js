@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 // import { getLang, setDefaultLang } from '../common/locales'
 import './common/iframe-router'
 
-const routes = COMPONENTS.map(name => ({
+const routes = __COMPONENTS__.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),
   meta: {

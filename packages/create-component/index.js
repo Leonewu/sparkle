@@ -28,8 +28,8 @@ function replaceName(str, componentName) {
   // 替换字符串
   const capitalizeName = componentName.split('-').map(str => str[0].toUpperCase() + str.slice(1)).join('')
   return str
-    .replace(/xiao-example/g, `xiao-${componentName}`)
-    .replace(/XiaoExample/g, `Xiao${capitalizeName}`)
+    // .replace(/xiao-example/g, `xiao-${componentName}`)
+    // .replace(/XiaoExample/g, `Xiao${capitalizeName}`)
     // .replace(/(example)(\.vue|\.scss)/, `${componentName}$2`)
     .replace(/example/g, componentName)
     .replace(/Example/g, capitalizeName)

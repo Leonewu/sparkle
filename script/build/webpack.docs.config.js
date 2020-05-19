@@ -101,11 +101,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './site/index.html',
+      logo: './site/icon/favicon-32x32.png',
+      title: 'Sparkle Design | Vue移动端组件库',
       chunks: ['site']
     }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './mobile/index.html',
+      logo: './site/icon/favicon-32x32.png',
+      title: 'Sparkle Design | Vue移动端组件库',
       chunks: ['mobile']
     }),
     new CleanWebpackPlugin(),
