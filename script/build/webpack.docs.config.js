@@ -91,6 +91,17 @@ module.exports = {
         use: ['babel-loader']
       },
       {
+        test: /\.(woff|woff2|eot|ttf|otf|png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'img'
+            }
+          }
+        ]
+      },
+      {
         test: /\.md$/,
         use: ['vue-loader', 'markdown-loader']
       }
