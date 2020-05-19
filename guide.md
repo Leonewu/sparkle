@@ -1,5 +1,9 @@
 # 项目指南
 
+## 开始
+
+`npm run create` 会自动创建组件开发目录，如 `npm run create button`
+
 ## 脚本
 
 - `npm run create [component]`: 创建组件，生成模板
@@ -10,7 +14,7 @@
 
 ## 文件目录
 
-`tree -I 'node_modules|site|mobile'`
+`tree -I 'node_modules'`
 
 ```
 .

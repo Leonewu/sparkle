@@ -47,7 +47,7 @@ export default {
     },
 
     config() {
-      const basicComponents = COMPONENTS.map(name => ({
+      const basicComponents = __COMPONENTS__.map(name => ({
         title: name,
         path: name
       }))

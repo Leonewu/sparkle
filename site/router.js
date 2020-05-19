@@ -99,7 +99,7 @@ import './common/iframe-router'
 //   return routes
 // }
 
-const routes = COMPONENTS.map(name => ({
+const routes = __COMPONENTS__.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/README.md`)
 }))
