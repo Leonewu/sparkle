@@ -80,6 +80,7 @@ console.log(chalk.cyan(
   `├─────────────└── ${name}.vue\n` +
   `├─────────────└── ${name}.scss\n` +
   '└─────────────└── index.js'))
+console.log(chalk.yellow('请在' + chalk.magenta.italic(' src/index.js ') + '中手动添加组件'))
 console.log(chalk.yellow('Getting started with ' + chalk.magenta.italic('`npm run dev`')))
 console.log(chalk.yellow(`移动端预览: http://127.0.0.1:2333/mobile.html/${name}`))
 console.log(chalk.yellow(`网站预览: http://127.0.0.1:2333/index.html/${name}`))
