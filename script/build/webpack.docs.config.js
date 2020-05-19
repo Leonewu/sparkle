@@ -110,7 +110,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
-      COMPONENTS: JSON.stringify(getComponents())
+      __COMPONENTS__: JSON.stringify(getComponents())
     })
   ]
 }
