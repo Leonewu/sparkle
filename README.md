@@ -46,11 +46,12 @@
 + [] 补全接入文档
 + [] 测试 vue-test-utils mocha chai
 + [] webpack-dev-server 在修改 components.json 的时候 reload？另外 components.json 既然是静态文件，而且只有 router 用到，那是不是可以将它设置成 webpack 全局变量？
++ [] 开发时引入方式的文档，npm link 或者 npm install file:../../
 + [] 根据屏幕设置 font-size
 + [] demo-block 和 demo-section 用法注明
 + [] 文档的介绍部分
 + [] 控制台 sourcemap 找不到
-+ [] 网站 title 和 图标
++ [x] 网站 title 和 图标
 + [] 检查一下 windows 会不会因为文件目录分隔符 / 而导致一些问题，如 npm run create 失败
 
 ## 初步任务
