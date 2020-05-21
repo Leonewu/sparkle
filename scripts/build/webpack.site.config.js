@@ -14,7 +14,6 @@ module.exports = {
     // compress: true,
     port: 2333
   },
-  devtool: '',
   entry: {
     site: './site/main.js',
     mobile: './mobile/main.js'
