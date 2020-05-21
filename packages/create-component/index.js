@@ -78,16 +78,16 @@ const emoji = {
 console.log(chalk.magenta(`${emoji.rocket_x3} 组件 ${name} 创建成功!`))
 // │ └ ├ ─
 console.log(chalk.cyan(
-  '├── src\n' +
-  '├────└──components\n' +
-  `├────────└── ${name}\n` +
-  '├─────────────└── demo\n' +
-  '├──────────────────└── index.vue\n' +
-  '├─────────────└── __test__\n' +
-  '├──────────────────└── index.spec.js\n' +
-  `├─────────────└── ${name}.vue\n` +
-  `├─────────────└── ${name}.scss\n` +
-  '└─────────────└── index.js'))
+  'src\n' +
+  '├──components\n' +
+  `├──└── ${name}\n` +
+  '├──────└── index.js\n' +
+  `├──────└── ${name}.vue\n` +
+  `├──────└── ${name}.scss\n` +
+  '├──────└── demo\n' +
+  '├──────────└── index.vue\n' +
+  '├──────└── __test__\n' +
+  '└──────────└── index.spec.js\n'))
 console.log(chalk.red(`${emoji.point_right_x3} 请在` + chalk.bgMagentaBright.black.italic(' src/index.js ') + `中手动添加组件入口! ${emoji.point_left_x3}`))
 console.log(chalk.yellow(`${emoji.fire} Getting started with ` + chalk.magenta.italic('`npm run dev`')))
 console.log(chalk.yellow(`${emoji.fire} 移动端预览: http://127.0.0.1:2333/mobile.html/${name}`))
