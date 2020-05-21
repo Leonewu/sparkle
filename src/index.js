@@ -1,5 +1,5 @@
-import Button from './components/button/button.vue'
-import Select from './components/select/select.vue'
+import Button from './components/button/'
+import Select from './components/select/'
 
 const components = [Button, Select]
 
