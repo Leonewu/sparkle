@@ -68,8 +68,14 @@ const dest = path.resolve(__dirname, `../../src/components/${name}`)
 childProcess.spawnSync('cp', ['-r', src, dest])
 replaceFile(dest, name)
 // end
-
-console.log(chalk.magenta(`组件 ${name} 创建成功!`))
+const emoji = {
+  rocket_x3: (String.fromCodePoint(0x1F680) + ' ').repeat(3),
+  fire: String.fromCodePoint(0x1F525),
+  point_left_x3: (String.fromCodePoint(0x1F448) + ' ').repeat(3),
+  point_right_x3: (String.fromCodePoint(0x1F449) + ' ').repeat(3),
+  warn_x3: (String.fromCodePoint(0x26A0) + ' ').repeat(3)
+}
+console.log(chalk.magenta(`${emoji.rocket_x3} 组件 ${name} 创建成功!`))
 // │ └ ├ ─
 console.log(chalk.cyan(
   '├── src\n' +
@@ -82,7 +88,7 @@ console.log(chalk.cyan(
   `├─────────────└── ${name}.vue\n` +
   `├─────────────└── ${name}.scss\n` +
   '└─────────────└── index.js'))
-console.log(chalk.yellow('请在' + chalk.magenta.italic(' src/index.js ') + '中手动添加组件'))
-console.log(chalk.yellow('Getting started with ' + chalk.magenta.italic('`npm run dev`')))
-console.log(chalk.yellow(`移动端预览: http://127.0.0.1:2333/mobile.html/${name}`))
-console.log(chalk.yellow(`网站预览: http://127.0.0.1:2333/index.html/${name}`))
+console.log(chalk.red(`${emoji.point_right_x3} 请在` + chalk.bgMagentaBright.black.italic(' src/index.js ') + `中手动添加组件入口! ${emoji.point_left_x3}`))
+console.log(chalk.yellow(`${emoji.fire} Getting started with ` + chalk.magenta.italic('`npm run dev`')))
+console.log(chalk.yellow(`${emoji.fire} 移动端预览: http://127.0.0.1:2333/mobile.html/${name}`))
+console.log(chalk.yellow(`${emoji.fire} 网站预览: http://127.0.0.1:2333/index.html/${name}`))
