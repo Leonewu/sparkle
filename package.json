@@ -6,10 +6,10 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint && stylelint ./**/*.scss",
-    "build": "webpack --progress --colors --config ./script/build/webpack.total.config.js && npm run build:components",
-    "build:components": "webpack --progress --colors --config ./script/build/webpack.components.config.js",
-    "dev": "webpack-dev-server --progress --colors --config ./script/build/webpack.docs.config.js",
-    "build:site": "webpack --progress --colors --config ./script/build/webpack.docs.config.js",
+    "build": "webpack --progress --colors --config ./scripts/build/webpack.total.config.js && npm run build:components",
+    "build:components": "webpack --progress --colors --config ./scripts/build/webpack.components.config.js",
+    "dev": "webpack-dev-server --progress --colors --config ./scripts/build/webpack.site.config.js",
+    "build:site": "webpack --progress --colors --mode=production --config ./scripts/build/webpack.site.config.js",
     "create": "node ./packages/create-component/index.js"
   },
   "husky": {
@@ -65,6 +65,7 @@
     "lint-staged": "^10.2.2",
     "markdown-it": "^10.0.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss": "^7.0.29",
     "postcss-loader": "^3.0.0",
     "postcss-normalize": "^9.0.0",
