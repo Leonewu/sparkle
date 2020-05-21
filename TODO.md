@@ -26,9 +26,9 @@
 - [x] 补全开发接入文档，文档书写规范，demo 书写规范
 - [x] markdown-loader
 - [x] 优化，site 和 mobile 可以再自动化一点，通过解析文件目录生成 component 配置文件然后交给 router
-- [ ] 组件库名字，sparkle design？
+- [x] 组件库名字，sparkle design？
 - [ ] 版本管理 semver 规范
-- [ ] css 压缩，去重，cssnano，OptimizeCssAssetsWebpackPlugin，js 压缩
+- [x] css 压缩，去重，cssnano，OptimizeCssAssetsWebpackPlugin，js 压缩，webpack4 自带 terser
 - [ ] ci
 - [ ] rollup 导出 es module，并且配置 package.json 的 files 选项， treeshaking
 - [ ] ts
@@ -37,7 +37,7 @@
 - [ ] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配 polyfill
 - [ ] 优化，iframe 内外可以滚动联动，锚点点击滚动
 - [ ] 开发时引入方式的文档，npm link 或者 npm install file:../../ 或者 git ssh
-- [ ] 根据屏幕设置 font-size
+- [ ] 根据屏幕宽度动态设置 font-size
 - [ ] demo-block 和 demo-section 用法注明
 - [ ] 文档的开篇介绍部分
 - [ ] 控制台 sourcemap 找不到

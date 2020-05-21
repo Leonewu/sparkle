@@ -19,3 +19,11 @@ setTimeout(() => {
     router
   })
 }, 0)
+
+// 设置根元素 font-size
+function calcFontSize() {
+  const deviceWidth = document.documentElement.clientWidth
+  document.documentElement.style.fontSize = deviceWidth * 100 / 750 + 'px'
+}
+document.addEventListener('DOMContentLoaded', calcFontSize, false)
+window.onresize = calcFontSize
