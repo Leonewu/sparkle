@@ -4,6 +4,6 @@ import Button from '../button'
 describe('Button', () => {
   test('is a Vue instance', () => {
     const wrapper = mount(Button)
-    expect(wrapper.isEmpty()).toBe(false)
+    expect(wrapper.exists()).toBe(true)
   })
 })
