@@ -4,6 +4,6 @@ import example from '../example'
 describe('example', () => {
   test('init example test', () => {
     const wrapper = mount(example)
-    expect(wrapper.isEmpty()).toBe(true)
+    expect(wrapper.exists()).toBe(true)
   })
 })

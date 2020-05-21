@@ -17,7 +17,7 @@ module.exports = {
     '!**/node_modules/**'
   ],
   coverageReporters: [
-    'html',
+    // 'html',
     'text-summary'
   ]
 }
