@@ -20,40 +20,40 @@
 13. 全局公共 css 打包，配合 babel-plugin-component 可以自动引入公共css
 14. 对于可能公用的第三方依赖包，如何管理？
 
-+ [x] 基本框架搭建
-+ [] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
-+ [x] eslint,git hooks
-+ [] prettier 和 eslint-plugin-vue 的 recommended 存在无法覆盖的冲突比较多，暂时先移除
-+ [x] stylint (lint-staged scss,css)
-+ [x] babel，验证是否根据 browserlist 正确转码
-+ [] devserver,sourceMap
-+ [] files-loader,svg
-+ [x] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包，并且验证引入之后打包的体积
-+ [] 单元测试
-+ [] 后编译，直接引入 src 目录下的源码，并验证
-+ [x] 命令生成模板
-+ [] 可选支持 rem，不转 px 就 ok 了
-+ [x] 文档自动化，支持搜索,组件预览,代码片段展示,bisheng（好像需要手写一部分）,vue-styleguidist(方便，但是不好看，没主题)，vuepress（考虑中）,vuese（嗯...）,都没有移动端的预览窗口，最后选择研究一下有赞的做法
-+ [] ci
-+ [] rollup 导出 es module，并且配置 package.json 的 files 选项， treeshaking
-+ [] ts
-+ [x] peerDependencies ^开头
-+ [] logo
-+ [] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
-+ [] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配polyfill
-+ [] 优化，site 和 mobile 可以再想想优化，还可以再自动化一点，通过解析文件目录生成 component 配置文件然后解析交给 router
-+ [] 优化，iframe 内外可以滚动联动，锚点点击滚动
-+ [] 补全接入文档
-+ [] 测试 vue-test-utils mocha chai
-+ [] webpack-dev-server 在修改 components.json 的时候 reload？另外 components.json 既然是静态文件，而且只有 router 用到，那是不是可以将它设置成 webpack 全局变量？
-+ [] 开发时引入方式的文档，npm link 或者 npm install file:../../
-+ [] 根据屏幕设置 font-size
-+ [] demo-block 和 demo-section 用法注明
-+ [] 文档的介绍部分
-+ [] 控制台 sourcemap 找不到
-+ [x] 网站 title 和 图标
-+ [] 检查一下 windows 会不会因为文件目录分隔符 / 而导致一些问题，如 npm run create 失败
-+ [] 看一下有赞的 bem 自动化方案
+- [x] 基本框架搭建
+- [ ] css压缩,去重，cssnano，OptimizeCssAssetsWebpackPlugin
+- [x] eslint,git hooks
+- [ ] prettier 和 eslint-plugin-vue 的 recommended 存在无法覆盖的冲突比较多，暂时先移除
+- [x] stylint (lint-staged scss,css)
+- [x] babel，验证是否根据 browserlist 正确转码
+- [ ] devserver,sourceMap
+- [ ] files-loader,svg
+- [x] 按需加载，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包，并且验证引入之后打包的体积
+- [x] 单元测试
+- [ ] 后编译，直接引入 src 目录下的源码，并验证
+- [x] 命令生成模板
+- [ ] 可选支持 rem，不转 px 就 ok 了
+- [x] 文档自动化，支持搜索,组件预览,代码片段展示,bisheng（好像需要手写一部分）,vue-styleguidist(方便，但是不好看，没主题)，vuepress（考虑中）,vuese（嗯...）,都没有移动端的预览窗口，最后选择研究一下有赞的做法
+- [ ] ci
+- [ ] rollup 导出 es module，并且配置 package.json 的 files 选项， treeshaking
+- [ ] ts
+- [x] peerDependencies ^开头
+- [ ] logo
+- [ ] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
+- [ ] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配polyfill
+- [ ] 优化，site 和 mobile 可以再想想优化，还可以再自动化一点，通过解析文件目录生成 component 配置文件然后解析交给 router
+- [ ] 优化，iframe 内外可以滚动联动，锚点点击滚动
+- [ ] 补全接入文档
+- [x] 测试 vue-test-utils mocha chai
+- [ ] webpack-dev-server 在修改 components.json 的时候 reload？另外 components.json 既然是静态文件，而且只有 router 用到，那是不是可以将它设置成 webpack 全局变量？
+- [ ] 开发时引入方式的文档，npm link 或者 npm install file:../../
+- [ ] 根据屏幕设置 font-size
+- [ ] demo-block 和 demo-section 用法注明
+- [ ] 文档的介绍部分
+- [ ] 控制台 sourcemap 找不到
+- [x] 网站 title 和 图标
+- [ ] 检查一下 windows 会不会因为文件目录分隔符 / 而导致一些问题，如 npm run create 失败
+- [ ] 看一下有赞的 bem 自动化方案
 
 ## 初步任务
 
@@ -109,14 +109,14 @@ Vue.use(XiaoUI)
 
 ## 参考
 
-+ [有赞vant-ui](https://github.com/youzan/vant)
-+ [owl-ui 开发案例](https://github.com/dengwb1991/owl-ui)
-+ [infoQ-组件库构建方案演进](https://www.infoq.cn/article/VMA6h6uJzDeljkFERurZ)
-+ [webpack create library](https://www.webpackjs.com/guides/author-libraries/#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-library)
-+ [前端UI组件库搭建指南](https://zhuanlan.zhihu.com/p/94920464)
+- [有赞vant-ui](https://github.com/youzan/vant)
+- [owl-ui 开发案例](https://github.com/dengwb1991/owl-ui)
+- [infoQ-组件库构建方案演进](https://www.infoq.cn/article/VMA6h6uJzDeljkFERurZ)
+- [webpack create library](https://www.webpackjs.com/guides/author-libraries/#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-library)
+- [前端UI组件库搭建指南](https://zhuanlan.zhihu.com/p/94920464)
 <!-- [6个postcss插件推荐](https://juejin.im/post/5c9b3c465188251e1618670a) -->
-+ [10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
-+ [别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
-+ [prettier-Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)
-+ [Vue组件库搭建实践与探索](https://segmentfault.com/a/1190000020754678)
-+ [shields.io](https://shields.io/)
+- [10 awesome postcss plugins to make you a css wizard](https://www.hongkiat.com/blog/postcss-plugins/)
+- [别再乱提交代码了，看下大厂 Git 提交规范是怎么做的！](https://mp.weixin.qq.com/s/IMqhv9j_STQRmfeyU9vB1w)
+- [prettier-Integrating with Linters](https://prettier.io/docs/en/integrating-with-linters.html)
+- [Vue组件库搭建实践与探索](https://segmentfault.com/a/1190000020754678)
+- [shields.io](https://shields.io/)
