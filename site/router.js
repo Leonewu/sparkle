@@ -98,11 +98,18 @@ import './common/iframe-router'
 
 //   return routes
 // }
-
-const routes = __COMPONENTS__.map(name => ({
+const demoRoutes = __COMPONENTS__.map(name => ({
   path: `/${name}`,
   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/README.md`)
 }))
+
+const routes = [
+  {
+    path: '/home',
+    component: () => import(/* webpackChunkName: "[request]" */'./views/home.md')
+  },
+  ...demoRoutes
+]
 
 Vue.use(VueRouter)
 

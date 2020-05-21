@@ -13,7 +13,6 @@
 
 <script>
 import Doc from './components/index.vue'
-// import { config, packageVersion } from 'site-desktop-shared'
 
 export default {
   components: {
@@ -39,11 +38,6 @@ export default {
       return {
 
       }
-      // const { locales = {} } = config.site
-      // return Object.keys(locales).map(key => ({
-      //   lang: key,
-      //   label: locales[key].langLabel || ''
-      // }))
     },
 
     config() {
@@ -74,35 +68,10 @@ export default {
     },
 
     versions() {
-      // if (config.site.versions) {
-      //   return [{ label: packageVersion }, ...config.site.versions]
-      // }
       return null
     }
-  },
-
-  watch: {
-    // lang(val) {
-    //   setLang(val)
-    //   this.setTitle()
-    // }
-  },
-
-  created() {
-    this.setTitle()
-  },
-
-  methods: {
-    setTitle() {
-      // let { title } = this.config
-
-      // if (this.config.description) {
-      //   title += ` - ${this.config.description}`
-      // }
-
-      // document.title = title
-    }
   }
+
 }
 </script>
 
