@@ -10,13 +10,13 @@
 ## TODO
 
 - [x] 基本框架搭建
-- [x] 全量引入
-- [x] eslint,git hooks
+- [x] 全量引入，用 style-loader
+- [x] 按需引入，miniCssExtractPlugin，去掉 style-loader，多入口，并测试引入后打包，并且验证引入之后打包的体积
+- [x] eslint，git hooks
 - [x] stylelint
 - [x] babel，验证是否根据 browserlist 正确转码
 - [x] devserver
-- [x] files-loader,svg
-- [x] 按需引入，miniCssExtractPlugin,去掉 style-loader，多入口,并测试引入后打包，并且验证引入之后打包的体积
+- [x] files-loader, svg
 - [x] 单元测试
 - [x] 自动生成组件模板，npm run create component
 - [x] 文档自动化，支持搜索，组件预览，代码片段展示，bisheng（好像需要手写一部分）,vue-styleguidist(方便，但是不好看，没主题)，vuepress，vuese（嗯...），都没有移动端的预览窗口，最后选择研究一下有赞的做法
@@ -27,17 +27,17 @@
 - [x] markdown-loader
 - [x] 优化，site 和 mobile 可以再自动化一点，通过解析文件目录生成 component 配置文件然后交给 router
 - [x] 组件库名字，sparkle design？
-- [ ] 版本管理 semver 规范
 - [x] css 压缩，去重，cssnano，OptimizeCssAssetsWebpackPlugin，js 压缩，webpack4 自带 terser
+- [x] mobile 根据屏幕宽度动态设置 font-size
+- [ ] 版本管理 semver 规范
 - [ ] ci
 - [ ] rollup 导出 es module，并且配置 package.json 的 files 选项， treeshaking
 - [ ] ts
 - [ ] logo
 - [ ] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
 - [ ] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配 polyfill
-- [ ] 优化，iframe 内外可以滚动联动，锚点点击滚动
+- [ ] 优化项:iframe 内外可以滚动联动，锚点点击滚动
 - [ ] 开发时引入方式的文档，npm link 或者 npm install file:../../ 或者 git ssh
-- [ ] 根据屏幕宽度动态设置 font-size
 - [ ] demo-block 和 demo-section 用法注明
 - [ ] 文档的开篇介绍部分
 - [ ] 控制台 sourcemap 找不到
