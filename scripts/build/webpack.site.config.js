@@ -3,6 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const WebpackBar = require('webpackbar')
 const getComponents = require('./components')
 // 多页面： site 文档网站
 // mobile： 移动端预览
@@ -116,6 +117,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new WebpackBar({
+      name: 'Starity UI',
+      color: '#c94bff'
+    }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',

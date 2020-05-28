@@ -45,6 +45,7 @@
 - [ ] css 的 bem 规范，看一下有赞的 bem 解决方案
 - [ ] 后编译
 - [ ] packages 每个包里面维护自己的 package.json，不要放在顶级目录，site，mobile 同理
+- [ ] css 不直接在代码中引入
 
 ## 遇到的问题
 
