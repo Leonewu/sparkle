@@ -46,7 +46,7 @@ export default {
         path: name
       }))
       return {
-        title: 'Sparkle Design',
+        title: 'Starity UI',
         description: 'Mobile UI Components built on Vue',
         logo: 'https://img.yzcdn.cn/vant/logo.png',
         links: [{ logo: 'https://b.yzcdn.cn/vant/logo/github.svg', url: 'https://gitlab.xinghuolive.com/web' }],
