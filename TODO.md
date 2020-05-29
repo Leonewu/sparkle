@@ -47,6 +47,9 @@
 - [ ] packages 每个包里面维护自己的 package.json，不要放在顶级目录，site，mobile 同理
 - [ ] css 不直接在代码中引入
 - [ ] 全量引入时，引入 css 样式改成手动，并支持引用 sass 源文件或者编译后的 css
+- [x] 支持组件 sfc
+- [x] 支持 jsx
+- [ ] 支持 tsx
 
 ## 遇到的问题
 
