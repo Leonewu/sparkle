@@ -28,6 +28,10 @@ module.exports = {
 
   //   ]
   // },
+  resolve: {
+    extensions: ['.js', '.vue', '.jsx', '.json'],
+    mainFiles: ['index']
+  },
   module: {
     rules: [
       {
