@@ -11,3 +11,21 @@ $base-color: #c6538c;
   transform: all 0.6s;
   // 测试 import 后的 postcss 是否加前缀
 }
+
+.common {
+  color: #ddd;
+}
+
+@keyframes test {
+  from {
+    background-color: rgb(234, 238, 12);
+  }
+
+  to {
+    background-color: rgb(26, 187, 236);
+  }
+}
+
+.animation {
+  animation: test 0.5s;
+}
