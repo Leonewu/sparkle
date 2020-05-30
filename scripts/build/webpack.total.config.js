@@ -15,6 +15,10 @@ module.exports = {
     // 打包成 umd
     libraryTarget: 'umd'
   },
+  resolve: {
+    extensions: ['.js', '.vue', '.jsx', '.json'],
+    mainFiles: ['index']
+  },
   module: {
     rules: [
       {
