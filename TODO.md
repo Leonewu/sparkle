@@ -42,7 +42,7 @@
 - [ ] 文档的开篇介绍部分
 - [ ] 控制台 sourcemap 找不到
 - [ ] 检查一下 windows 会不会因为文件目录分隔符 / 而导致一些问题，如 npm run create 失败
-- [ ] css 的 bem 规范，看一下有赞的 bem 解决方案
+- [ ] css 的 bem 规范，看一下有赞的 bem 解决方案，结合属性规范化 bem
 - [ ] 后编译
 - [ ] packages 每个包里面维护自己的 package.json，不要放在顶级目录，site，mobile 同理
 - [ ] css 不直接在代码中引入
@@ -61,6 +61,7 @@
 6. 从 babel 7.0 开始， babel-core 整合到 @babel 中，即 @babel/core， 有些旧项目用的是 babel-core，没有升级到 @babel/core （比如 vue-jest@3.0.4），所以需要用 babel-bridge 中转，babel-core:bridge 源码只有一行...
 7. vue-test-utils 英文文档比较新一点，最好看英文文档
 8. eslint-plugin-vue/recommend 和 prettier 冲突，暂时移除 prettier :rage:
+9. 如果要将 scss 和 js 文件分离（即不显示地引入 scss 文件，在编译并且需要时再手动引入），这个时候就要用 gulp 了，webpack 主要用于模块化打包，gulp 更加灵活，antdesign 就是用 gulp + webpack
 
 ## 参考
 
