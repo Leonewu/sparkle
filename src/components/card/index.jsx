@@ -1,5 +1,5 @@
 
-import './card.scss'
+// import './card.scss'
 
 export default {
   name: 'XiaoCard',

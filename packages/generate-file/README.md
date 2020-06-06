@@ -1,4 +1,4 @@
-#
+# 打包方案
 
 - [ ] 生成 js 主文件入口
 - [ ] 生成 scss 主文件入口
@@ -26,8 +26,8 @@ lib
 |----- starity-ui.js(引入css的入口文件，用style-loader处理，用于script标签引入)
 |----- starity-ui.min.js(引入css并且压缩后的入口文件，用style-loader处理，用于script标签引入)
 |----- style(放置公共的scss和css依赖，button/style/*.js的依赖都放在这里面)
-|----- |------ common.scss
-|----- |------ common.css
+|----- |------ common.scss(源文件)
+|----- |------ common.css(已经压缩)
 |----- button
 |----- |------ index.js(组件入口)
 |----- |------ index.scss(组件scss源文件，貌似不需要)
@@ -36,9 +36,12 @@ lib
 |----- |------ |------ scss.js(管理scss依赖，用于主题定制并且按需加载)
 ```
 
+源码中，不显式引入样式文件
+
 ## 简单版方案
 
-简单版是开发组件的时候，在组件内引入 scss 文件，之后都交给 webpack 处理
+简单版是开发组件的时候，在组件内引入 scss 文件，之后都交给 webpack 处理  
+webpack 的思路很简单，就是递归依赖，但是对于按需加载这种需求，仅仅使用 webpack 是满足不了的，会出现许多冗余的 css，解决办法就是不引入 css，用户引入 css 的时候通过 babel-plugin-import 自动引入，这样就用不了 webpack 了
 
 ```
 lib
@@ -47,3 +50,27 @@ lib
 |------|----- index.js(组件入口)
 |------|----- index.css(组件的css)
 ```
+
+## 实现思路
+
+### 自己手写编译过程
+
+fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻烦，特别是 vue 文件的处理，能不用就不用
+
+### 手写 webpack plugin，结合 webpack 处理
+
+1. webpack 的基本概念就是 entry 和 module，如果使用 webpack 编译，那肯定要在 entry 加入 css denpendencies（css.js 和 scss.js），这是比较符合 webpack 的做法
+2. 背景: webpack 的 entry 不支持文本字符串，只支持路径写法，所以只能生成文件再添加 entry
+3. 通过 compiler.hooks.entryOption （或者其他钩子），在开始编译前生成 css denpendencies（css.js 和 scss.js），添加到 entry 中，交给 webpack 编译，编译完成后，将文件删除  
+很明显不可取，这样用不用 webpack plugin 都一样，另外如果编译时间长，那文件目录会一直存在这些 css denpendencies 文件，太恶心了
+
+### 使用 gulp
+
+比起手写，可以使用 gulp 的插件，如 babel，scss 等，缺点就是要装一堆插件，vue 周边插件比较少，其他跟手写并没有太大的区别
+
+## 参考
+
+[编写一个webpack插件](https://webpack.docschina.org/contribute/writing-a-plugin/#compiler-%E5%92%8C-compilation)
+[webpack-plugin-get-chunk-entries](https://github.com/johuder33/webpack-plugin-get-chunk-entries)
+[React组件库打包总结](https://juejin.im/post/5ebcf12df265da7bc55df460#heading-24)
+[vue-loader&vue-template-compiler详解](https://zhuanlan.zhihu.com/p/114239056)
