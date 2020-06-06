@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import './select.scss'
+// import './select.scss'
 export default {
   name: 'XiaoSelect',
   data() {

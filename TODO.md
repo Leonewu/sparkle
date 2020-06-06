@@ -51,6 +51,7 @@
 - [x] 支持 jsx
 - [ ] 支持 tsx
 - [ ] 公共的 scss 会重复打包，需要用 js 处理 scss 样式依赖
+- [ ] 去掉组件入口，用代码生成，因为只是简单的 import 加上 install 再 export，都是重复的东西
 - [ ] 使用 gulp 管理编译的 task，更加清晰一点
 - [ ] 沉淀脚手架，支持 react，vue，ts
 
@@ -91,3 +92,4 @@
 - [Vue 组件库搭建实践与探索](https://segmentfault.com/a/1190000020754678)
 - [shields.io](https://shields.io/)
 - [vue-test-utils](https://vue-test-utils.vuejs.org/api/wrapper/)
+- [minify benchmarks](https://github.com/babel/minify#benchmarks)

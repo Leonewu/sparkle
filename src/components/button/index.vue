@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import './button.scss'
+// import './button.scss'
 export default {
   name: 'XiaoButton',
   data() {
