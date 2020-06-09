@@ -68,6 +68,55 @@ fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻
 
 比起手写，可以使用 gulp 的插件，如 babel，scss 等，缺点就是要装一堆插件，vue 周边插件比较少，其他跟手写并没有太大的区别
 
+## vue-loader
+
+vue-loader 首先将 vue 文件转成
+
+```
+import { render, staticRenderFns } from "./App.vue?vue&type=template&id=7ba5bd90&"
+import script from "./App.vue?vue&type=script&lang=js&"
+export * from "./App.vue?vue&type=script&lang=js&"
+import style0 from "./App.vue?vue&type=style&index=0&lang=css&"
+
+
+/* normalize component */
+import normalizer from "!../node_modules/vue-loader/lib/runtime/componentNormalizer.js"
+var component = normalizer(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (module.hot) {
+  var api = require("/home/leone/leone/demo/node_modules/vue-hot-reload-api/dist/index.js")
+  api.install(require('vue'))
+  if (api.compatible) {
+    module.hot.accept()
+    if (!api.isRecorded('7ba5bd90')) {
+      api.createRecord('7ba5bd90', component.options)
+    } else {
+      api.reload('7ba5bd90', component.options)
+    }
+    module.hot.accept("./App.vue?vue&type=template&id=7ba5bd90&", function () {
+      api.rerender('7ba5bd90', {
+        render: render,
+        staticRenderFns: staticRenderFns
+      })
+    })
+  }
+}
+component.options.__file = "src/App.vue"
+export default component.exports
+```
+
+然后交给 webpack 去引入，然后又进来 vue-loader 去解析
+
 ## 参考
 
 [编写一个webpack插件](https://webpack.docschina.org/contribute/writing-a-plugin/#compiler-%E5%92%8C-compilation)
