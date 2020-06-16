@@ -11,9 +11,17 @@ export default {
   data() {
     return {}
   },
+  async mounted() {
+    await this.promise
+  },
   methods: {
     c() {
       console.log(12)
+    },
+    promise() {
+      return new Promise((resolve, reject) => {
+        resolve(1)
+      })
     }
   }
 }

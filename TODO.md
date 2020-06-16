@@ -54,6 +54,7 @@
 - [ ] 去掉组件入口，用代码生成，因为只是简单的 import 加上 install 再 export，都是重复的东西
 - [ ] 使用 gulp 管理编译的 task，更加清晰一点
 - [ ] 沉淀脚手架，支持 react，vue，ts
+- [ ] 文档优化，夜间模式？<https://gridjs.io/docs/examples/hello-world，代码可编辑？>
 
 ## 遇到的问题
 
@@ -67,7 +68,7 @@
 8. eslint-plugin-vue/recommend 和 prettier 冲突，暂时移除 prettier :rage:
 9. 如果要将 scss 和 js 文件分离（即不显示地引入 scss 文件，在编译并且需要时再手动引入），这个时候就要用 gulp 了，webpack 主要用于模块化打包，gulp 更加灵活，antdesign 就是用 gulp + webpack
 10. 为什么要将 js 和 scss 完全独立开来，不在 js 中引入 scss 文件？
-11. 调试 webpack 或者其他 node_modules，可以用 vscode 本地调试，或者 node --inspect-brk node_modules/lib/cli.js + chrome://inspect/#devices
+11. 调试 webpack 或者其他 node_modules，可以用 vscode 本地调试，参数可以用 args，或者 node --inspect-brk node_modules/lib/cli.js + chrome://inspect/#devices
 
 > 1. 要考虑全量引入的时候能保证样式的成功引入，有两种方案：
 >
@@ -94,3 +95,9 @@
 - [shields.io](https://shields.io/)
 - [vue-test-utils](https://vue-test-utils.vuejs.org/api/wrapper/)
 - [minify benchmarks](https://github.com/babel/minify#benchmarks)
+- [2B 场景下的前端组件库换肤设计理念与实践](https://mp.weixin.qq.com/s/zIA01wtk_bu4E-8SoEzLvQ)
+
+## 拓展阅读
+
+- [livecodestream.dev: node-buffers](https://livecodestream.dev/post/2020-06-06-a-complete-introduction-to-node-buffers/)
+- [Webpack: write a loader](https://webpack.js.org/contribute/writing-a-loader/)
