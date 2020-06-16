@@ -4,10 +4,11 @@ const { src, dest, task } = require('gulp')
 const babel = require('gulp-babel')
 const webpack = require('webpack')
 const compiler = require('vue-template-compiler')
+const compileUtils = require('@vue/component-compiler-utils')
 const through2 = require('through2')
 const COMPONENTS_DEPENDENCIES = []
 const entry = {
-  js: ['src/components/*/index.{vue,js,jsx,tsx}', '!src/components/*/{demo,__test__}/*'],
+  js: ['src/components/*/index.vue', '!src/components/*/{demo,__test__}/*'],
   style: 'src/components/*/index.{scss,css}',
   commonStyle: 'src/common/*.{scss,css}',
   commonJs: 'src/utils/*.{ts,js}'
@@ -25,29 +26,45 @@ function clean(next) {
 
 /* compile vue */
 function compileVue(next) {
-  // return src(entry.js)
-  // .pipe()
-  const result = compiler.compile(`
-  <div id="test">
-    <div>
-      <p>This is my vue render test</p>
-    </div>
-    <p>my name is {{myName}}</p>
-  </div>`
-  )
-
-  console.log(result)
+  return src(entry.js)
+    .pipe(through2.obj(function(chunk, encode, next) {
+      const source = chunk.contents.toString()
+      const descriptor = compileUtils.parse({ compiler, source, needMap: false })
+      console.log(descriptor)
+      if (descriptor.template) {
+        const result = compileUtils.compileTemplate({
+          source: descriptor.template.content,
+          compiler,
+          // transformAssetUrls: options.transformAssetUrls || true,
+          prettify: false
+        })
+        if (result.errors.length || result.tips.length) {
+          // error or tips
+        }
+        chunk.path = chunk.path.replace('vue', 'js')
+        chunk.contents = Buffer.from(result.code + '\n')
+      }
+      this.push(chunk)
+      next()
+    }))
+    .pipe(dest('gulp-lib/'))
 }
 
 /* compile js */
 function compileJs(next) {
   return src(entry.js)
-    // .pipe(through2.obj(function(chunk, encode, next) {
-    //   this.push(chunk)
-    //   next()
-    // }))
+    .pipe(through2.obj(function(chunk, encode, next) {
+      const source = chunk.contents.toString()
+      const descriptor = compileUtils.parse({ compiler, source, needMap: false })
+      if (descriptor.script) {
+        chunk.contents = Buffer.from(descriptor.script.content)
+      }
+      chunk.path = chunk.path.replace('vue', 'js')
+      this.push(chunk)
+      next()
+    }))
     .pipe(babel())
-    .pipe(dest('gulp-lib/'))
+    .pipe(dest('gulp-lib/', { append: true }))
 }
 
 /* 拷贝 scss */
@@ -69,8 +86,12 @@ function getCssDep(next) {
 }
 
 exports.default = function build(next) {
-  compileJs()
   compileVue()
-  copyScss()
+  compileJs()
+  // copyScss()
   next()
 }
+
+/* 编译 vue template 的内容有两种方法，一种是用vue-template-compiler.complie(source)
+  或者用 vue-compile-utils.compileTemplate({source,compiler})
+*/

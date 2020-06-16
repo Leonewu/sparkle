@@ -68,9 +68,34 @@ fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻
 
 比起手写，可以使用 gulp 的插件，如 babel，scss 等，缺点就是要装一堆插件，vue 周边插件比较少，其他跟手写并没有太大的区别
 
-## vue-loader
+## vue-loader & vueLoaderPlugin
 
-vue-loader 首先将 vue 文件转成
+### vueLoaderPlugin 的准备工作
+
+- 获取项目 webpack 配置的 rules 项，然后复制 rules，添加上对 ?vue&lang=xx...query 参数的文件的路径解析
+- 为 vue文件配置一个公共的 loader(lib/pitchr.js)
+- 将 [pitcher, ...clonedRules, ...rules] 作为 webapck 新的 rules
+
+### 大致的解析路线
+
+1. vueLoaderPlugin(plugin-webpack4.js) 生成 sfc block 规则，规则对应的 loader 为 pitch-loader(vue-loader/lib/picher.js)
+2. 开始编译，根据用户配置的 rules，会首先执行到 vue-loader/index.js，将 sfc 转换成带 query 的 import，并且返回给 webpack 处理
+3. 由于上面的 vue-loader 是最左边的 loader， 所以返回的 code 会被 webpack 当成 js 代码块处理，webpack 开始解析代码块
+4. 此时代码块的 import 是带有 query 的，所以会进入到第一步配置的 pitcher-loader(vue-loader/lib/pitcher.js)
+5. pitcher(vue-loader/lib/pitcher.js) 中定义了 pitch，并且在 pitch 返回了字符串，所以执行到 pitch 后，会跳过后面的 loader，这样就防止了再次调用了 vue-loader。另外，pitcher 中利用 loaderUtils 生成内联 loader，剔除了 pitcher 自身，并且加上了 -! 前缀，表示禁用所有已配置的 preLoader 和 loader，接着将带有内联 loader 的 import 语句返回给 webpack
+6. webpack 解析这个代码块，根据内联的规则，开始执行 vue-loader
+7. vue-loader/index.js 调用 select.js 的 selectBlock()方法， 间接调用 loaderContext.callback() 传给其他 loader 解析
+8. loader 解析结束，最终的输出被引入，然后通过 /lib/runtime/componentNormalizer.js 输出一个对象
+
+### 代码转换过程  
+
+转换前：
+
+```
+import App from "./App.vue"
+```
+
+第一次调用 vue-loader 转换后：
 
 ```
 import { render, staticRenderFns } from "./App.vue?vue&type=template&id=7ba5bd90&"
@@ -115,11 +140,48 @@ component.options.__file = "src/App.vue"
 export default component.exports
 ```
 
-然后交给 webpack 去引入，然后又进来 vue-loader 去解析
+可以看到带上了 query  
+调用 pitch-loader 转换后：
+
+template block 输出为
+
+```
+export * from "-!../node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"aa9ab318-vue-loader-template\"}!../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/cache-loader/dist/cjs.js??ref--0-0!../node_modules/vue-loader/lib/index.js??vue-loader-options!./App.vue?vue&type=template&id=7ba5bd90&"
+```
+
+script block 输出为
+
+```
+import mod from "-!../node_modules/cache-loader/dist/cjs.js??ref--12-0!../node_modules/babel-loader/lib/index.js!../node_modules/cache-loader/dist/cjs.js??ref--0-0!../node_modules/vue-loader/lib/index.js??vue-loader-options!./App.vue?vue&type=script&lang=js&";
+
+export default mod; export * from "-!../node_modules/cache-loader/dist/cjs.js??ref--12-0!../node_modules/babel-loader/lib/index.js!../node_modules/cache-loader/dist/cjs.js??ref--0-0!../node_modules/vue-loader/lib/index.js??vue-loader-options!./App.vue?vue&type=script&lang=js&"
+```
+
+### 附录
+
+> webpack 文档中对于 loader 顺序的解释（Complex Usage）  
+>
+> - The last loader, called first, will be passed the contents of the raw resource.  
+> - The first loader, called last, is expected to return JavaScript and an optional source map.  
+> - The loaders in between will be executed with the result(s) of the previous loader in the chain.
+>
+> webpack 通过为内联 import 语句添加前缀，可以覆盖 配置 中的所有 loader, preLoader 和 postLoader
+>
+> - 使用 ! 前缀，将禁用所有已配置的 normal loader(普通 loader)  
+> `import Styles from '!style-loader!css-loader?modules!./styles.css';`
+> - 使用 !! 前缀，将禁用所有已配置的 loader（preLoader, loader, postLoader）
+> `import Styles from '!!style-loader!css-loader?modules!./styles.css';`
+> - 使用 -! 前缀，将禁用所有已配置的 preLoader 和 loader，但是不禁用 postLoaders  
+> `import Styles from '-!style-loader!css-loader?modules!./styles.css';`
 
 ## 参考
 
-[编写一个webpack插件](https://webpack.docschina.org/contribute/writing-a-plugin/#compiler-%E5%92%8C-compilation)
-[webpack-plugin-get-chunk-entries](https://github.com/johuder33/webpack-plugin-get-chunk-entries)
-[React组件库打包总结](https://juejin.im/post/5ebcf12df265da7bc55df460#heading-24)
-[vue-loader&vue-template-compiler详解](https://zhuanlan.zhihu.com/p/114239056)
+- [编写一个webpack插件](https://webpack.docschina.org/contribute/writing-a-plugin/#compiler-%E5%92%8C-compilation)
+- [webpack-plugin-get-chunk-entries](https://github.com/johuder33/webpack-plugin-get-chunk-entries)
+- [React组件库打包总结](https://juejin.im/post/5ebcf12df265da7bc55df460#heading-24)
+- [vue-loader&vue-template-compiler详解](https://zhuanlan.zhihu.com/p/114239056)
+- [vue-loader工作原理](https://cloud.tencent.com/developer/article/1591476)
+- [Vue Beyond Vue Loader VueConf CN 2019](https://www.youtube.com/watch?v=reNHZrUGquM)
+- [Webpack: write a loader](https://webpack.js.org/contribute/writing-a-loader/)
+- [从vue-loader源码分析CSS Scoped的实现](https://juejin.im/post/5d8627355188253f3a70c22c)
+- [@vue/component-compiler-utils](https://github.com/vuejs/component-compiler-utils)
