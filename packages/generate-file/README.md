@@ -53,10 +53,6 @@ lib
 
 ## 实现思路
 
-### 自己手写编译过程
-
-fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻烦，特别是 vue 文件的处理，能不用就不用
-
 ### 手写 webpack plugin，结合 webpack 处理
 
 1. webpack 的基本概念就是 entry 和 module，如果使用 webpack 编译，那肯定要在 entry 加入 css denpendencies（css.js 和 scss.js），这是比较符合 webpack 的做法
@@ -66,7 +62,11 @@ fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻
 
 ### 使用 gulp
 
-比起手写，可以使用 gulp 的插件，如 babel，scss 等，缺点就是要装一堆插件，vue 周边插件比较少，其他跟手写并没有太大的区别
+比起手写，可以使用 gulp 的插件，如 babel，scss 等，缺点就是要装一堆插件，试了一遍，解析 vue 文件甚至比用 fs 还麻烦
+
+### 用 fs 手写
+
+fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻烦，特别是 vue 文件的处理，能不用就不用
 
 ## vue-loader & vueLoaderPlugin
 
@@ -157,6 +157,22 @@ import mod from "-!../node_modules/cache-loader/dist/cjs.js??ref--12-0!../node_m
 export default mod; export * from "-!../node_modules/cache-loader/dist/cjs.js??ref--12-0!../node_modules/babel-loader/lib/index.js!../node_modules/cache-loader/dist/cjs.js??ref--0-0!../node_modules/vue-loader/lib/index.js??vue-loader-options!./App.vue?vue&type=script&lang=js&"
 ```
 
+一个 vue 文件编译会被编译成一个对象，根据 vue-loader/index.js 生成的代码块中，可以看到调用了 /vue-loader/lib/runtime/componentNormalizer.js 中的 normallize 方法，可以看到这个方法并没有很复杂，最终编译出来的文件大概是这样的
+
+```
+// 这里的 vueProps 指的是 vue 文件的配置，如 name, data, computed, methods
+import ...
+export default {
+  ...vueProps,
+  render,
+  staticRenderFns,
+  _compiled: true,
+  __file: 'src/App.vue',
+  beforeCreate, // 仅在 hot-reload 用到
+  beforeDestroy // 仅在 hot-reload 用到
+}
+```
+
 ### 附录
 
 > webpack 文档中对于 loader 顺序的解释（Complex Usage）  
@@ -178,10 +194,11 @@ export default mod; export * from "-!../node_modules/cache-loader/dist/cjs.js??r
 
 - [编写一个webpack插件](https://webpack.docschina.org/contribute/writing-a-plugin/#compiler-%E5%92%8C-compilation)
 - [webpack-plugin-get-chunk-entries](https://github.com/johuder33/webpack-plugin-get-chunk-entries)
-- [React组件库打包总结](https://juejin.im/post/5ebcf12df265da7bc55df460#heading-24)
 - [vue-loader&vue-template-compiler详解](https://zhuanlan.zhihu.com/p/114239056)
 - [vue-loader工作原理](https://cloud.tencent.com/developer/article/1591476)
 - [Vue Beyond Vue Loader VueConf CN 2019](https://www.youtube.com/watch?v=reNHZrUGquM)
 - [Webpack: write a loader](https://webpack.js.org/contribute/writing-a-loader/)
 - [从vue-loader源码分析CSS Scoped的实现](https://juejin.im/post/5d8627355188253f3a70c22c)
 - [@vue/component-compiler-utils](https://github.com/vuejs/component-compiler-utils)
+- [Node.js: fs-extra](https://github.com/jprichardson/node-fs-extra)
+- [@babel/core](https://babeljs.io/docs/en/babel-core)

@@ -38,6 +38,7 @@ function compileVue(next) {
           // transformAssetUrls: options.transformAssetUrls || true,
           prettify: false
         })
+        console.log(result)
         if (result.errors.length || result.tips.length) {
           // error or tips
         }
@@ -57,7 +58,8 @@ function compileJs(next) {
       const source = chunk.contents.toString()
       const descriptor = compileUtils.parse({ compiler, source, needMap: false })
       if (descriptor.script) {
-        chunk.contents = Buffer.from(descriptor.script.content)
+        const contents = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,\n')
+        chunk.contents = Buffer.from(contents)
       }
       chunk.path = chunk.path.replace('vue', 'js')
       this.push(chunk)
