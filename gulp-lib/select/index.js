@@ -9,6 +9,8 @@ render._withStripped = true
 //
 // import './select.scss'
 export default {
+  render,
+  staticRenderFns,
   name: 'XiaoSelect',
 
   data() {

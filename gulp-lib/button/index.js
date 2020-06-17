@@ -13,6 +13,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 // import './button.scss'
 export default {
+  render,
+  staticRenderFns,
   name: 'XiaoButton',
 
   data() {
