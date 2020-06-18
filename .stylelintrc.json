@@ -16,6 +16,8 @@
     "./mobile/**/*.vue",
     "./site/**/*.scss",
     "./site/**/*.vue",
-    "./lib/**/*.css"
+    "./lib/**/*.css",
+    "./gulp-lib/**/*.css",
+    "./fs-lib/**/*.{scss,css}"
   ]
 }
