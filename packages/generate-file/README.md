@@ -202,3 +202,4 @@ export default {
 - [@vue/component-compiler-utils](https://github.com/vuejs/component-compiler-utils)
 - [Node.js: fs-extra](https://github.com/jprichardson/node-fs-extra)
 - [@babel/core](https://babeljs.io/docs/en/babel-core)
+- [Sass: JavaScript API](https://sass-lang.com/documentation/js-api)

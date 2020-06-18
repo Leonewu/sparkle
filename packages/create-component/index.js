@@ -2,7 +2,7 @@
 // npm run create button
 // 把 example 的文件复制到组件目录，并修改内容
 const chalk = require('chalk')
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
 const childProcess = require('child_process')
 

@@ -1,61 +1,26 @@
 const fs = require('fs-extra')
-const path = require('path')
-const compiler = require('vue-template-compiler')
-const compileUtils = require('@vue/component-compiler-utils')
 const { sync: glob } = require('glob')
-const babel = require('@babel/core')
+const compileVue = require('./compile-vue')
+const complileCommon = require('./compile-common')
+const { getExt } = require('./utils')
+const { entry, outputDir } = require('./config')
+const chalk = require('chalk')
+// TODO 用 ts 写编译代码，减少出错
+// TODO 编译缓存 sass，babel，vue
+// TODO sourceMap sass babel vue
+// TODO error catch
+// TODO uglify，去掉换行，注释，trim
+// TODO umd
+// TODO 打印每个阶段的控制台信息
+// TODO css scope
 
-function getExt(file) {
-  return file ? file.match(/\.([^.]+)$/) ? file.match(/\.([^.]+)$/)[1] : '' : ''
-}
-function compileVue(source) {
-  return new Promise(function(resolve, reject) {
-    // TODO 可能需要 sourceMap，估计需要改 needMap 还有 babel.transfrom(code, options)
-    // TODO 需要控制好报错，readFile => parse => babel => uglify => writeFile
-    // TODO 打印必要的信息，如文件以及处理状态，大小
-    let template = ''
-    let script = ''
-    const descriptor = compileUtils.parse({ compiler, source, needMap: false })
-    if (descriptor.template) {
-      const result = compileUtils.compileTemplate({
-        source: descriptor.template.content,
-        compiler,
-        // transformAssetUrls: options.transformAssetUrls || true,
-        prettify: false
-      })
-      template = result.code
-      if (result.errors.length || result.tips.length) {
-        // error or tips
-        console.log('出错了')
-        // reject('出错了')
-      }
-    }
-    if (descriptor.script) {
-      script = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,')
-    }
-    const content = `${template}\n${script}`
-    resolve(content)
-  })
-}
-
-// 先解析 vue 文件，先不考虑 css scope
-const entry = path.resolve(__dirname, '../../', 'src/components/*/index.{js,vue,jsx,tsx}')
-const output = path.resolve(__dirname, '../../', 'fs-lib')
-fs.emptyDirSync(output)
+fs.emptyDirSync(outputDir)
 const result = glob(entry)
-console.log(result)
+complileCommon()
 result.forEach(filePath => {
   if (getExt(filePath) === 'vue') {
-    // 编译 sfc
-    const source = fs.readFileSync(filePath, 'utf8')
-    compileVue(source).then(content => {
-      const componentDir = path.resolve(__dirname, '../../', 'src/components')
-      const fileName = filePath.replace(componentDir, output).replace('vue', 'js')
-      console.log(content)
-      content = babel.transformSync(content, { filename: fileName }).code
-      // TODO uglify
-      console.log(content)
-      fs.outputFileSync(fileName, content)
+    compileVue(filePath).then((output) => {
+      console.log(chalk.greenBright(`${filePath}编译成功: ${output}`))
     })
   }
 })
