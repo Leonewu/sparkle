@@ -69,7 +69,10 @@
 9. 如果要将 scss 和 js 文件分离（即不显示地引入 scss 文件，在编译并且需要时再手动引入），这个时候就要用 gulp 了，webpack 主要用于模块化打包，gulp 更加灵活，antdesign 就是用 gulp + webpack
 10. 为什么要将 js 和 scss 完全独立开来，不在 js 中引入 scss 文件？
 11. 调试 webpack 或者其他 node_modules，可以用 vscode 本地调试，参数可以用 args，或者 node --inspect-brk node_modules/lib/cli.js + chrome://inspect/#devices
-
+12. sass 等 css 预处理语言，var，mixin 单独写到文件中再引入，不要在一个文件中同时定义类，mixin，再给外部引入，这样会出现冗余，而且也没必要  
+13. sass 可以通过 @at-root 避免 bem 的嵌套
+14. 为什么组件都统一放在 src 下的一级目录，而不是单独放在同一个只放组件的目录，原因编译后的目录和 src 目录的层级不一样，假如编译前的组件目录是 src/components/button，编译后是 lib/button，在组件中引入了 common 或者 utils，是使用相对路径引入的， `import utils from '../../utils/'`,`@import '../../common/var.scss'`，编译过程中，由于层级变了，会提示找不到文件，只能改成`import utils from '../utils/'`，然而如果在编译过程中去替换目录是比较麻烦的，并且需要知道编译后的目录名，做成目录名可配置，这样也会造成配置项越来越庞大，所以干脆都提取出来了，比如 vant。antd 则是将 common， utils 都放在 src/components 中
+>
 > 1. 要考虑全量引入的时候能保证样式的成功引入，有两种方案：
 >
 > - 在入口文件引入公共 scss 文件

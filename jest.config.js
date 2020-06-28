@@ -13,9 +13,10 @@ module.exports = {
   },
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/components/*/*.vue',
-    'src/components/*/*.jsx',
-    '!src/components/demo/**',
+    'src/**/*.vue',
+    'src/**/*.jsx',
+    '!src/*/demo/**',
+    '!src/common/**',
     '!**/node_modules/**'
   ],
   coverageReporters: [

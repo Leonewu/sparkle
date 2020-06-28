@@ -2,8 +2,9 @@ const fs = require('fs-extra')
 const { sync: glob } = require('glob')
 const compileVue = require('./compile-vue')
 const complileCommon = require('./compile-common')
+const { generateStyleEntry } = require('./generate-entry')
 const { getExt } = require('./utils')
-const { entry, outputDir } = require('./config')
+const { entries, outputDir } = require('./config')
 const chalk = require('chalk')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
@@ -13,9 +14,11 @@ const chalk = require('chalk')
 // TODO umd
 // TODO 打印每个阶段的控制台信息
 // TODO css scope
-
+// TODO 提取公共方法
+// spinner
 fs.emptyDirSync(outputDir)
-const result = glob(entry)
+const result = entries.map(entry => glob(entry))
+console.log(result)
 complileCommon()
 result.forEach(filePath => {
   if (getExt(filePath) === 'vue') {
@@ -24,3 +27,4 @@ result.forEach(filePath => {
     })
   }
 })
+generateStyleEntry()
