@@ -1,5 +1,6 @@
 
-@import '../../common/base.scss';
+@import '../../common/mixin.scss';
+@import '../../common/var.scss';
 
 .wrapper {
   @include transition;
