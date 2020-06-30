@@ -9,6 +9,7 @@ function compileCommon() {
 }
 
 function copyCommonStyle() {
+  // 复制公共样式文件夹
   const baseStyleDirName = path.basename(baseStyleDir)
   fs.copySync(baseStyleDir, `${outputDir}/${baseStyleDirName}`)
 }

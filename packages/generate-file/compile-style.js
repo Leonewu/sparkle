@@ -4,7 +4,7 @@ const postcss = require('postcss')
 const autoprefixer = require('autoprefixer')
 const postcssNormalize = require('postcss-normalize')
 const fs = require('fs-extra')
-const { outputDir, componentDir } = require('./config')
+const { outputDir, srcDir } = require('./config')
 
 /**
  * inject style and compile style
@@ -28,8 +28,8 @@ function injectStyle(file) {
 
 function compileStyle(file) {
   const { filePath, source } = file
-  const cssPath = filePath.replace(componentDir, outputDir).replace('scss', 'css')
-  fs.copySync(filePath, filePath.replace(componentDir, outputDir))
+  const cssPath = filePath.replace(srcDir, outputDir).replace('scss', 'css')
+  fs.copySync(filePath, filePath.replace(srcDir, outputDir))
   if (source) {
     // sfc style block
   } else if (filePath) {
@@ -52,7 +52,7 @@ function generateCssModule(filePath) {
       reject(new Error(`componentName error, filePath: ${filePath}`))
       return
     }
-    const componentName = filePath.match(new RegExp(`${componentDir}/([^/]+)/`))
+    const componentName = filePath.match(new RegExp(`${srcDir}/([^/]+)/`))
     if (!componentName || !componentName[1]) {
       reject(new Error(`componentName error, filePath: ${filePath}`))
       return
