@@ -3,4 +3,4 @@ lib
 fs-lib
 gulp-lib
 site-dist
-packages/generate-file
+packages/compile

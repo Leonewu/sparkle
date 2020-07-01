@@ -1,7 +1,7 @@
 
 const path = require('path')
 const { sync: glob } = require('glob')
-const components = require('../../components.config.js')
+const components = require('../../components.config')
 
 const root = path.resolve(__dirname, '../../')
 // component entries
