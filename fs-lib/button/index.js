@@ -11,7 +11,7 @@ var render = function render() {
 
   return _c('div', {
     staticClass: "wrapper"
-  }, [_vm._v("\n  button component\n")]);
+  }, [_vm._v(" button component ")]);
 };
 
 var staticRenderFns = [];
@@ -26,6 +26,7 @@ render._withStripped = true; //
 export default {
   render,
   staticRenderFns,
+  _scopeId: "data-v-f1419fd8",
   name: 'XiaoButton',
 
   data() {

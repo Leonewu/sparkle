@@ -7,7 +7,7 @@ var render = function render() {
 
   return _c('div', {
     staticClass: "select-wrapper"
-  }, [_vm._v("\n  select component\n  "), _c('XiaoButton')], 1);
+  }, [_vm._v(" select component "), _c('XiaoButton')], 1);
 };
 
 var staticRenderFns = [];

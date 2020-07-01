@@ -15,6 +15,7 @@ const chalk = require('chalk')
 // TODO 打印每个阶段的控制台信息
 // TODO css scope
 // TODO 提取公共方法
+// TODO babel transform runtime
 // spinner
 
 // 顺序
