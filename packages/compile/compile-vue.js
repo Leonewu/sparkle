@@ -63,7 +63,7 @@ function compileVue(filePath) {
       const result = VueCompileUtils.compileTemplate({
         source: descriptor.template.content,
         compiler,
-        // transformAssetUrls: options.transformAssetUrls || true,
+        // transformAssetUrls: true,
         prettify: false,
         compilerOptions: {
           // scopeId: scopeId ? `data-v-${scopeId}` : null,
@@ -101,13 +101,6 @@ function compileVue(filePath) {
     // console.log(content)
     fs.outputFileSync(fileName, result)
     resolve(fileName)
-    // 解析 sfc 中的样式
-    // if (descriptor.styles.length) {
-    //   descriptor.styles.forEach(style => {
-    //     // 合并，然后写入到文件中
-    //     console.log(style)
-    //   })
-    // }
   })
 }
 

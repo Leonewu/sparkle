@@ -1,8 +1,8 @@
 const fs = require('fs-extra')
-const { sync: glob } = require('glob')
 const compileVue = require('./compile-vue')
 const complileCommon = require('./compile-common')
-const { generateStyleEntry } = require('./generate-entry')
+const { generateStyleEntry } = require('./genCode/generate-entry')
+const { generateCssModule } = require('./compile-style')
 const { getExt } = require('./utils')
 const { entries, outputDir, styleEntries, srcDir } = require('./config')
 const chalk = require('chalk')
@@ -16,6 +16,7 @@ const chalk = require('chalk')
 // TODO css scope
 // TODO 提取公共方法
 // TODO babel transform runtime
+// 抽取公共函数 getExt getComponentName
 // spinner
 
 // 顺序
@@ -30,14 +31,12 @@ fs.emptyDirSync(outputDir)
 
 complileCommon()
 
-const styles = styleEntries.map(entry => glob(entry)[0]).filter(entry => entry)
-styles.forEach(filePath => {
+styleEntries.forEach(filePath => {
   const outputPath = filePath.replace(srcDir, outputDir)
   fs.copySync(filePath, outputPath)
 })
 
-const result = entries.map(entry => glob(entry)[0]).filter(entry => entry)
-result.forEach(filePath => {
+entries.forEach(filePath => {
   if (getExt(filePath) === 'vue') {
     compileVue(filePath).then((output) => {
       console.log(chalk.greenBright(`${filePath}编译成功: ${output}`))
@@ -47,4 +46,5 @@ result.forEach(filePath => {
 
 
 
-// generateStyleEntry()
+generateStyleEntry()
+generateCssModule()
