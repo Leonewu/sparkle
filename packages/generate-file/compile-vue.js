@@ -1,12 +1,12 @@
 
 const fs = require('fs-extra')
 const compiler = require('vue-template-compiler')
-const compileUtils = require('@vue/component-compiler-utils')
+const VueCompileUtils = require('@vue/component-compiler-utils')
 const babel = require('@babel/core')
 const { injectStyle } = require('./compile-style')
 const { srcDir, outputDir } = require('./config')
 const { sync: glob } = require('glob')
-
+const hash = require('hash-sum')
 
 function compileVue(filePath) {
   const source = fs.readFileSync(filePath, 'utf8')
@@ -16,32 +16,29 @@ function compileVue(filePath) {
     // TODO 打印必要的信息，如文件以及处理状态，大小
     let template = ''
     let script = ''
-    const descriptor = compileUtils.parse({ compiler, source, needMap: false })
-    if (descriptor.template) {
-      // 编译 template 代码块
-      const result = compileUtils.compileTemplate({
-        source: descriptor.template.content,
-        compiler,
-        // transformAssetUrls: options.transformAssetUrls || true,
-        prettify: false
-      })
-      template = result.code
-      if (result.errors.length || result.tips.length) {
-        // error or tips
-        console.log('出错了')
-        // reject('出错了')
-      }
-    }
-    if (descriptor.script) {
-      // 在 script 中添加 render 和 staticRenderFns
-      script = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,')
-    }
+    let scopeId = ''
+    const descriptor = VueCompileUtils.parse({ compiler, source, needMap: false })
     if (descriptor.styles) {
-      let styles = ''
       descriptor.styles.forEach((style, index) => {
         // 添加到 index.(scss|less|styl) 中
         // 都没有的话创建 css 文件
-        const content = `\n/* sfc-style-block-${index} */\n` + style.content.replace(/\n/g, '').trim()
+        let content = ''
+        if (style.scoped && !scopeId) {
+          scopeId = hash(filePath + '\n' + source)
+          const { code, map, errors } = VueCompileUtils.compileStyle({
+            source: style.content,
+            filename: filePath,
+            id: `data-v-${scopeId}`,
+            scoped: true,
+            trim: true
+          })
+          if (errors.length) {
+            console.log(errors)
+          } else {
+            content = code
+          }
+        }
+        content = `\n/* sfc-style-block-${index} */\n` + content.replace(/\n/g, '').trim()
         if (style.lang !== 'css') {
           const mainStyleFile = filePath.replace('.vue', `.${style.lang}`).replace(srcDir, outputDir)
           if (fs.existsSync(mainStyleFile)) {
@@ -60,6 +57,39 @@ function compileVue(filePath) {
           }
         }
       })
+    }
+    if (descriptor.template) {
+      // 编译 template 代码块
+      const result = VueCompileUtils.compileTemplate({
+        source: descriptor.template.content,
+        compiler,
+        // transformAssetUrls: options.transformAssetUrls || true,
+        prettify: false,
+        compilerOptions: {
+          // scopeId: scopeId ? `data-v-${scopeId}` : null,
+          // outputSourceRange: true,
+          whitespace: 'condense',
+        }
+      })
+      template = result.code
+      if (result.errors.length || result.tips.length) {
+        // error or tips
+        console.log('出错了')
+        // reject('出错了')
+      }
+    }
+    if (descriptor.script) {
+      // 在 script 中添加 render 和 staticRenderFns
+      // 以及 scopeId
+      // 注意 vue-template-compiler 的 compilerOptions: { scopeId } 是假的
+      // 虽然 vue-loader（templateLoader） 的源码上是有写的，但其实并没有起作用
+      // 初步猜测应该是添加了 _scopeId
+      // TODO 待研究原理
+      if (scopeId) {
+        script = descriptor.script.content.replace('export default {', `export default {\n  render,\n  staticRenderFns,\n  _scopeId: "data-v-${scopeId}",`)
+      } else {
+        script = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,')
+      }
     }
     // 将 template 和 script 的内容拼在一起
     const content = `${template}\n${script}`
