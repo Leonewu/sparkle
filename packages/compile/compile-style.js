@@ -4,7 +4,7 @@ const postcss = require('postcss')
 const autoprefixer = require('autoprefixer')
 const postcssNormalize = require('postcss-normalize')
 const fs = require('fs-extra')
-const { outputDir, srcDir, } = require('./config')
+const { outputDir, srcDir, getOutputStyleDir } = require('./config')
 const path = require('path')
 /**
  * inject style and compile style
@@ -27,17 +27,16 @@ function injectStyle(file) {
 }
 
 function compileStyle(filePath) {
-  const cssPath = filePath.replace(srcDir, outputDir).replace('scss', 'css')
-  fs.copySync(filePath, filePath.replace(srcDir, outputDir))
-  if (filePath) {
-    // component/index.scss
+  // 编译组件样式
+  const stylePath = getOutputStyleDir()
+  stylePath.forEach(filePath => {
+    const compiledPath = filePath.replace(srcDir, outputDir).replace(/(\.scss|\.less|\.styl)/, '.css')
     const css = sass.renderSync({ file: filePath }).css
     const processor = postcss([autoprefixer, postcssNormalize])
     processor.process(css).then(res => {
-      fs.outputFileSync(cssPath, res)
+      fs.outputFileSync(compiledPath, res)
     })
-    generateCssModule(filePath)
-  }
+  })
 }
 
 

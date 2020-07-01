@@ -2,7 +2,8 @@ const fs = require('fs-extra')
 const compileVue = require('./compile-vue')
 const complileCommon = require('./compile-common')
 const { generateStyleEntry } = require('./genCode/generate-entry')
-const { generateCssModule } = require('./compile-style')
+const { generateCssModule } = require('./genCode/generate-css-module')
+const { compileStyle } = require('./compile-style')
 const { getExt } = require('./utils')
 const { entries, outputDir, styleEntries, srcDir } = require('./config')
 const chalk = require('chalk')
@@ -23,7 +24,7 @@ const chalk = require('chalk')
 // 1. 清空目录
 // 2. 复制公共目录（style，js）
 // 3. 复制组件样式（这一步在第4步前是因为要 vue 的 style block 要和主样式文件合在一起）
-// 4. 编译组件主文件（vue，jsx，tsx）
+// 4. 编译组件主文件（vue，jsx，tsx）,style block 会追加在 index.scss 后面
 // 5. 生成 css module 文件
 // 6. 编译组件样式
 // 7. 生成主入口文件，生成入口样式文件，编译入口样式文件
@@ -48,3 +49,4 @@ entries.forEach(filePath => {
 
 generateStyleEntry()
 generateCssModule()
+compileStyle()
