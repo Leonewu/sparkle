@@ -1,6 +1,5 @@
-const { styleEntry, componentDir, outputDir } = require('./config')
+const { styleEntries, componentDir, outputDir, srcDir } = require('../config')
 const fs = require('fs-extra')
-const { sync: glob } = require('glob')
 const sass = require('sass')
 const postcss = require('postcss')
 const autoprefixer = require('autoprefixer')
@@ -9,10 +8,9 @@ const postcssNormalize = require('postcss-normalize')
 
 function generateStyleEntry() {
   return new Promise((resolve, reject) => {
-    const result = glob(styleEntry)
     const entry = '@import "./common/base.scss";'
-    const code = result.reduce((sum, cur) => {
-      const componentName = cur.match(new RegExp(`${componentDir}/([^/]+)/`))
+    const code = styleEntries.reduce((sum, cur) => {
+      const componentName = cur.match(new RegExp(`${srcDir}/([^/]+)/`))
       if (!componentName || !componentName[1]) {
         throw new Error('编译scss入口出错，componentName')
       }
