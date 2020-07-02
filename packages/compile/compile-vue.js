@@ -7,6 +7,8 @@ const { injectStyle } = require('./compile-style')
 const { srcDir, outputDir } = require('./config')
 const { sync: glob } = require('glob')
 const hash = require('hash-sum')
+const { updateImport, getDeps } = require('./deps')
+
 
 function compileVue(filePath) {
   const source = fs.readFileSync(filePath, 'utf8')
@@ -90,17 +92,19 @@ function compileVue(filePath) {
       } else {
         script = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,')
       }
+      script = updateImport(filePath, script)
     }
     // 将 template 和 script 的内容拼在一起
     const content = `${template}\n${script}`
-    const fileName = filePath.replace(srcDir, outputDir).replace('vue', 'js')
-    const result = babel.transformSync(content, { filename: fileName }).code
+    const outputFilePath = filePath.replace(srcDir, outputDir).replace('vue', 'js')
+    const result = babel.transformSync(content, { filename: outputFilePath }).code
     // 到这里为止，打出来的是没有 uglify 的 esModule
     // 这一部开始，可以继续编译出来 umd
     // TODO uglify umd 去掉注释
     // console.log(content)
-    fs.outputFileSync(fileName, result)
-    resolve(fileName)
+    fs.outputFileSync(outputFilePath, result)
+    console.log(getDeps(filePath))
+    resolve(filePath)
   })
 }
 

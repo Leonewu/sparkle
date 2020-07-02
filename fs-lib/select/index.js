@@ -20,7 +20,7 @@ render._withStripped = true; //
 //
 // import './select.scss'
 
-import XiaoButton from '../button/index.vue';
+import XiaoButton from '../button/index.js';
 export default {
   render,
   staticRenderFns,
