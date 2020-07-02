@@ -10,12 +10,12 @@ const chalk = require('chalk')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
-// TODO error catch
+// TODO error catch，promisify
 // TODO uglify，去掉换行，注释，trim
 // TODO umd
 // TODO 打印每个阶段的控制台信息
-// TODO css scope
-// TODO 提取公共方法
+// TODO css scope，css module
+// 组件内部依赖
 // TODO babel transform runtime
 // 抽取公共函数 getExt getComponentName
 // spinner
