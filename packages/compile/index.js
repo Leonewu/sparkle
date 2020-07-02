@@ -15,8 +15,8 @@ const chalk = require('chalk')
 // TODO umd
 // TODO 打印每个阶段的控制台信息
 // TODO css scope，css module
-// 组件内部依赖
-// TODO babel transform runtime
+// 组件内部依赖，第三方依赖
+// TODO babel transform runtime，转 es5
 // 抽取公共函数 getExt getComponentName
 // spinner
 
@@ -24,7 +24,7 @@ const chalk = require('chalk')
 // 1. 清空目录
 // 2. 复制公共目录（style，js）
 // 3. 复制组件样式（这一步在第4步前是因为要 vue 的 style block 要和主样式文件合在一起）
-// 4. 编译组件主文件（vue，jsx，tsx）,style block 会追加在 index.scss 后面
+// 4. 编译组件主文件（vue，jsx，tsx）,style block 会追加在 index.scss 后面 ,生成依赖地图
 // 5. 生成 css module 文件
 // 6. 编译组件样式
 // 7. 生成主入口文件，生成入口样式文件，编译入口样式文件

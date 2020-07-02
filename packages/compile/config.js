@@ -3,25 +3,28 @@ const path = require('path')
 const { sync: glob } = require('glob')
 const components = require('../../components.config')
 
-const root = path.resolve(__dirname, '../../')
+const JS_EXT = ['js', 'ts', 'vue', 'jsx', 'tsx']
+const CSS_EXT = ['scss', 'less', 'styl']
+
+const ROOT = path.resolve(__dirname, '../../')
 // component entries
 const entries = components.reduce((sum, cur) => {
   return sum.concat(cur.components.map(component => {
-    return `${root}/src/${component.path}/index.{js,vue,jsx,tsx}`
+    return `${ROOT}/src/${component.path}/index.{${JS_EXT.join(',')}}`
   }))
 }, []).map(entry => glob(entry)[0]).filter(entry => entry)
 
 // component style entries
 const styleEntries = components.reduce((sum, cur) => {
   return sum.concat(cur.components.map(component => {
-    return `${root}/src/${component.path}/index.{scss,less,styl,css}`
+    return `${ROOT}/src/${component.path}/index.{${CSS_EXT.join(',')},css}`
   }))
 }, []).map(entry => glob(entry)[0]).filter(entry => entry)
-// const entry = `${root}/src/components/*/index.{js,vue,jsx,tsx}`
-const outputDir = `${root}/fs-lib`
-const srcDir = `${root}/src`
-const utils = `${root}/src/utils/**/*.{js,ts}`
-const baseStyleFile = `${root}/src/common/base.scss`
+// const entry = `${ROOT}/src/components/*/index.{js,vue,jsx,tsx}`
+const outputDir = `${ROOT}/fs-lib`
+const srcDir = `${ROOT}/src`
+const utils = `${ROOT}/src/utils/**/*.{js,ts}`
+const baseStyleFile = `${ROOT}/src/common/base.scss`
 
 // 公共css的文件夹
 const baseStyleDir = path.dirname(baseStyleFile)
@@ -40,5 +43,7 @@ module.exports = {
   utils,
   baseStyleFile,
   baseStyleDir,
-  getOutputStyleDir
+  getOutputStyleDir,
+  JS_EXT,
+  CSS_EXT
 }
