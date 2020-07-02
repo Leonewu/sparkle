@@ -1,8 +1,5 @@
 
-const sass = require('sass')
-const postcss = require('postcss')
-const autoprefixer = require('autoprefixer')
-const postcssNormalize = require('postcss-normalize')
+const compileSass = require('./sass-compiler')
 const fs = require('fs-extra')
 const { outputDir, srcDir, getOutputStyleDir } = require('./config')
 const path = require('path')
@@ -26,14 +23,12 @@ function injectStyle(file) {
   return source
 }
 
-function compileStyle(filePath) {
+function compileStyle() {
   // 编译组件样式
   const stylePath = getOutputStyleDir()
   stylePath.forEach(filePath => {
     const compiledPath = filePath.replace(srcDir, outputDir).replace(/(\.scss|\.less|\.styl)/, '.css')
-    const css = sass.renderSync({ file: filePath }).css
-    const processor = postcss([autoprefixer, postcssNormalize])
-    processor.process(css).then(res => {
+    compileSass(filePath).then(res => {
       fs.outputFileSync(compiledPath, res)
     })
   })

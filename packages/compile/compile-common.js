@@ -1,11 +1,14 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { outputDir, baseStyleDir } = require('./config')
+const { srcDir, outputDir, baseStyleDir, baseStyleFile } = require('./config')
+const compileSass = require('./sass-compiler')
+const compileStyle = require('./compile-style')
+
 
 function compileCommon() {
   // 复制 utils
   copyCommonStyle()
-  // generateStyleEntry()
+  compileCommonStyle()
 }
 
 function copyCommonStyle() {
@@ -21,7 +24,13 @@ function compileCommonjs() {
 
 
 function compileCommonStyle() {
-
+  const baseStyle = baseStyleFile.replace(srcDir, outputDir)
+  const lang = path.extname(baseStyle).substr(1)
+  if (lang === 'scss') {
+    compileSass(baseStyle).then(res => {
+      fs.outputFileSync(baseStyle.replace(lang, 'css'), res)
+    })
+  }
 }
 
 module.exports = compileCommon

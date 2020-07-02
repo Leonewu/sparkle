@@ -14,7 +14,7 @@ function generateCssModule() {
       const file = path.basename(filePath)
       const lang = path.extname(filePath).substr(1)
       const cssModuleDir = filePath.replace(file, 'style')
-      const srcCode = `\nrequire("../..${relativeBaseFile}")\nrequire("../${file}")`
+      const srcCode = `require("../..${relativeBaseFile}")\nrequire("../${file}")`
       const cssCode = srcCode.replace(/(\.scss|\.less|\.styl)/g, '.css')
       fs.outputFileSync(`${cssModuleDir}/css.js`, cssCode)
       fs.outputFileSync(`${cssModuleDir}/${lang}.js`, srcCode)
