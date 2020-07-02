@@ -14,7 +14,7 @@ function updateImport(filePath, source) {
     source = fs.readFileSync(filePath)
   }
   const imports = source.match(IMPORT_REG)
-  imports.forEach(code => {
+  imports && imports.forEach(code => {
     const absolutePath = getImportPath(filePath, code)
     if (absolutePath) {
       depsMap[filePath].push(absolutePath)

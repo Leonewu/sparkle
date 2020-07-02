@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const { srcDir, getOutputStyleDir, baseStyleFile } = require('../config')
 const path = require('path')
-const { getDeps } = require('./deps')
+const { getDeps } = require('../deps')
 
 
 function generateCssModule() {

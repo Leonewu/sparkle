@@ -7,6 +7,9 @@
 
 <script>
 // import './select.scss'
+/*
+  asdasd
+*/
 import XiaoButton from '../button/index.vue'
 export default {
   name: 'XiaoSelect',

@@ -15,14 +15,7 @@ var render = function render() {
 };
 
 var staticRenderFns = [];
-render._withStripped = true; //
-//
-//
-//
-//
-//
-// import './button.scss'
-
+render._withStripped = true;
 export default {
   render,
   staticRenderFns,

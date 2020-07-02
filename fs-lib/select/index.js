@@ -11,15 +11,7 @@ var render = function render() {
 };
 
 var staticRenderFns = [];
-render._withStripped = true; //
-//
-//
-//
-//
-//
-//
-// import './select.scss'
-
+render._withStripped = true;
 import XiaoButton from '../button/index.js';
 export default {
   render,

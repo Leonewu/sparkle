@@ -92,6 +92,7 @@ function compileVue(filePath) {
       } else {
         script = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,')
       }
+      script = removeComment(script)
       script = updateImport(filePath, script)
     }
     // 将 template 和 script 的内容拼在一起
@@ -106,6 +107,10 @@ function compileVue(filePath) {
     console.log(getDeps(filePath))
     resolve(filePath)
   })
+}
+
+function removeComment(str) {
+  return str.replace(/\/\*[\s\S]*?\*\/|(?<!:)\/\/.*/g, '')
 }
 
 module.exports = compileVue
