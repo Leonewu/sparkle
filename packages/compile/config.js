@@ -21,7 +21,7 @@ const styleEntries = components.reduce((sum, cur) => {
   }))
 }, []).map(entry => glob(entry)[0]).filter(entry => entry)
 // const entry = `${ROOT}/src/components/*/index.{js,vue,jsx,tsx}`
-const outputDir = `${ROOT}/fs-lib`
+const outputDir = `${ROOT}/fs-lib-2`
 const srcDir = `${ROOT}/src`
 const utils = `${ROOT}/src/utils/**/*.{js,ts}`
 const baseStyleFile = `${ROOT}/src/common/base.scss`

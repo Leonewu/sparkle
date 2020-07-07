@@ -7,7 +7,7 @@ const compileStyle = require('./compile-style')
 
 function compileCommon() {
   // 复制 utils
-  copyCommonStyle()
+  // copyCommonStyle()
   compileCommonStyle()
 }
 
