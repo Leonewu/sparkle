@@ -7,6 +7,7 @@ const { compileStyle } = require('./compile-style')
 const { getExt } = require('./utils')
 const { entries, outputDir, styleEntries, srcDir } = require('./config')
 const chalk = require('chalk')
+const { compile } = require('vue/types/umd')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -29,21 +30,38 @@ const chalk = require('chalk')
 // 6. 编译组件样式
 // 7. 生成主入口文件，生成入口样式文件，编译入口样式文件
 fs.emptyDirSync(outputDir)
+fs.copySync(srcDir, outputDir)
+// complileCommon()
 
-complileCommon()
+function compileDir(dir) {
+  const results = fs.readdirSync(outputDir)
+  const dirs = []
+  const files = []
+  results.forEach(res => {
+    if (fs.lstatSync(res).isDirectory()) {
+      dirs.push(res)
+    } else {
+      files.push(res)
+    }
+  })
+  dirs.map(compileDir)
+  const vueFile = files.find(file => file.test(/\.vue/))
+  const scriptFile = files.find(file => file.test(/\.(js|ts|jsx|tsx)/))
+  const styleFile = files.find(file => file.test(/\.(scss|less|styl|css)/))
+}
 
-styleEntries.forEach(filePath => {
-  const outputPath = filePath.replace(srcDir, outputDir)
-  fs.copySync(filePath, outputPath)
-})
+// styleEntries.forEach(filePath => {
+//   const outputPath = filePath.replace(srcDir, outputDir)
+//   fs.copySync(filePath, outputPath)
+// })
 
-entries.forEach(filePath => {
-  if (getExt(filePath) === 'vue') {
-    compileVue(filePath).then((output) => {
-      console.log(chalk.greenBright(`${filePath}编译成功: ${output}`))
-    })
-  }
-})
+// entries.forEach(filePath => {
+//   if (getExt(filePath) === 'vue') {
+//     compileVue(filePath).then((output) => {
+//       console.log(chalk.greenBright(`${filePath}编译成功: ${output}`))
+//     })
+//   }
+// })
 
 
 
