@@ -1,13 +1,15 @@
 const fs = require('fs-extra')
 const compileVue = require('./compile-vue')
-const complileCommon = require('./compile-common')
-const { generateStyleEntry } = require('./genCode/generate-entry')
+const compileJs = require('./compile-script')
+const generateStyleEntry = require('./genCode/generate-entry')
 const { generateCssModule } = require('./genCode/generate-css-module')
 const { compileStyle } = require('./compile-style')
 const { getExt } = require('./utils')
 const { entries, outputDir, styleEntries, srcDir } = require('./config')
 const chalk = require('chalk')
-const { compile } = require('vue/types/umd')
+const path = require('path')
+const { sync: glob } = require('glob')
+const { getDeps } = require('./deps')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -21,6 +23,16 @@ const { compile } = require('vue/types/umd')
 // 抽取公共函数 getExt getComponentName
 // spinner
 
+function isTestPath(filePath) {
+  return /__test__/.test(filePath)
+}
+function isDemoPath(filePath) {
+  return /demo/.test(filePath)
+}
+function isDocPath(filePath) {
+  return /README\.md/.test(filePath)
+}
+
 // 顺序
 // 1. 清空目录
 // 2. 复制公共目录（style，js）
@@ -31,40 +43,41 @@ const { compile } = require('vue/types/umd')
 // 7. 生成主入口文件，生成入口样式文件，编译入口样式文件
 fs.emptyDirSync(outputDir)
 fs.copySync(srcDir, outputDir)
-// complileCommon()
 
 function compileDir(dir) {
-  const results = fs.readdirSync(outputDir)
+  const results = fs.readdirSync(dir)
   const dirs = []
   const files = []
   results.forEach(res => {
-    if (fs.lstatSync(res).isDirectory()) {
-      dirs.push(res)
+    const filePath = path.join(dir, res)
+    if (isDemoPath(filePath) || isTestPath(filePath) || isDocPath(filePath)) {
+      fs.removeSync(filePath)
+      return
+    }
+    if (fs.lstatSync(filePath).isDirectory()) {
+      dirs.push(filePath)
     } else {
-      files.push(res)
+      files.push(filePath)
     }
   })
   dirs.map(compileDir)
-  const vueFile = files.find(file => file.test(/\.vue/))
-  const scriptFile = files.find(file => file.test(/\.(js|ts|jsx|tsx)/))
-  const styleFile = files.find(file => file.test(/\.(scss|less|styl|css)/))
+  const vueFile = files.find(file => /\.vue/.test(file))
+  const scriptFiles = files.filter(file => /\.(js|ts|jsx|tsx)/.test(file))
+  // 先编译 vue 和 jsx/tsx
+  if (vueFile) {
+    compileVue(vueFile).then(() => {
+      fs.remove(vueFile)
+    })
+  }
+  if (scriptFiles) {
+    scriptFiles.map(compileJs)
+  }
 }
 
-// styleEntries.forEach(filePath => {
-//   const outputPath = filePath.replace(srcDir, outputDir)
-//   fs.copySync(filePath, outputPath)
-// })
-
-// entries.forEach(filePath => {
-//   if (getExt(filePath) === 'vue') {
-//     compileVue(filePath).then((output) => {
-//       console.log(chalk.greenBright(`${filePath}编译成功: ${output}`))
-//     })
-//   }
-// })
-
-
-
-generateStyleEntry()
+compileDir(outputDir)
 generateCssModule()
 compileStyle()
+generateStyleEntry()
+setTimeout(() => {
+  console.log(getDeps())
+}, 1000);

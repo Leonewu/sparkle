@@ -7,6 +7,10 @@ const JS_EXT = ['js', 'ts', 'vue', 'jsx', 'tsx']
 const CSS_EXT = ['scss', 'less', 'styl']
 
 const ROOT = path.resolve(__dirname, '../../')
+
+const COMPONENTS = components.reduce((sum, cur) => {
+  return sum.concat(cur.components.map(component => component.path))
+}, [])
 // component entries
 const entries = components.reduce((sum, cur) => {
   return sum.concat(cur.components.map(component => {
@@ -24,16 +28,15 @@ const styleEntries = components.reduce((sum, cur) => {
 const outputDir = `${ROOT}/fs-lib-2`
 const srcDir = `${ROOT}/src`
 const utils = `${ROOT}/src/utils/**/*.{js,ts}`
-const baseStyleFile = `${ROOT}/src/common/base.scss`
+const baseStyleFile = `common/base.scss`
 
-// 公共css的文件夹
-const baseStyleDir = path.dirname(baseStyleFile)
 
 function getOutputStyleDir() {
   // 获取输出目录下的样式源文件
   const stylePath = styleEntries.map(entry => entry.replace(srcDir, outputDir))
   return stylePath.map(entry => glob(entry)[0]).filter(entry => entry)
 }
+
 
 module.exports = {
   entries,
@@ -42,8 +45,8 @@ module.exports = {
   srcDir,
   utils,
   baseStyleFile,
-  baseStyleDir,
   getOutputStyleDir,
   JS_EXT,
-  CSS_EXT
+  CSS_EXT,
+  COMPONENTS
 }
