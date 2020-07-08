@@ -42,19 +42,21 @@ function compileVue(filePath) {
         }
         content = `\n/* sfc-style-block-${index} */\n` + content.replace(/\n/g, '').trim()
         if (style.lang !== 'css') {
-          const mainStyleFile = filePath.replace('.vue', `.${style.lang}`).replace(srcDir, outputDir)
-          if (fs.existsSync(mainStyleFile)) {
-            fs.appendFileSync(mainStyleFile, content)
+          const styleFile = filePath.replace('.vue', `.${style.lang}`)
+          if (fs.existsSync(styleFile)) {
+            // 如果有scss|less|styl文件，就写到文件最后面
+            fs.appendFileSync(styleFile, content)
           } else {
-            fs.outputFileSync(mainStyleFile, content)
+            // 没有就创建
+            fs.outputFileSync(styleFile, content)
           }
         } else {
-          const globStr = filePath.replace('.vue', `.{scss,less,styl,css}`).replace(srcDir, outputDir)
+          const globStr = filePath.replace('.vue', `.{scss,less,styl,css}`)
           const result = glob(globStr)
           if (result[0]) {
             fs.appendFileSync(result[0], content)
           } else {
-            const cssFile =  filePath.replace('.vue', '.css').replace(srcDir, outputDir)
+            const cssFile = filePath.replace('.vue', '.css')
             fs.outputFileSync(cssFile, content)
           }
         }
@@ -97,14 +99,13 @@ function compileVue(filePath) {
     }
     // 将 template 和 script 的内容拼在一起
     const content = `${template}\n${script}`
-    const outputFilePath = filePath.replace(srcDir, outputDir).replace('vue', 'js')
-    const result = babel.transformSync(content, { filename: outputFilePath }).code
+    const outputFile = filePath.replace('vue', 'js')
+    const result = babel.transformSync(content, { filename: filePath }).code
     // 到这里为止，打出来的是没有 uglify 的 esModule
     // 这一部开始，可以继续编译出来 umd
     // TODO uglify umd 去掉注释
     // console.log(content)
-    fs.outputFileSync(outputFilePath, result)
-    console.log(getDeps(filePath))
+    fs.outputFileSync(outputFile, result)
     resolve(filePath)
   })
 }

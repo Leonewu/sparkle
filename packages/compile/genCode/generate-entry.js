@@ -1,34 +1,52 @@
-const { styleEntries, componentDir, outputDir, srcDir } = require('../config')
+const { COMPONENTS, outputDir, baseStyleFile } = require('../config')
 const fs = require('fs-extra')
-const sass = require('sass')
-const postcss = require('postcss')
-const autoprefixer = require('autoprefixer')
-const postcssNormalize = require('postcss-normalize')
+const compileSass = require('../sass-compiler')
+const index = require('postcss-normalize')
 
-
+// TODO 依赖引入
 function generateStyleEntry() {
   return new Promise((resolve, reject) => {
-    const entry = '@import "./common/base.scss";'
-    const code = styleEntries.reduce((sum, cur) => {
-      const componentName = cur.match(new RegExp(`${srcDir}/([^/]+)/`))
-      if (!componentName || !componentName[1]) {
-        throw new Error('编译scss入口出错，componentName')
-      }
-      sum += `\n@import "./${componentName[1]}/index.scss";`
+    const sass = COMPONENTS.reduce((sum, cur) => {
+      sum += `\n@import "./${cur}/index.scss";`
       return sum
-    }, entry)
-    const scssPath = `${outputDir}/index.scss`
-    const cssPath = scssPath.replace(/scss/g, 'css')
-    fs.outputFileSync(scssPath, code)
-    const css = sass.renderSync({ file: scssPath }).css
-    const processor = postcss([autoprefixer, postcssNormalize])
-    processor.process(css).then(res => {
-      fs.outputFileSync(cssPath, res)
+    }, `@import "./${baseStyleFile}";`)
+    const sassPath = `${outputDir}/index.scss`
+    const cssPath = sassPath.replace(/scss/g, 'css')
+    fs.outputFileSync(sassPath, sass)
+    compileSass(sassPath).then(res => {
+      fs.outputFileSync(cssPath, res.content)
     })
     resolve()
   })
 }
 
-module.exports = {
-  generateStyleEntry
+function generateScriptEntry() {
+  let code = COMPONENTS.reduce((sum, cur) => {
+      sum += `\nimport ${cur} from "./${cur}/index.js";`
+      return sum
+    }, '')
+    code += `
+const components = [${COMPONENTS.join(', ')}];
+function install(Vue) {
+  components.forEach(component => {
+    if (component.install) {
+      component.install(Vue);
+    } else {
+      Vue.component(component.name, component);
+    }
+  })
 }
+// if (Vue) {
+//   install(Vue)
+// }
+export default {
+  install
+}`
+    fs.outputFileSync(`${outputDir}/index.js`, code)
+}
+
+function generateEntry() {
+  generateStyleEntry()
+  generateScriptEntry()
+}
+module.exports = generateEntry

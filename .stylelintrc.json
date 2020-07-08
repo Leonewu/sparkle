@@ -18,6 +18,7 @@
     "./site/**/*.vue",
     "./lib/**/*.css",
     "./gulp-lib/**/*.css",
-    "./fs-lib/**/*.{scss,css}"
+    "./fs-lib/**/*.{scss,css}",
+    "./fs-lib-2/**/*.{scss,css}"
   ]
 }

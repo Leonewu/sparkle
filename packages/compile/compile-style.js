@@ -3,6 +3,7 @@ const compileSass = require('./sass-compiler')
 const fs = require('fs-extra')
 const { outputDir, srcDir, getOutputStyleDir } = require('./config')
 const path = require('path')
+const { sync: glob } = require('glob')
 /**
  * inject style and compile style
  * 影响文件： 组件 index.js
@@ -24,12 +25,14 @@ function injectStyle(file) {
 }
 
 function compileStyle() {
-  // 编译组件样式
-  const stylePath = getOutputStyleDir()
-  stylePath.forEach(filePath => {
-    const compiledPath = filePath.replace(srcDir, outputDir).replace(/(\.scss|\.less|\.styl)/, '.css')
+  // 编译所有样式文件
+  const styles = glob(`${outputDir}/**/*.{scss,less,styl,css}`)
+  styles.forEach(filePath => {
+    const compiledPath = filePath.replace(/(\.scss|\.less|\.styl)/, '.css')
     compileSass(filePath).then(res => {
-      fs.outputFileSync(compiledPath, res)
+      if (res.content) {
+        fs.outputFileSync(compiledPath, res.content)
+      }
     })
   })
 }
