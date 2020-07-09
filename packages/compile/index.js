@@ -9,7 +9,7 @@ const { entries, outputDir, styleEntries, srcDir } = require('./config')
 const chalk = require('chalk')
 const path = require('path')
 const { sync: glob } = require('glob')
-const { getDeps } = require('./deps')
+const { getDeps, initDeps } = require('./deps')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -73,7 +73,7 @@ function compileDir(dir) {
     scriptFiles.map(compileJs)
   }
 }
-
+initDeps()
 compileDir(outputDir)
 generateCssModule()
 compileStyle()

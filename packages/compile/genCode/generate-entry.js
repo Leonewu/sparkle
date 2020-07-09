@@ -1,7 +1,6 @@
 const { COMPONENTS, outputDir, baseStyleFile } = require('../config')
 const fs = require('fs-extra')
 const compileSass = require('../sass-compiler')
-const index = require('postcss-normalize')
 
 // TODO 依赖引入
 function generateStyleEntry() {

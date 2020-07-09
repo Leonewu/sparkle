@@ -2,6 +2,7 @@
 const path = require('path')
 const { sync: glob } = require('glob')
 const components = require('../../components.config')
+const fs = require('fs-extra')
 
 const JS_EXT = ['js', 'ts', 'vue', 'jsx', 'tsx']
 const CSS_EXT = ['scss', 'less', 'styl']
@@ -24,7 +25,6 @@ const styleEntries = components.reduce((sum, cur) => {
     return `${ROOT}/src/${component.path}/index.{${CSS_EXT.join(',')},css}`
   }))
 }, []).map(entry => glob(entry)[0]).filter(entry => entry)
-// const entry = `${ROOT}/src/components/*/index.{js,vue,jsx,tsx}`
 const outputDir = `${ROOT}/fs-lib-2`
 const srcDir = `${ROOT}/src`
 const utils = `${ROOT}/src/utils/**/*.{js,ts}`
@@ -36,6 +36,7 @@ function getOutputStyleDir() {
   const stylePath = styleEntries.map(entry => entry.replace(srcDir, outputDir))
   return stylePath.map(entry => glob(entry)[0]).filter(entry => entry)
 }
+
 
 
 module.exports = {
