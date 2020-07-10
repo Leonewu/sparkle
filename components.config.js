@@ -9,6 +9,10 @@ module.exports = [
       {
         path: 'select',
         title: 'Select 选择'
+      },
+      {
+        path: 'card',
+        title: 'card 卡片'
       }
     ]
   },

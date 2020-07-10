@@ -2,6 +2,7 @@
   <div class="select-wrapper">
     select component
     <XiaoButton />
+    <picker />
   </div>
 </template>
 
@@ -11,9 +12,10 @@
   asdasd
 */
 import XiaoButton from '../button/index.vue'
+import picker from './picker'
 export default {
   name: 'XiaoSelect',
-  components: { XiaoButton },
+  components: { XiaoButton, picker },
   data() {
     return {
 

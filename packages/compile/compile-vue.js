@@ -24,7 +24,7 @@ function compileVue(filePath) {
       descriptor.styles.forEach((style, index) => {
         // 添加到 index.(scss|less|styl) 中
         // 都没有的话创建 css 文件
-        let content = ''
+        let content = style.content.replace(/\n/g, '').trim()
         if (style.scoped && !scopeId) {
           scopeId = hash(filePath + '\n' + source)
           const { code, map, errors } = VueCompileUtils.compileStyle({
@@ -40,15 +40,15 @@ function compileVue(filePath) {
             content = code
           }
         }
-        content = `\n/* sfc-style-block-${index} */\n` + content.replace(/\n/g, '').trim()
-        if (style.lang !== 'css') {
+        content = content ? `\n/* sfc-style-block-${index} */\n${content}` : ''
+        if (style.lang && style.lang !== 'css') {
           const styleFile = filePath.replace('.vue', `.${style.lang}`)
           if (fs.existsSync(styleFile)) {
             // 如果有scss|less|styl文件，就写到文件最后面
             fs.appendFileSync(styleFile, content)
           } else {
             // 没有就创建
-            fs.outputFileSync(styleFile, content)
+            content && fs.outputFileSync(styleFile, content)
           }
         } else {
           const globStr = filePath.replace('.vue', `.{scss,less,styl,css}`)
@@ -57,7 +57,7 @@ function compileVue(filePath) {
             fs.appendFileSync(result[0], content)
           } else {
             const cssFile = filePath.replace('.vue', '.css')
-            fs.outputFileSync(cssFile, content)
+            content && fs.outputFileSync(cssFile, content)
           }
         }
       })
