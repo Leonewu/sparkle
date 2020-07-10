@@ -7,18 +7,20 @@ var render = function render() {
 
   return _c('div', {
     staticClass: "select-wrapper"
-  }, [_vm._v(" select component "), _c('XiaoButton')], 1);
+  }, [_vm._v(" select component "), _c('XiaoButton'), _c('picker')], 1);
 };
 
 var staticRenderFns = [];
 render._withStripped = true;
 import XiaoButton from '../button/index.js';
+import picker from './picker';
 export default {
   render,
   staticRenderFns,
   name: 'XiaoSelect',
   components: {
-    XiaoButton
+    XiaoButton,
+    picker
   },
 
   data() {

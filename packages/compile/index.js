@@ -10,6 +10,7 @@ const chalk = require('chalk')
 const path = require('path')
 const { sync: glob } = require('glob')
 const { getDeps, initDeps } = require('./deps')
+const { isIgnorePath } = require('./utils/')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -23,15 +24,6 @@ const { getDeps, initDeps } = require('./deps')
 // 抽取公共函数 getExt getComponentName
 // spinner
 
-function isTestPath(filePath) {
-  return /__test__/.test(filePath)
-}
-function isDemoPath(filePath) {
-  return /demo/.test(filePath)
-}
-function isDocPath(filePath) {
-  return /README\.md/.test(filePath)
-}
 
 // 顺序
 // 1. 清空目录
@@ -50,7 +42,7 @@ function compileDir(dir) {
   const files = []
   results.forEach(res => {
     const filePath = path.join(dir, res)
-    if (isDemoPath(filePath) || isTestPath(filePath) || isDocPath(filePath)) {
+    if (isIgnorePath(filePath)) {
       fs.removeSync(filePath)
       return
     }
@@ -61,17 +53,15 @@ function compileDir(dir) {
     }
   })
   dirs.map(compileDir)
-  const vueFile = files.find(file => /\.vue/.test(file))
+  const vueFiles = files.filter(file => /\.vue/.test(file))
   const scriptFiles = files.filter(file => /\.(js|ts|jsx|tsx)/.test(file))
   // 先编译 vue 和 jsx/tsx
-  if (vueFile) {
-    compileVue(vueFile).then(() => {
-      fs.remove(vueFile)
-    })
-  }
-  if (scriptFiles) {
-    scriptFiles.map(compileJs)
-  }
+  vueFiles.forEach(file => {
+    compileVue(file).then(
+      fs.remove(file)
+    )
+  })
+  scriptFiles.forEach(compileJs)
 }
 initDeps()
 compileDir(outputDir)

@@ -1,32 +1,64 @@
 const fs = require('fs-extra')
-const { getOutputStyleDir, baseStyleFile } = require('../config')
+const { baseStyleFile, COMPONENTS, outputDir } = require('../config')
 const path = require('path')
-const { getDeps } = require('../deps')
-
+const { getDeps, updateDeps } = require('../deps')
 
 function generateCssModule() {
-  // 生成 css 依赖文件，如
+  // 生成样式依赖文件
   // button/style/css.js
-  // button/style/scss.js
+  // button/style/sass.js
   return new Promise((resolve, reject) => {
-    const outputStyleDir = getOutputStyleDir()
-    const relativeBaseFile = `../../${baseStyleFile}`
-    outputStyleDir.forEach(filePath => {
-      const file = path.basename(filePath)
-      const lang = path.extname(filePath).substr(1)
-      const cssModuleDir = filePath.replace(file, 'style')
-      const srcCode = `require("${relativeBaseFile}")\nrequire("../${file}")`
-      const cssCode = srcCode.replace(/(\.scss|\.less|\.styl)/g, '.css')
-      fs.outputFileSync(`${cssModuleDir}/css.js`, cssCode)
-      fs.outputFileSync(`${cssModuleDir}/${lang}.js`, srcCode)
+    COMPONENTS.forEach(component => {
+      let sassImports = `require("../../${baseStyleFile}")`
+      const deps = getDeps(component)
+      console.log(component)
+      console.log(deps)
+      const styleFile = getPreStyle(`${outputDir}/${component}/`)
+      if (styleFile.path) {
+        sassImports += `\nrequire("../${styleFile.ext}")`
+      }
+      deps.forEach(dep => {
+        const preStyleFile = getPreStyle(path.join(outputDir, component, dep.path))
+        if (preStyleFile.path) {
+          const relativePath = path.join('..', `${dep.path}${preStyleFile.ext}`)
+          sassImports += `\nrequire("${relativePath}")`
+        }
+      })
+      const cssImports = sassImports.replace(/(\.scss|\.less|\.styl)/g, '.css')
+      const styleModuleDir = `${outputDir}/${component}/style`
+      fs.outputFileSync(`${styleModuleDir}/sass.js`, sassImports)
+      fs.outputFileSync(`${styleModuleDir}/css.js`, cssImports)
     })
     resolve()
   })
 }
 
-function getDepStyles() {
-  
+function getPreStyle(filePath) {
+  // 根据 filePath 检查是否存在预处理样式文件
+  // 并且更新 deps
+  const file = {}
+  if (filePath.substr(-1) === '/') {
+    // 目录
+    if (fs.existsSync(`${filePath}index.scss`)) {
+      file.path = `${filePath}index.scss`,
+      file.ext = 'index.scss'
+    } else if (fs.existsSync(`${filePath}index.css`)) {
+      file.path = `${filePath}index.css`,
+      file.ext = 'index.css'
+    }
+  } else {
+    // 文件
+    if (fs.existsSync(`${filePath}.scss`)) {
+      file.path = `${filePath}.scss`,
+      file.ext = '.scss'
+    } else if (fs.existsSync(`${filePath}.css`)) {
+      file.path = `${filePath}.css`,
+      file.ext = '.css'
+    }
+  }
+  return file
 }
+
 
 module.exports = {
   generateCssModule

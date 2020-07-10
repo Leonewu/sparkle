@@ -1,7 +1,8 @@
 
 import button from "./button/index.js";
 import select from "./select/index.js";
-const components = [button, select];
+import card from "./card/index.js";
+const components = [button, select, card];
 function install(Vue) {
   components.forEach(component => {
     if (component.install) {
