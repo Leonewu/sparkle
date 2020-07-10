@@ -1,2 +1,2 @@
 require("../../common/base.css")
-require("../card/index.css")
+require("../index.css")

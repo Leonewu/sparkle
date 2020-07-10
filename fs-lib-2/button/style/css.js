@@ -1,2 +1,2 @@
 require("../../common/base.css")
-require("../button/index.css")
+require("../index.css")

@@ -1,2 +1,2 @@
 require("../../common/base.scss")
-require("../card/index.scss")
+require("../index.scss")
