@@ -8,7 +8,7 @@ const { srcDir, outputDir } = require('./config')
 const { sync: glob } = require('glob')
 const hash = require('hash-sum')
 const { updateImport, getDeps } = require('./deps')
-
+const { isExist } = require('./utils/cache')
 
 function compileVue(filePath) {
   const source = fs.readFileSync(filePath, 'utf8')
@@ -43,7 +43,7 @@ function compileVue(filePath) {
         content = content ? `\n/* sfc-style-block-${index} */\n${content}` : ''
         if (style.lang && style.lang !== 'css') {
           const styleFile = filePath.replace('.vue', `.${style.lang}`)
-          if (fs.existsSync(styleFile)) {
+          if (isExist(styleFile)) {
             // 如果有scss|less|styl文件，就写到文件最后面
             fs.appendFileSync(styleFile, content)
           } else {

@@ -1,5 +1,5 @@
 require("../../common/base.scss")
-require("../select/index.scss")
+require("../index.scss")
 require("../../button/index.scss")
 require("../components/test.css")
 require("../components/components2/test2.css")

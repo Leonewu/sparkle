@@ -1,7 +1,8 @@
 const fs = require('fs-extra')
 const { baseStyleFile, COMPONENTS, outputDir } = require('../config')
 const path = require('path')
-const { getDeps, updateDeps } = require('../deps')
+const { getDeps } = require('../deps')
+const { isExist } = require('../utils/cache')
 
 function generateCssModule() {
   // 生成样式依赖文件
@@ -39,19 +40,19 @@ function getPreStyle(filePath) {
   const file = {}
   if (filePath.substr(-1) === '/') {
     // 目录
-    if (fs.existsSync(`${filePath}index.scss`)) {
+    if (isExist(`${filePath}index.scss`)) {
       file.path = `${filePath}index.scss`,
       file.ext = 'index.scss'
-    } else if (fs.existsSync(`${filePath}index.css`)) {
+    } else if (isExist(`${filePath}index.css`)) {
       file.path = `${filePath}index.css`,
       file.ext = 'index.css'
     }
   } else {
     // 文件
-    if (fs.existsSync(`${filePath}.scss`)) {
+    if (isExist(`${filePath}.scss`)) {
       file.path = `${filePath}.scss`,
       file.ext = '.scss'
-    } else if (fs.existsSync(`${filePath}.css`)) {
+    } else if (isExist(`${filePath}.css`)) {
       file.path = `${filePath}.css`,
       file.ext = '.css'
     }
