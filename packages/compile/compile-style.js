@@ -3,7 +3,7 @@ const compileSass = require('./sass-compiler')
 const fs = require('fs-extra')
 const { outputDir, STYLE_EXT } = require('./config')
 const path = require('path')
-const { sync: glob } = require('glob')
+const { glob } = require('./utils/glob')
 /**
  * inject style and compile style
  * 影响文件： 组件 index.js

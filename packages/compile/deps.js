@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 const { SCRIPT_EXT, outputDir, STYLE_EXT } = require('./config') 
-const { sync: glob } = require('glob')
+const { glob } = require('./utils/glob')
 const { isIgnorePath  } = require('./utils/')
 const deps = {}
 
