@@ -14,19 +14,16 @@ import XiaoUI from 'xiao-ui'
 Vue.use(XiaoUI)
 ```
 
-- 按需引入，首先安装 babel 插件 `npm install -D babel-plugin-component`，配置 babel
+- 按需引入，首先安装 babel 插件 `npm install -D babel-plugin-import`，配置 babel
 
 ```
 "plugins": [
   [
-    "component",
+    "import",
     {
       "libraryName": "xiao-ui",
-      "styleLibrary": {
-        "name": "style",
-        "base": false,
-        "path": "[module].css"
-       }
+      "libraryDirectory": "lib",
+      "style": "css"
     }
   ]
 ]
@@ -38,6 +35,8 @@ Vue.use(Button)
 // 或者
 // Vue.component(Button.name, Button)
 ```
+
+注意：不能同时使用全局引入和按需引入
 
 ## 开发
 
