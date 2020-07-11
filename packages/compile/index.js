@@ -4,7 +4,7 @@ const compileJs = require('./compile-script')
 const generateEntry = require('./genCode/generate-entry')
 const { generateCssModule } = require('./genCode/generate-css-module')
 const { compileStyle } = require('./compile-style')
-const { outputDir, srcDir } = require('./config')
+const { OUTPUT_DIR, SRC_DIR } = require('./config')
 const chalk = require('chalk')
 const path = require('path')
 const { getDeps, initDeps } = require('./deps')
@@ -31,8 +31,8 @@ const { isIgnorePath } = require('./utils/')
 // 5. 生成 css module 文件
 // 6. 编译组件样式
 // 7. 生成主入口文件，生成入口样式文件，编译入口样式文件
-fs.emptyDirSync(outputDir)
-fs.copySync(srcDir, outputDir)
+fs.emptyDirSync(OUTPUT_DIR)
+fs.copySync(SRC_DIR, OUTPUT_DIR)
 
 function compileDir(dir) {
   const results = fs.readdirSync(dir)
@@ -62,7 +62,7 @@ function compileDir(dir) {
   scriptFiles.forEach(compileJs)
 }
 initDeps()
-compileDir(outputDir)
+compileDir(OUTPUT_DIR)
 generateCssModule()
 compileStyle()
 generateEntry()
