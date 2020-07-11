@@ -1,7 +1,7 @@
 
 const compileSass = require('./sass-compiler')
 const fs = require('fs-extra')
-const { outputDir, srcDir, getOutputStyleDir } = require('./config')
+const { outputDir, STYLE_EXT } = require('./config')
 const path = require('path')
 const { sync: glob } = require('glob')
 /**
@@ -26,9 +26,9 @@ function injectStyle(file) {
 
 function compileStyle() {
   // 编译所有样式文件
-  const styles = glob(`${outputDir}/**/*.{scss,less,styl,css}`)
+  const styles = glob(`${outputDir}/**/*.{${STYLE_EXT.substr(1)}, css}`)
   styles.forEach(filePath => {
-    const compiledPath = filePath.replace(/(\.scss|\.less|\.styl)/, '.css')
+    const compiledPath = filePath.replace(new RegExp(`${STYLE_EXT}`), '.css')
     compileSass(filePath).then(res => {
       if (res.content) {
         fs.outputFileSync(compiledPath, res.content)
