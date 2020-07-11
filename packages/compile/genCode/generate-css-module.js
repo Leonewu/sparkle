@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const { baseStyleFile, COMPONENTS, outputDir } = require('../config')
+const { baseStyleFile, COMPONENTS, outputDir, STYLE_EXT } = require('../config')
 const path = require('path')
 const { getDeps } = require('../deps')
 const { isExist } = require('../utils/cache')
@@ -25,7 +25,7 @@ function generateCssModule() {
           sassImports += `\nrequire("${relativePath}")`
         }
       })
-      const cssImports = sassImports.replace(/(\.scss|\.less|\.styl)/g, '.css')
+      const cssImports = sassImports.replace(new RegExp(`${STYLE_EXT}`, 'g'), '.css')
       const styleModuleDir = `${outputDir}/${component}/style`
       fs.outputFileSync(`${styleModuleDir}/sass.js`, sassImports)
       fs.outputFileSync(`${styleModuleDir}/css.js`, cssImports)

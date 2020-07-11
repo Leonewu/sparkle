@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { JS_EXT, outputDir } = require('./config') 
+const { SCRIPT_EXT, outputDir, STYLE_EXT } = require('./config') 
 const { sync: glob } = require('glob')
 const { isIgnorePath  } = require('./utils/')
 const deps = {}
@@ -44,14 +44,14 @@ function getDepByImport(filePath, importPath) {
   const absolutePath = path.resolve(filePath, '../', importPath)
   if (importPath.substr(-1) === '/') {
     // (../button/) 引入目录，自动找目录下的 index
-    globStr = `${absolutePath}/index.{${JS_EXT.join(',')}}`
+    globStr = `${absolutePath}/index.{${SCRIPT_EXT.join(',')}}`
   } else if (/\/[^.]+$/.test(importPath)) {
     // (../button/index) 引入没后缀的文件，补全后缀
-    globStr = `${absolutePath}.{${JS_EXT.join(',')}}`
+    globStr = `${absolutePath}.{${SCRIPT_EXT.join(',')}}`
   } else {
     // (../button/index.vue) 引入的是有后缀的文件，扩展后缀
     const ext = path.extname(importPath)
-    globStr = absolutePath.replace(ext, `.{${JS_EXT.join(',')}}`)
+    globStr = absolutePath.replace(ext, `.{${SCRIPT_EXT.join(',')}}`)
   }
   const file = glob(globStr)[0]
   if (file) {
@@ -102,7 +102,7 @@ function initDeps() {
       const dirName = getUniqueName(filePath)
       deps[dirName] = []
     } else {
-      const styleFile = filePath.replace(/\.(js|ts|jsx|tsx)/, '.{scss,less,styl,css}')
+      const styleFile = filePath.replace(/\.(js|ts|jsx|tsx)/, `.{${STYLE_EXT.substr(1)},css}`)
       if (glob(styleFile).length) {
         // 存在样式文件
         const dirName = getUniqueName(filePath)

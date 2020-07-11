@@ -4,7 +4,7 @@ const compiler = require('vue-template-compiler')
 const VueCompileUtils = require('@vue/component-compiler-utils')
 const babel = require('@babel/core')
 const { injectStyle } = require('./compile-style')
-const { srcDir, outputDir } = require('./config')
+const { srcDir, outputDir, STYLE_EXT } = require('./config')
 const { sync: glob } = require('glob')
 const hash = require('hash-sum')
 const { updateImport, getDeps } = require('./deps')
@@ -51,7 +51,7 @@ function compileVue(filePath) {
             content && fs.outputFileSync(styleFile, content)
           }
         } else {
-          const globStr = filePath.replace('.vue', `.{scss,less,styl,css}`)
+          const globStr = filePath.replace('.vue', `${STYLE_EXT}`)
           const result = glob(globStr)
           if (result[0]) {
             fs.appendFileSync(result[0], content)
