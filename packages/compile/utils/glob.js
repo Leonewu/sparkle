@@ -1,6 +1,6 @@
 
 const fs = require('fs-extra')
-
+const { updateCache } = require('./cache')
 
 // 低配版 glob
 // {dir1,dir2}/**/*.{scss,less,styl,css}
@@ -12,7 +12,7 @@ const fs = require('fs-extra')
 // 4. 遍历 routes，从入口 entry 开始，将每一层的结果塞进 results 相同层的数组中
 // 5. 遍历过程中，从第二层开始的父路径，都从 results 拿
 // 6. 遍历结束，从结果 results 中拿出最后一层的结果，再根据 {index}.{vue} 之类的条件过滤
-function glob(str) {
+function glob(str, isCache) {
   let files = []
   // 最后的结果是否为目录
   const shouldPickDir = str.substr(-1) === '/'
@@ -51,7 +51,7 @@ function glob(str) {
           res = fs.readdirSync(entry).map(s => `${entry}/${s}`)
         } else {
           res = fs.readdirSync(entry).map(s => `${entry}/${s}`)
-          res = res.filter(p => isDirectory(p))
+          res = res.filter(p => isDirectory(p, isCache))
         }
       } else {
         // 不是第一个 *
@@ -60,7 +60,7 @@ function glob(str) {
           if (index < routes.length - 1 || shouldPickDir) {
             // 不是最后一个
             // 或者是最后一个，并且要筛出目录
-            res = res.concat(sub.filter(p => isDirectory(p)))
+            res = res.concat(sub.filter(p => isDirectory(p, isCache)))
           } else {
             res = res.concat(...sub)
           }
@@ -71,18 +71,18 @@ function glob(str) {
       if (index === 0) {
         if (index === routes.length - 1 && !shouldPickDir) {
           // 刚好第一层就是最后一层，并且不用只筛出目录
-          res = getAllPath(entry, false)
+          res = getAllPath(entry, false, isCache)
         } else {
-          res = getAllPath(entry, true)
+          res = getAllPath(entry, true, isCache)
         }
       } else {
         results[index - 1].forEach(parent => {
           if (index < routes.length - 1 || shouldPickDir) {
             // 不是最后一个，拿出所有目录
             // 或者是最后一个，并且要筛出目录
-            res = res.concat(getAllPath(parent, true))
+            res = res.concat(getAllPath(parent, true, isCache))
           } else {
-            res = res.concat(getAllPath(parent, false))
+            res = res.concat(getAllPath(parent, false, isCache))
           }
         })
       }
@@ -101,7 +101,7 @@ function glob(str) {
           res = fs.readdirSync(entry).filter(s => {
             return includeDirs.includes(s) && !excludeDirs.includes(s)
           }).map(s => `${entry}/${s}`)
-          res = res.filter(p => isDirectory(p))
+          res = res.filter(p => isDirectory(p, isCache))
         }
       } else {
         // 不是第一个 *
@@ -112,7 +112,7 @@ function glob(str) {
           if (index < routes.length - 1 || shouldPickDir) {
             // 不是最后一个
             // 或者是最后一个，并且要筛出目录
-            res = res.concat(sub.filter(p => isDirectory(p)))
+            res = res.concat(sub.filter(p => isDirectory(p, isCache)))
           } else {
             res = res.concat(...sub)
           }
@@ -142,25 +142,41 @@ function glob(str) {
   return files
 }
 
-function getAllPath(filePath, shouldPickDir) {
+function getAllPath(filePath, shouldPickDir, isCache) {
   // 获取路径下的所有文件或者文件夹
   let res = []
   res.push(filePath)
-  if (fs.lstatSync(filePath).isDirectory()) {
+  if (isDirectory(filePath)) {
     const subPath = fs.readdirSync(filePath).map(p => `${filePath}/${p}`)
     subPath.forEach(p => {
-      const sub = getAllPath(p, shouldPickDir)
+      const sub = getAllPath(p, shouldPickDir, isCache)
       res = res.concat(sub)
     })
   }
   if (shouldPickDir) {
-    res = res.filter(p => isDirectory(p))
+    res = res.filter(p => isDirectory(p, isCache))
   }
   return res
 }
 
-function isDirectory(filePath) {
-  return fs.lstatSync(filePath).isDirectory()
+function isDirectory(filePath, isCache) {
+  try {
+    const isDir = fs.lstatSync(filePath).isDirectory()
+    // 不是目录并且没有报错，就是文件
+    if (isCache && !isDir) {
+      updateCache(filePath, { exist: true })
+    }
+    return isDir
+  } catch (e) {
+    if (isCache) {
+      updateCache(filePath, { exist: false })
+    }
+    return false
+  }
+}
+
+function cacheGlob(str) {
+  return glob(str, true)
 }
 
 // console.log(glob('/home/leone/lib/*/'))
@@ -183,5 +199,5 @@ function isDirectory(filePath) {
 
 
 module.exports = {
-  glob
+  glob, cacheGlob
 }

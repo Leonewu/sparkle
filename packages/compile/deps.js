@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 const { SCRIPT_EXT, OUTPUT_DIR, STYLE_EXT } = require('./config') 
-const { glob } = require('./utils/glob')
+const { cacheGlob: glob } = require('./utils/glob')
 const { isIgnorePath  } = require('./utils/')
 const deps = {}
 
@@ -35,7 +35,7 @@ function getDepByImport(filePath, importPath) {
   /** 
    * 根据引入路径生成依赖对象
    * @params '../button/' filpath
-   * @returns { name: 'button', path: 相对于当前的路径 }
+   * @returns { name: 'button', path: 相对于当前的路径, fullePath: src 下的路径 }
    */
   if (!importPath.includes('./')) {
     // 不是相对路径引入，第三方依赖
@@ -58,6 +58,7 @@ function getDepByImport(filePath, importPath) {
     const res = {}
     res.name = getUniqueName(file)
     res.path = getShortPath(importPath)
+    res.fullPath = res.name
     return res
   }
   return null
