@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { SCRIPT_EXT, outputDir, STYLE_EXT } = require('./config') 
+const { SCRIPT_EXT, OUTPUT_DIR, STYLE_EXT } = require('./config') 
 const { glob } = require('./utils/glob')
 const { isIgnorePath  } = require('./utils/')
 const deps = {}
@@ -82,7 +82,7 @@ function getUniqueName(filePath) {
   // lib/button/index.vue => button
   // lib/button/components/index.vue => button/components
   // lib/button/components/icon.vue => button/components/icon
-  const reg = new RegExp(`${outputDir}/([^.]+)`)
+  const reg = new RegExp(`${OUTPUT_DIR}/([^.]+)`)
   let name = filePath.match(reg)[1].replace('/index', '')
   if (name.substr(-1) === '/') {
     name = name.substr(0, name.length - 1)
@@ -93,7 +93,7 @@ function getUniqueName(filePath) {
 
 function initDeps() {
   // 找出所有组件的目录
-  const globStr = `${outputDir}/*/**/*.{js,ts,tsx,jsx,vue}`
+  const globStr = `${OUTPUT_DIR}/*/**/*.{js,ts,tsx,jsx,vue}`
   glob(globStr).forEach(filePath => {
     if (isIgnorePath(filePath)) return
     // 如果是 vue, tsx, jsx 文件

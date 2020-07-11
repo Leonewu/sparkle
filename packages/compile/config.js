@@ -16,18 +16,18 @@ const COMPONENTS = components.reduce((sum, cur) => {
 
 
 
-const outputDir = `${ROOT}/fs-lib-2`
-const srcDir = `${ROOT}/src`
+const OUTPUT_DIR = `${ROOT}/fs-lib-2`
+const SRC_DIR = `${ROOT}/src`
 // 公共的样式文件
-const baseStyleFile = `common/base.scss`
+const BASE_STYLE_FILE = `common/base.scss`
 
 
 
 
 module.exports = {
-  outputDir,
-  srcDir,
-  baseStyleFile,
+  OUTPUT_DIR,
+  SRC_DIR,
+  BASE_STYLE_FILE,
   SCRIPT_EXT,
   STYLE_EXT,
   COMPONENTS

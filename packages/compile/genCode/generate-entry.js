@@ -1,4 +1,4 @@
-const { COMPONENTS, outputDir, baseStyleFile } = require('../config')
+const { COMPONENTS, OUTPUT_DIR, BASE_STYLE_FILE } = require('../config')
 const fs = require('fs-extra')
 const compileSass = require('../sass-compiler')
 
@@ -8,8 +8,8 @@ function generateStyleEntry() {
     const sass = COMPONENTS.reduce((sum, cur) => {
       sum += `\n@import "./${cur}/index.scss";`
       return sum
-    }, `@import "./${baseStyleFile}";`)
-    const sassPath = `${outputDir}/index.scss`
+    }, `@import "./${BASE_STYLE_FILE}";`)
+    const sassPath = `${OUTPUT_DIR}/index.scss`
     const cssPath = sassPath.replace(/scss/g, 'css')
     fs.outputFileSync(sassPath, sass)
     compileSass(sassPath).then(res => {
@@ -41,7 +41,7 @@ function install(Vue) {
 export default {
   install
 }`
-    fs.outputFileSync(`${outputDir}/index.js`, code)
+    fs.outputFileSync(`${OUTPUT_DIR}/index.js`, code)
 }
 
 function generateEntry() {
