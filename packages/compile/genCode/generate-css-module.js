@@ -40,18 +40,18 @@ function getPreStyle(filePath) {
   const file = {}
   if (filePath.substr(-1) === '/') {
     // 目录
-    if (isExist(`${filePath}index.scss`)) {
-      file.path = `${filePath}index.scss`,
-      file.ext = 'index.scss'
+    if (isExist(`${filePath}index${STYLE_EXT}`)) {
+      file.path = `${filePath}index${STYLE_EXT}`,
+      file.ext = `index${STYLE_EXT}`
     } else if (isExist(`${filePath}index.css`)) {
       file.path = `${filePath}index.css`,
       file.ext = 'index.css'
     }
   } else {
     // 文件
-    if (isExist(`${filePath}.scss`)) {
-      file.path = `${filePath}.scss`,
-      file.ext = '.scss'
+    if (isExist(`${filePath}${STYLE_EXT}`)) {
+      file.path = `${filePath}${STYLE_EXT}`,
+      file.ext = `${STYLE_EXT}`
     } else if (isExist(`${filePath}.css`)) {
       file.path = `${filePath}.css`,
       file.ext = '.css'

@@ -1,6 +1,6 @@
 
 const path = require('path')
-const components = require('../../components.config')
+const componentsJson = require('../../components.config')
 
 // 脚本文件后缀
 const SCRIPT_EXT = ['js', 'ts', 'vue', 'jsx', 'tsx']
@@ -10,7 +10,7 @@ const STYLE_EXT = '.scss'
 const ROOT = path.resolve(__dirname, '../../')
 
 // 根据配置项配置的
-const COMPONENTS = components.reduce((sum, cur) => {
+const COMPONENTS = componentsJson.reduce((sum, cur) => {
   return sum.concat(cur.components.map(component => component.path))
 }, [])
 
