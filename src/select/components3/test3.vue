@@ -1,7 +1,7 @@
 <template>
   <div>
     测试嵌套引用
-    <trr />
+    <!-- <trr /> -->
   </div>
 </template>
 
