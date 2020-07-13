@@ -16,10 +16,11 @@ var render = function render() {
 
 var staticRenderFns = [];
 render._withStripped = true;
+import { add } from '../utils/';
 var _default = {
   render,
   staticRenderFns,
-  _scopeId: "data-v-8ae31cfa",
+  _scopeId: "data-v-7725077e",
   name: 'XiaoButton',
 
   data() {
@@ -37,6 +38,7 @@ var _default = {
   methods: {
     c() {
       console.log(12);
+      add();
     },
 
     promise() {
