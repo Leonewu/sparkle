@@ -16,10 +16,10 @@ var render = function render() {
 
 var staticRenderFns = [];
 render._withStripped = true;
-export default {
+var _default = {
   render,
   staticRenderFns,
-  _scopeId: "data-v-3d68478c",
+  _scopeId: "data-v-8ae31cfa",
   name: 'XiaoButton',
 
   data() {
@@ -46,4 +46,13 @@ export default {
     }
 
   }
+};
+
+function install(Vue) {
+  Vue.component(_default.name, _default);
+}
+
+export default {
+  _default,
+  install
 };

@@ -1,5 +1,5 @@
 const { isExist } = require('./cache')
-const { STYLE_EXT } = require('../config')
+const { STYLE_EXT, COMPONENTS, OUTPUT_DIR, SCRIPT_EXT } = require('../config')
 function isTestPath(filePath) {
   return /__test__/.test(filePath)
 }
@@ -45,10 +45,31 @@ function getPreStyle(filePath) {
   return file
 }
 
+function isComponent(filePath) {
+  const paths = COMPONENTS.map(com => new RegExp(`${OUTPUT_DIR}/${com}/index\.(${SCRIPT_EXT.join('|')})`))
+  let flag = false
+  for (reg of paths) {
+    if (reg.test(filePath)) {
+      flag = true
+      break
+    }
+  }
+  return flag
+}
+
+function injectInstall(filePath, content) {
+  if (isComponent(filePath)) {
+    const install = 'function install(Vue) {\n Vue.component(_default.name, _default)\n}'
+    content = content.replace('export default', 'var _default = ')
+    content += `${install}\nexport default {\n_default,\ninstall\n}`
+  }
+  return content
+}
 module.exports = {
   isTestPath,
   isDemoPath,
   isDocPath,
   isIgnorePath,
-  getPreStyle
+  getPreStyle,
+  injectInstall
 }
