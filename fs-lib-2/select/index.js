@@ -14,7 +14,7 @@ var staticRenderFns = [];
 render._withStripped = true;
 import XiaoButton from '../button/index.js';
 import picker from './picker';
-export default {
+var _default = {
   render,
   staticRenderFns,
   name: 'XiaoSelect',
@@ -27,4 +27,13 @@ export default {
     return {};
   }
 
+};
+
+function install(Vue) {
+  Vue.component(_default.name, _default);
+}
+
+export default {
+  _default,
+  install
 };

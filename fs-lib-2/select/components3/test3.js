@@ -5,7 +5,7 @@ var render = function render() {
 
   var _c = _vm._self._c || _h;
 
-  return _c('div', [_vm._v(" 测试嵌套引用 "), _c('trr')], 1);
+  return _c('div', [_vm._v(" 测试嵌套引用 ")]);
 };
 
 var staticRenderFns = [];

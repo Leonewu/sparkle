@@ -8,6 +8,7 @@ const { SRC_DIR, OUTPUT_DIR, STYLE_EXT } = require('./config')
 const hash = require('hash-sum')
 const { updateImport, getDeps } = require('./deps')
 const { isExist } = require('./utils/cache')
+const { injectInstall } = require('./utils/')
 
 function compileVue(filePath) {
   const source = fs.readFileSync(filePath, 'utf8')
@@ -94,6 +95,7 @@ function compileVue(filePath) {
       }
       script = removeComment(script)
       script = updateImport(filePath, script)
+      script = injectInstall(filePath, script)
     }
     // 将 template 和 script 的内容拼在一起
     const content = `${template}\n${script}`

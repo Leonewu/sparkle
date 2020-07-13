@@ -1,4 +1,4 @@
-export default {
+var _default = {
   name: 'XiaoCard',
   props: {
     name: String,
@@ -12,4 +12,13 @@ export default {
     }, ["card"]);
   }
 
+};
+
+function install(Vue) {
+  Vue.component(_default.name, _default);
+}
+
+export default {
+  _default,
+  install
 };
