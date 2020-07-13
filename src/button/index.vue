@@ -6,6 +6,7 @@
 
 <script>
 // import './button.scss'
+import { add } from '../utils/'
 export default {
   name: 'XiaoButton',
   data() {
@@ -17,6 +18,7 @@ export default {
   methods: {
     c() {
       console.log(12)
+      add()
     },
     promise() {
       return new Promise((resolve, reject) => {
