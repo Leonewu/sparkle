@@ -16,8 +16,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './common/style/var.scss';
-@import './common/style/base.scss';
 
 body {
   min-width: 100vw;

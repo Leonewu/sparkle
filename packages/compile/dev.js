@@ -1,13 +1,13 @@
 const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const config  = require('../../scripts/build/webpack.site.config.js')
+const config = require('../../scripts/build/webpack.site.config.js')
 const { DEV_OUTPUT_DIR, COMPONENTS, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('./config')
 const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
 // 生成 dev 的入口
 
 function genDevScriptEntry() {
-  let code = 'import Vue from "vue"\n'
+  let code = 'import Vue from "vue"\nimport "./index.scss"\n'
   const routes = []
   COMPONENTS.forEach(component => {
     code += `import ${component} from "${SRC_DIR}/${component}/"\n`
@@ -18,9 +18,9 @@ function genDevScriptEntry() {
     })
   })
   code += `const components = [${COMPONENTS.join(', ')}]\n` +
-  `components.forEach(component => Vue.component(component.name, component))\n` +
-  `const routes = ${JSON.stringify(routes, null, 2).replace(/"component":\s"(.+)"/g, '"component": $1')}\n` +
-  'export default routes'
+    `components.forEach(component => Vue.component(component.name, component))\n` +
+    `const routes = ${JSON.stringify(routes, null, 2).replace(/"component":\s"(.+)"/g, '"component": $1')}\n` +
+    'export default routes'
   fs.outputFileSync(`${DEV_OUTPUT_DIR}/index.js`, code)
 }
 
@@ -33,10 +33,13 @@ function genDevStyleEntry() {
       code += `@import "${files[0]}";\n`
     }
   })
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index.${STYLE_EXT}`, code)
+  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index${STYLE_EXT}`, code)
 }
 
 genDevScriptEntry()
 genDevStyleEntry()
 const compiler = Webpack(config)
-new WebpackDevServer(compiler)
+console.log(config)
+process.env.NODE_ENV = 'development'
+const server = new WebpackDevServer(compiler)
+server.listen(config.devServer.port)
