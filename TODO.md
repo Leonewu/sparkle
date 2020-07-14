@@ -31,8 +31,7 @@
 - [x] mobile 根据屏幕宽度动态设置 font-size
 - [ ] 版本管理 semver 规范
 - [ ] ci
-- [ ] rollup 导出 es module，并且配置 package.json 的 files 选项， treeshaking
-- [ ] ts
+- [ ] 导出 es module，并且配置 package.json 的 files 选项， treeshaking
 - [ ] logo
 - [ ] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
 - [ ] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配 polyfill
@@ -43,18 +42,19 @@
 - [ ] 控制台 sourcemap 找不到
 - [ ] 检查一下 windows 会不会因为文件目录分隔符 / 而导致一些问题，如 npm run create 失败
 - [ ] css 的 bem 规范，看一下有赞的 bem 解决方案，结合属性规范化 bem
-- [ ] 后编译
 - [ ] packages 每个包里面维护自己的 package.json，不要放在顶级目录，site，mobile 同理
-- [ ] css 不直接在代码中引入
-- [ ] 全量引入时，引入 css 样式改成手动，并支持引用 sass 源文件或者编译后的 css
+- [x] css 不直接在代码中引入
+- [x] 全量引入时，引入 css 样式改成手动，并支持引用 sass 源文件或者编译后的 css
 - [x] 支持组件 sfc
 - [x] 支持 jsx
-- [ ] 支持 tsx
-- [ ] 公共的 scss 会重复打包，需要用 js 处理 scss 样式依赖
-- [ ] 去掉组件入口，用代码生成，因为只是简单的 import 加上 install 再 export，都是重复的东西
-- [ ] 使用 gulp 管理编译的 task，更加清晰一点
+- [x] 支持 tsx
+- [x] 用 js 处理 scss 样式依赖
+- [x] 去掉组件入口，用代码生成，因为只是简单的 import 加上 install 再 export，都是重复的东西
 - [ ] 沉淀脚手架，支持 react，vue，ts
 - [ ] 文档优化，夜间模式？<https://gridjs.io/docs/examples/hello-world，代码可编辑？>
+- [ ] postcss 用配置文件
+- [ ] package.json 缺少 repository 字段
+- [ ] 处理编译 sass 时的 warning
 
 ## 遇到的问题
 

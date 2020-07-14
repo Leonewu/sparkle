@@ -3,9 +3,9 @@ const path = require('path')
 const componentsJson = require('../../components.config')
 
 // 脚本文件后缀
-const SCRIPT_EXT = ['js', 'ts', 'vue', 'jsx', 'tsx']
+const SCRIPT_EXTS = ['js', 'ts', 'vue', 'jsx', 'tsx']
 // css 预处理后缀
-const STYLE_EXT = '.scss'
+const STYLE_EXTS = '.scss'
 
 const ROOT = path.resolve(__dirname, '../../')
 
@@ -28,7 +28,7 @@ module.exports = {
   OUTPUT_DIR,
   SRC_DIR,
   BASE_STYLE_FILE,
-  SCRIPT_EXT,
-  STYLE_EXT,
+  SCRIPT_EXTS,
+  STYLE_EXTS,
   COMPONENTS
 }
