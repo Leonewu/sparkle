@@ -22,6 +22,7 @@ function glob(str, isCache) {
   if (routes[routes.length - 1] && routes[routes.length - 1].includes('.')) {
     // 有指定文件名
     const file = routes.pop().split('.')
+    if (file.length !== 2) throw new Error(`pattern ${file.join('.')} is invalid`)
     if (/\{(.+)\}/.test(file[0])) {
       fileNames = file[0].match(/\{(.+)\}/)[1].split(',')
     } else {
