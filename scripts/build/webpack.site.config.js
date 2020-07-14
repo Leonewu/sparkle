@@ -15,8 +15,9 @@ module.exports = {
     port: 2333
   },
   entry: {
-    site: './site/main.js',
-    mobile: './mobile/main.js'
+    // site: path.resolve(__dirname, '../../site/main.js')
+    mobile: path.resolve(__dirname, '../../mobile/main.js')
+    // mobile: './mobile/main.js'
   },
   output: {
     filename: '[name].[chunkhash].js',
@@ -24,10 +25,10 @@ module.exports = {
     chunkFilename: 'js-chunk/[name].[chunkhash].js'
   },
   resolve: {
-    extensions: ['.js', '.vue', '.jsx', '.json'],
+    extensions: ['.ts', '.js', '.vue', '.jsx', '.json'],
     mainFiles: ['index'],
     alias: {
-      '@Components': DEV_OUTPUT_DIR
+      '@COMPONENTS': DEV_OUTPUT_DIR
     }
   },
   resolveLoader: {
@@ -124,13 +125,13 @@ module.exports = {
       color: '#c94bff'
     }),
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './site/index.html',
-      logo: './site/icon/favicon-32x32.png',
-      title: 'Starity UI | Vue移动端组件库',
-      chunks: ['site']
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: './site/index.html',
+    //   logo: './site/icon/favicon-32x32.png',
+    //   title: 'Starity UI | Vue移动端组件库',
+    //   chunks: ['site']
+    // }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './mobile/index.html',
