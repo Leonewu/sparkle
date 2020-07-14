@@ -55,6 +55,8 @@
 - [ ] postcss 用配置文件
 - [ ] package.json 缺少 repository 字段
 - [ ] 处理编译 sass 时的 warning
+- [ ] 前缀可配置，组件名转成首字母小写，去除-
+- [ ] 路由切换动画
 
 ## 遇到的问题
 

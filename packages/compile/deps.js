@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { SCRIPT_EXTS, OUTPUT_DIR, STYLE_EXTS } = require('./config') 
+const { SCRIPT_EXTS, OUTPUT_DIR, STYLE_EXT } = require('./config') 
 const { cacheGlob: glob } = require('./utils/glob')
 const { isIgnorePath  } = require('./utils/')
 const deps = {}
@@ -103,7 +103,7 @@ function initDeps() {
       const dirName = getUniqueName(filePath)
       deps[dirName] = []
     } else {
-      const styleFile = filePath.replace(/\.(js|ts|jsx|tsx)/, `.{${STYLE_EXTS.substr(1)},css}`)
+      const styleFile = filePath.replace(/\.(js|ts|jsx|tsx)/, `.{${STYLE_EXT.substr(1)},css}`)
       if (glob(styleFile).length) {
         // 存在样式文件
         const dirName = getUniqueName(filePath)

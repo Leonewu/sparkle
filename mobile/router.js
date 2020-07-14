@@ -3,14 +3,14 @@ import VueRouter from 'vue-router'
 // import DemoHome from './components/DemoHome'
 // import { decamelize } from './common'
 import './common/iframe-router'
-
-const routes = __COMPONENTS__.map(name => ({
-  path: `/${name}`,
-  component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),
-  meta: {
-    name
-  }
-}))
+import routes from '@Components'
+// const routes = __COMPONENTS__.map(name => ({
+//   path: `/${name}`,
+//   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),
+//   meta: {
+//     name
+//   }
+// }))
 // const { locales, defaultLang } = config.site
 
 // setDefaultLang(defaultLang)
@@ -87,7 +87,7 @@ const routes = __COMPONENTS__.map(name => ({
 // }
 
 Vue.use(VueRouter)
-
+console.log(routes)
 export const router = new VueRouter({
   mode: 'hash',
   routes: routes,

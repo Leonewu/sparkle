@@ -6,10 +6,9 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint && stylelint ./**/*.scss",
-    "build": "webpack --progress --colors --config ./scripts/build/webpack.total.config.js && npm run build:components",
-    "build:components": "webpack --progress --colors --config ./scripts/build/webpack.components.config.js",
+    "build": "node ./packages/compile/index.js",
     "dev": "webpack-dev-server --progress --colors --config ./scripts/build/webpack.site.config.js",
-    "build:site": "webpack --progress --colors --mode=production --config ./scripts/build/webpack.site.config.js",
+    "build:site": "webpack --progress --colors --mode=development --config ./scripts/build/webpack.site.config.js",
     "create": "node ./packages/create-component/index.js"
   },
   "husky": {
