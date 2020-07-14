@@ -2,9 +2,8 @@ const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const webpack = require('webpack')
 const WebpackBar = require('webpackbar')
-const getComponents = require('./components')
+const { DEV_OUTPUT_DIR } = require('../../packages/compile/config')
 // 多页面： site 文档网站
 // mobile： 移动端预览
 
@@ -26,7 +25,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.jsx', '.json'],
-    mainFiles: ['index']
+    mainFiles: ['index'],
+    alias: {
+      '@Components': DEV_OUTPUT_DIR
+    }
   },
   resolveLoader: {
     modules: ['node_modules', 'packages'],
@@ -132,13 +134,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './mobile/index.html',
-      logo: './site/icon/favicon-32x32.png',
+      // logo: './site/icon/favicon-32x32.png',
       title: 'Starity UI | Vue移动端组件库',
       chunks: ['mobile']
     }),
-    new CleanWebpackPlugin(),
-    new webpack.DefinePlugin({
-      __COMPONENTS__: JSON.stringify(getComponents())
-    })
+    new CleanWebpackPlugin()
   ]
 }

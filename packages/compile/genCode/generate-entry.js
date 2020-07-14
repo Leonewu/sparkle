@@ -1,4 +1,4 @@
-const { COMPONENTS, OUTPUT_DIR, BASE_STYLE_FILE, STYLE_EXTS } = require('../config')
+const { COMPONENTS, OUTPUT_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config')
 const fs = require('fs-extra')
 const compileSass = require('../sass-compiler')
 const { getDeps } = require('../deps')
@@ -26,8 +26,8 @@ function generateStyleEntry() {
         }
       })
     })
-    const sassPath = `${OUTPUT_DIR}/index${STYLE_EXTS}`
-    const cssPath = sassPath.replace(new RegExp(`${STYLE_EXTS}`), '.css')
+    const sassPath = `${OUTPUT_DIR}/index${STYLE_EXT}`
+    const cssPath = sassPath.replace(new RegExp(`${STYLE_EXT}`), '.css')
     fs.outputFileSync(sassPath, importCodes)
     compileSass(sassPath).then(res => {
       fs.outputFileSync(cssPath, res.content)
