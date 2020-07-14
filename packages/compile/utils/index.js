@@ -1,5 +1,5 @@
 const { isExist } = require('./cache')
-const { STYLE_EXT, COMPONENTS, OUTPUT_DIR, SCRIPT_EXT } = require('../config')
+const { STYLE_EXTS, COMPONENTS, OUTPUT_DIR, SCRIPT_EXTS } = require('../config')
 function isTestPath(filePath) {
   return /__test__/.test(filePath)
 }
@@ -25,18 +25,18 @@ function getPreStyle(filePath) {
   const file = {}
   if (filePath.substr(-1) === '/') {
     // 目录
-    if (isExist(`${filePath}index${STYLE_EXT}`)) {
-      file.path = `${filePath}index${STYLE_EXT}`
-      file.ext = `index${STYLE_EXT}`
+    if (isExist(`${filePath}index${STYLE_EXTS}`)) {
+      file.path = `${filePath}index${STYLE_EXTS}`
+      file.ext = `index${STYLE_EXTS}`
     } else if (isExist(`${filePath}index.css`)) {
       file.path = `${filePath}index.css`
       file.ext = 'index.css'
     }
   } else {
     // 文件
-    if (isExist(`${filePath}${STYLE_EXT}`)) {
-      file.path = `${filePath}${STYLE_EXT}`
-      file.ext = STYLE_EXT
+    if (isExist(`${filePath}${STYLE_EXTS}`)) {
+      file.path = `${filePath}${STYLE_EXTS}`
+      file.ext = STYLE_EXTS
     } else if (isExist(`${filePath}.css`)) {
       file.path = `${filePath}.css`
       file.ext = '.css'
@@ -46,7 +46,7 @@ function getPreStyle(filePath) {
 }
 
 function isComponent(filePath) {
-  const paths = COMPONENTS.map(com => new RegExp(`${OUTPUT_DIR}/${com}/index\.(${SCRIPT_EXT.join('|')})`))
+  const paths = COMPONENTS.map(com => new RegExp(`${OUTPUT_DIR}/${com}/index\.(${SCRIPT_EXTS.join('|')})`))
   let flag = false
   for (reg of paths) {
     if (reg.test(filePath)) {
