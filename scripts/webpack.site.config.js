@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackBar = require('webpackbar')
-const { DEV_OUTPUT_DIR } = require('../../packages/compile/config')
+const { DEV_OUTPUT_DIR } = require('../packages/compile/config')
 // 多页面： site 文档网站
 // mobile： 移动端预览
 
@@ -16,13 +16,13 @@ module.exports = {
   },
   devtool: 'eval-cheap-source-map',
   entry: {
-    site: path.resolve(__dirname, '../../site/main.js'),
-    mobile: path.resolve(__dirname, '../../mobile/main.js')
+    site: './site/main.js',
+    mobile: './mobile/main.js'
     // mobile: './mobile/main.js'
   },
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, '../../', 'site-dist'),
+    path: path.resolve(__dirname, '../', 'site-dist'),
     chunkFilename: 'js-chunk/[name].[chunkhash].js'
   },
   resolve: {
