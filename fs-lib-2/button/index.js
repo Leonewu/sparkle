@@ -20,7 +20,7 @@ import { add } from '../utils/';
 var _default = {
   render,
   staticRenderFns,
-  _scopeId: "data-v-7725077e",
+  _scopeId: "data-v-4fd67bb5",
   name: 'XiaoButton',
 
   data() {

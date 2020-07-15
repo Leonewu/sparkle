@@ -96,17 +96,19 @@ function getUniqueName(filePath) {
 
 
 function initDeps() {
-  // 找出所有组件的目录
+  // 找出所有 vue 组件的目录，初始化依赖的对象
+  // 满足以下三个条件：
+  // 1. 是 vue,tsx,jsx 文件
+  // 2. index.{js,ts} 文件，并且目录下有 index.{scss,less,styl,css}
+  // 3. 拥有同名的样式文件，如 picker.js 目录下存在 picker.{scss,less,styl,css}
   const globStr = `${OUTPUT_DIR}/*/**/*.{js,ts,tsx,jsx,vue}`
   glob(globStr).forEach(filePath => {
     if (isIgnorePath(filePath)) return
-    // 如果是 vue, tsx, jsx 文件
-    // 或者 js ，ts 文件，并且目录下有 index.(scss|less|styl|css)，就是组件目录
-    if ((['.vue']).includes(path.extname(filePath))) {
+      if (['.vue', '.jsx', 'tsx'].includes(path.extname(filePath)) === '.vue') {
       const dirName = getUniqueName(filePath)
       deps[dirName] = []
     } else {
-      const styleFile = filePath.replace(/\.(js|ts|jsx|tsx)/, `.{${STYLE_EXT.substr(1)},css}`)
+      const styleFile = filePath.replace(/\.(js|ts)/, `.{${STYLE_EXT.substr(1)},css}`)
       if (glob(styleFile).length) {
         // 存在样式文件
         const dirName = getUniqueName(filePath)

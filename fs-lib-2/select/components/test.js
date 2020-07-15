@@ -10,7 +10,7 @@ var render = function render() {
 
 var staticRenderFns = [];
 render._withStripped = true;
-import trr from './components2/test2';
+import trr from './components2/test2.js';
 export default {
   render,
   staticRenderFns,

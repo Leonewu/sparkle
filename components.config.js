@@ -1,6 +1,6 @@
 module.exports = [
   {
-    category: '基础组件',
+    title: '基础组件',
     components: [
       {
         path: 'button',
@@ -17,7 +17,7 @@ module.exports = [
     ]
   },
   {
-    category: '表单组件',
+    title: '表单组件',
     components: []
   }
 ]

@@ -7,10 +7,7 @@
 </template>
 
 <script>
-import XiaoCard from '../card'
 export default {
-  components: {
-    XiaoCard
-  }
+
 }
 </script>

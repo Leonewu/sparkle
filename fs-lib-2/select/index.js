@@ -12,7 +12,7 @@ var render = function render() {
 
 var staticRenderFns = [];
 render._withStripped = true;
-import XiaoButton from '../button/index.js';
+import XiaoButton from '../button/';
 import picker from './picker';
 var _default = {
   render,

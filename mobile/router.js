@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 // import DemoHome from './components/DemoHome'
 // import { decamelize } from './common'
 import './common/iframe-router'
-import routes from '@COMPONENTS'
+import { routes } from '@COMPONENTS/demo'
+
 // const routes = __COMPONENTS__.map(name => ({
 //   path: `/${name}`,
 //   component: () => import(/* webpackChunkName: "[request]" */`../src/components/${name}/demo/index.vue`),

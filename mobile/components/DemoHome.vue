@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { config } from 'site-mobile-shared'
+// import { config } from 'site-mobile-shared'
 import DemoHomeNav from './DemoHomeNav'
 
 export default {
@@ -39,13 +39,14 @@ export default {
     },
 
     config() {
-      const { locales } = config.site
+      // const { locales } = config.site
 
-      if (locales) {
-        return locales[this.lang]
-      }
+      // if (locales) {
+      //   return locales[this.lang]
+      // }
 
-      return config.site
+      // return config.site
+      return []
     },
 
     smallTitle() {

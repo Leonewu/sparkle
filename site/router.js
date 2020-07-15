@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 // import { config, documents } from 'site-desktop-shared'
 // import { getLang, setDefaultLang } from '../common/locales'
 import './common/iframe-router'
+import { routes as docRoutes } from '@COMPONENTS/doc'
 
 // if (isMobile) {
 //   console.log('mobile')
@@ -108,7 +109,7 @@ const routes = [
   //   path: '/home',
   //   component: () => import(/* webpackChunkName: "[request]" */'./views/home.md')
   // },
-  // ...demoRoutes
+  ...docRoutes
 ]
 
 Vue.use(VueRouter)
