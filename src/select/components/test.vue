@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import trr from './components2/test2'
+import trr from './components2/test2.vue'
 export default {
   name: 'Tt',
   components: { trr }

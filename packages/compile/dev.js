@@ -1,45 +1,101 @@
 const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require('../../scripts/build/webpack.site.config.js')
-const { DEV_OUTPUT_DIR, COMPONENTS, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('./config')
+const { DEV_OUTPUT_DIR, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT, SCRIPT_EXTS } = require('./config')
 const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
+const configJson = require('../../components.config.js')
+// const components = componentsJson.reduce((sum, cur) => {
+//   if (cur.components) {
+//     sum = sum.concat(cur.components.map(com => {
+//       return {
+//         ...com,
+//         category: cur.category
+//       }
+//     }))
+//   }
+//   return sum
+// }, [])
 // 生成 dev 的入口
 
-function genDevScriptEntry() {
-  let code = 'import Vue from "vue"\nimport "./index.scss"\n'
-  const routes = []
-  COMPONENTS.forEach(component => {
-    code += `import ${component} from "${SRC_DIR}/${component}/"\n`
-    routes.push({
-      path: '/' + component,
-      title: component,
-      component: component
-    })
-  })
-  code += `const components = [${COMPONENTS.join(', ')}]\n` +
-    `components.forEach(component => Vue.component(component.name, component))\n` +
-    `const routes = ${JSON.stringify(routes, null, 2).replace(/"component":\s"(.+)"/g, '"component": $1')}\n` +
-    'export default routes'
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index.js`, code)
-}
+const flatConfig = []
 
-function genDevStyleEntry() {
-  let code = `@import "${SRC_DIR}/${BASE_STYLE_FILE}";\n`
-  COMPONENTS.forEach(component => {
-    const stylePath = `${SRC_DIR}/${component}/index.{${STYLE_EXT.substr(1)},css}`
-    let files = glob(stylePath)
-    if (files[0]) {
-      code += `@import "${files[0]}";\n`
+function initJson() {
+  configJson.forEach(config => {
+    if (config.components) {
+      config.components.forEach(component => {
+        const { path } = component
+        const scriptFiles = glob(`${SRC_DIR}/${path}/index.{${SCRIPT_EXTS.join(',')}}`)
+        const demoFiles = glob(`${SRC_DIR}/${path}/demo/index.{${SCRIPT_EXTS.join(',')}}`)
+        const docFiles = glob(`${SRC_DIR}/${path}/README.md`)
+        const styleFiles = glob(`${SRC_DIR}/${[path]}/index.{${STYLE_EXT.substr(1)},css}`)
+        component.script = scriptFiles[0] ? scriptFiles[0] : ''
+        component.style = styleFiles[0] ? styleFiles[0] : ''
+        component.demo = demoFiles[0] ? demoFiles[0] : ''
+        component.doc = docFiles[0] ? docFiles[0] : ''
+        flatConfig.push(component)
+      })
     }
   })
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index${STYLE_EXT}`, code)
 }
 
-genDevScriptEntry()
-genDevStyleEntry()
+function genEntries() {
+  let scriptImports = `import Vue from "vue"\nimport "./index${STYLE_EXT}"\n`
+  let styleImports =  `@import "${SRC_DIR}/${BASE_STYLE_FILE}";\n`
+  let demoImports = 'import "./index.js"\n'
+  let docImports = 'import "./index.js"\n'
+  const installs = []
+  const demoRoutes = []
+  const docRoutes = []
+  flatConfig.forEach(config => {
+    const { script, style, demo, doc, path } = config
+    if (script) {
+      scriptImports += `import ${path} from "${script}"\n`
+      installs.push(path)
+    }
+    if (style) {
+      styleImports += `@import "${style}";\n`
+    }
+    if (demo) {
+      demoImports += `import ${path} from "${demo}"\n`
+      demoRoutes.push({
+        path: '/' + path,
+        component: path
+      })
+    }
+    if (doc) {
+      docImports += `import ${path} from "${doc}"\n`
+      docRoutes.push({
+        path: '/' + path,
+        component: path
+      })
+    }
+  })
+  scriptImports += 
+    `const components = [${installs.join(', ')}]\n` +
+    `components.forEach(component => {\n  Vue.component(component.name, component)\n})\n`
+  demoImports += 
+    `const components = {\n  ${installs.join(',\n  ')}\n}\n` +
+    `const config = ${JSON.stringify(configJson, null, 2)}\n` +
+    `const routes = ${JSON.stringify(demoRoutes, null, 2).replace(/"component":\s"(.+)"/g, '"component": $1')}\n` +
+    'export { routes, components, config }'
+  docImports += 
+    `const components = {\n  ${installs.join(',\n  ')}\n}\n` +
+    `const config = ${JSON.stringify(configJson, null, 2)}\n` +
+    `const routes = ${JSON.stringify(docRoutes, null, 2).replace(/"component":\s"(.+)"/g, '"component": $1')}\n` +
+    'export { routes, components, config }'
+  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index.js`, scriptImports)
+  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index${STYLE_EXT}`, styleImports)
+  fs.outputFileSync(`${DEV_OUTPUT_DIR}/demo.js`, demoImports)
+  fs.outputFileSync(`${DEV_OUTPUT_DIR}/doc.js`, docImports)
+}
+
+
+
+initJson()
+genEntries()
+
 const compiler = Webpack(config)
-console.log(config)
 process.env.NODE_ENV = 'development'
 const server = new WebpackDevServer(compiler)
 server.listen(config.devServer.port)

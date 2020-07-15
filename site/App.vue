@@ -13,7 +13,7 @@
 
 <script>
 import Doc from './components/index.vue'
-
+import { config } from '@COMPONENTS/doc'
 export default {
   components: {
     Doc
@@ -41,10 +41,9 @@ export default {
     },
 
     config() {
-      const basicComponents = __COMPONENTS__.map(name => ({
-        title: name,
-        path: name
-      }))
+      const basicComponents = config.find(s =>
+        s.title === '基础组件' && s.components
+      ).components
       return {
         title: 'Starity UI',
         description: 'Mobile UI Components built on Vue',

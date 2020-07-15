@@ -11,7 +11,7 @@
 /*
   asdasd
 */
-import XiaoButton from '../button/index.vue'
+import XiaoButton from '../button/'
 import picker from './picker'
 export default {
   name: 'XiaoSelect',

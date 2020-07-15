@@ -14,8 +14,9 @@ module.exports = {
     // compress: true,
     port: 2333
   },
+  devtool: 'eval-cheap-source-map',
   entry: {
-    // site: path.resolve(__dirname, '../../site/main.js')
+    site: path.resolve(__dirname, '../../site/main.js'),
     mobile: path.resolve(__dirname, '../../mobile/main.js')
     // mobile: './mobile/main.js'
   },
@@ -125,17 +126,17 @@ module.exports = {
       color: '#c94bff'
     }),
     new VueLoaderPlugin(),
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './site/index.html',
-    //   logo: './site/icon/favicon-32x32.png',
-    //   title: 'Starity UI | Vue移动端组件库',
-    //   chunks: ['site']
-    // }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './site/index.html',
+      logo: './site/icon/favicon-32x32.png',
+      title: 'Starity UI | Vue移动端组件库',
+      chunks: ['site']
+    }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './mobile/index.html',
-      // logo: './site/icon/favicon-32x32.png',
+      logo: './site/icon/favicon-32x32.png',
       title: 'Starity UI | Vue移动端组件库',
       chunks: ['mobile']
     }),
