@@ -18,11 +18,11 @@ function updateImport(filePath, source) {
     const quote = importCode.includes('"') ? '"' : "'"
     const importPath = importCode.split(quote)[1]
     const dep = getDepByImport(filePath, importPath)
-    if (dep && deps[dep.name]) {
+    // if (dep && deps[dep.name]) {
       // 这里的判断没有写错
       // deps[dep.name] 说明是组件
       deps[component].push(dep)
-    }
+    // }
     // 将引入文件后缀改成 js
     if (SCRIPT_REG.test(importCode)) {
       source = source.replace(importCode, importCode.replace(SCRIPT_REG, '.js'))
@@ -55,11 +55,12 @@ function getDepByImport(filePath, importPath) {
   }
   const file = glob(globStr)[0]
   if (file) {
-    const res = {}
-    res.name = getUniqueName(file)
-    res.path = getShortPath(importPath)
-    res.fullPath = res.name
-    return res
+    const name = getUniqueName(file)
+    return {
+      name,
+      path: getShortPath(importPath),
+      fullPath: name
+    }
   }
   return null
 }
@@ -69,13 +70,15 @@ function getShortPath(importPath) {
   // ../button/index.vue => ../button/
   // ../button/index => ../button/
   // ../button/icon.vue => ../button/icon
-  const extReg = /[^.]+\.[^.]+/
-  let shortPath = importPath.split('/').filter(s => !extReg.test(s)).join('/')
-  const dirReg = /\/(index(\.[^/]*)?)?$/
-  if (importPath.substr(-1) === '/' || dirReg.test(importPath)) {
-    shortPath += '/'
-  }
-  return shortPath
+  // ../button/icon => ../button/icon
+  // ../button/ => ../button/
+  return importPath.replace(/([^./]+)(\.[^./]+)*$/, (s, name, ext) => {
+    if (name === 'index') {
+      return ''
+    } else {
+      return name
+    }
+  })
 }
 
 function getUniqueName(filePath) {
