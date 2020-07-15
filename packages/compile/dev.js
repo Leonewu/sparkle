@@ -1,21 +1,11 @@
 const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const config = require('../../scripts/build/webpack.site.config.js')
+const config = require('../../scripts/webpack.site.config.js')
 const { DEV_OUTPUT_DIR, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT, SCRIPT_EXTS } = require('./config')
 const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
 const configJson = require('../../components.config.js')
-// const components = componentsJson.reduce((sum, cur) => {
-//   if (cur.components) {
-//     sum = sum.concat(cur.components.map(com => {
-//       return {
-//         ...com,
-//         category: cur.category
-//       }
-//     }))
-//   }
-//   return sum
-// }, [])
+
 // 生成 dev 的入口
 
 const flatConfig = []
