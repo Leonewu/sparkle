@@ -12,6 +12,7 @@ function generateStyleEntry() {
     COMPONENTS.forEach(component => {
       const styleFile = getPreStyle(`${OUTPUT_DIR}/${component}/`)
       if (styleFile.path) {
+        deps.push(component)
         importCodes += `\n@import "./${component}/${styleFile.ext}";`
       }
       getDeps(component).forEach(dep => {
