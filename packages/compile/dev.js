@@ -15,8 +15,8 @@ function initJson() {
     if (config.components) {
       config.components.forEach(component => {
         const { path } = component
-        const scriptFiles = glob(`${SRC_DIR}/${path}/index.{${SCRIPT_EXTS.join(',')}}`)
-        const demoFiles = glob(`${SRC_DIR}/${path}/demo/index.{${SCRIPT_EXTS.join(',')}}`)
+        const scriptFiles = glob(`${SRC_DIR}/${path}/index.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
+        const demoFiles = glob(`${SRC_DIR}/${path}/demo/index.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
         const docFiles = glob(`${SRC_DIR}/${path}/README.md`)
         const styleFiles = glob(`${SRC_DIR}/${[path]}/index.{${STYLE_EXT.substr(1)},css}`)
         component.script = scriptFiles[0] ? scriptFiles[0] : ''

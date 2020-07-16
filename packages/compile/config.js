@@ -1,16 +1,16 @@
 
 const path = require('path')
 const componentsJson = require('../../components.config')
-const fs = require('fs-extra')
-const { cacheGlob: glob } = require('./utils/glob')
 // 脚本文件后缀
-const SCRIPT_EXTS = ['js', 'ts', 'vue', 'jsx', 'tsx']
+const SCRIPT_EXTS = ['.js', '.ts', '.vue', '.jsx', '.tsx']
 // css 预处理后缀
 const STYLE_EXT = '.scss'
 // 根目录
 const ROOT = path.resolve(__dirname, '../../')
-// 打包输出目录
+// 打包输出 commonjs 目录
 const OUTPUT_DIR = `${ROOT}/fs-lib-2`
+// 打包输出 esModule 目录
+const ES_DIR = `${ROOT}/es`
 // 源目录
 const SRC_DIR = `${ROOT}/src`
 // 公共的样式文件
@@ -30,7 +30,7 @@ const COMPONENTS = componentsJson.reduce((sum, cur) => {
 //   // 1. 目录必须位于 src 下的第一层目录
 //   // 2. 存在 src/*/index.{vue,jsx,tsx}
 //   // 3. 存在 src/*/index.{js,ts}  src/*/index.{css,less,scss,styl}
-//   const scriptFiles = glob(`${SRC_DIR}/${cur}/index.{${SCRIPT_EXTS.join(',')}}`)
+//   const scriptFiles = glob(`${SRC_DIR}/${cur}/index.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
 //   if (scriptFiles[0]) {
 //     if(['.vue', 'jsx', 'tsx'].includes(path.extname(scriptFiles[0]))) {
 //       sum.push(cur)
@@ -48,6 +48,7 @@ const COMPONENTS = componentsJson.reduce((sum, cur) => {
 module.exports = {
   DEV_OUTPUT_DIR,
   OUTPUT_DIR,
+  ES_DIR,
   SRC_DIR,
   BASE_STYLE_FILE,
   SCRIPT_EXTS,

@@ -25,14 +25,15 @@ const { isIgnorePath } = require('./utils/')
 
 // 顺序
 // 1. 清空目录
-// 2. 复制公共目录（style，js）
-// 3. 复制组件样式（这一步在第4步前是因为要 vue 的 style block 要和主样式文件合在一起）
-// 4. 编译组件主文件（vue，jsx，tsx）,style block 会追加在 index.scss 后面 ,生成依赖地图
+// 2. 复制目录（SRC_DIR => OUTPUT_DIR）
+// 3. 初始化依赖对象
+// 4. 编译目录（OUTPUT_DIR）
+// 4-1. 编译时，根据文件类型编译
+// 4-2. 编译时，会补充第3步中的依赖对象
 // 5. 生成 css module 文件
 // 6. 编译组件样式
 // 7. 生成主入口文件，生成入口样式文件，编译入口样式文件
-fs.emptyDirSync(OUTPUT_DIR)
-fs.copySync(SRC_DIR, OUTPUT_DIR)
+
 
 function compileDir(dir) {
   const results = fs.readdirSync(dir)
@@ -61,6 +62,9 @@ function compileDir(dir) {
   })
   scriptFiles.forEach(compileJs)
 }
+
+fs.emptyDirSync(OUTPUT_DIR)
+fs.copySync(SRC_DIR, OUTPUT_DIR)
 initDeps()
 compileDir(OUTPUT_DIR)
 generateCssModule()

@@ -3,12 +3,11 @@ const fs = require('fs-extra')
 const compiler = require('vue-template-compiler')
 const VueCompileUtils = require('@vue/component-compiler-utils')
 const babel = require('@babel/core')
-const { injectStyle } = require('./compile-style')
-const { SRC_DIR, OUTPUT_DIR, STYLE_EXT } = require('./config')
+const { STYLE_EXT } = require('./config')
 const hash = require('hash-sum')
-const { updateImport, getDeps } = require('./deps')
+const { updateImport } = require('./deps')
 const { isExist } = require('./utils/cache')
-const { injectInstall } = require('./utils/')
+const { injectInstall, removeComment } = require('./utils/')
 
 function compileVue(filePath) {
   const source = fs.readFileSync(filePath, 'utf8')
@@ -89,29 +88,24 @@ function compileVue(filePath) {
       // 初步猜测应该是添加了 _scopeId
       // TODO 待研究原理
       if (scopeId) {
-        script = descriptor.script.content.replace('export default {', `export default {\n  render,\n  staticRenderFns,\n  _scopeId: "data-v-${scopeId}",`)
+        script = descriptor.script.content.replace('export default {', `${template}\nexport default {\n  render,\n  staticRenderFns,\n  _scopeId: "data-v-${scopeId}",`)
       } else {
-        script = descriptor.script.content.replace('export default {', 'export default {\n  render,\n  staticRenderFns,')
+        script = descriptor.script.content.replace('export default {', `${template}\nexport default {\n  render,\n  staticRenderFns,`)
       }
       script = removeComment(script)
       script = updateImport(filePath, script)
       script = injectInstall(filePath, script)
+    } else {
+      script = template
     }
-    // 将 template 和 script 的内容拼在一起
-    const content = `${template}\n${script}`
     const outputFile = filePath.replace('vue', 'js')
-    const result = babel.transformSync(content, { filename: filePath }).code
+    const result = babel.transformSync(script, { filename: filePath }).code
     // 到这里为止，打出来的是没有 uglify 的 esModule
     // 这一部开始，可以继续编译出来 umd
     // TODO uglify umd 去掉注释
-    // console.log(content)
     fs.outputFileSync(outputFile, result)
     resolve(filePath)
   })
-}
-
-function removeComment(str) {
-  return str.replace(/\/\*[\s\S]*?\*\/|(?<!:)\/\/.*/g, '')
 }
 
 module.exports = compileVue

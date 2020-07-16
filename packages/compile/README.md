@@ -1,10 +1,8 @@
 # 打包方案
 
-- [ ] 生成 js 主文件入口
-- [ ] 生成 scss 主文件入口
-- [ ] 生成 css/less 依赖管理目录
-- [ ] 生成公共样式 style 目录
-- [ ] 打包出更符合 babel-plugin-import 的目录
+- 生成 js 主文件入口 (index.js)
+- 生成 scss 和 css 主文件入口 (index.scss,index.css)
+- 生成 css/scss 依赖管理目录 (css.js,scss.js)
 
 ## 为什么要这样做
 
