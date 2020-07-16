@@ -46,7 +46,7 @@ function getPreStyle(filePath) {
 }
 
 function isComponent(filePath) {
-  const paths = COMPONENTS.map(com => new RegExp(`${OUTPUT_DIR}/${com}/index\.(${SCRIPT_EXTS.join('|')})`))
+  const paths = COMPONENTS.map(com => new RegExp(`${OUTPUT_DIR}/${com}/index\.(${SCRIPT_EXTS.map(s => s.substr(1)).join('|')})`))
   let flag = false
   for (reg of paths) {
     if (reg.test(filePath)) {
@@ -57,6 +57,10 @@ function isComponent(filePath) {
   return flag
 }
 
+function removeComment(str) {
+  return str.replace(/\/\*[\s\S]*?\*\/|(?<!:)\/\/.*/g, '')
+}
+
 function injectInstall(filePath, content) {
   if (isComponent(filePath)) {
     const install = 'function install(Vue) {\n Vue.component(_default.name, _default)\n}'
@@ -65,11 +69,13 @@ function injectInstall(filePath, content) {
   }
   return content
 }
+
 module.exports = {
   isTestPath,
   isDemoPath,
   isDocPath,
   isIgnorePath,
+  removeComment,
   getPreStyle,
   injectInstall
 }

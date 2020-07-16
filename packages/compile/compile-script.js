@@ -1,11 +1,9 @@
 const fs = require('fs-extra')
 const babel = require('@babel/core')
-const { injectInstall } = require('./utils/')
+const { injectInstall, removeComment } = require('./utils/')
 const { updateImport } = require('./deps')
 
-function removeComment(str) {
-  return str.replace(/\/\*[\s\S]*?\*\/|(?<!:)\/\/.*/g, '')
-}
+
 
 function compileJs(filePath) {
   let content = fs.readFileSync(filePath, 'utf8')
