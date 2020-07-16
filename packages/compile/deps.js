@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { SCRIPT_EXTS, LIB_DIR, STYLE_EXT } = require('./config') 
+const { SCRIPT_EXTS, OUTPUT_DIR, STYLE_EXT } = require('./config') 
 const { cacheGlob: glob } = require('./utils/glob')
 const { isIgnorePath  } = require('./utils/')
 const deps = {}
@@ -86,7 +86,7 @@ function getUniqueName(filePath) {
   // lib/button/index.vue => button
   // lib/button/components/index.vue => button/components
   // lib/button/components/icon.vue => button/components/icon
-  const reg = new RegExp(`${LIB_DIR}/([^.]+)`)
+  const reg = new RegExp(`${OUTPUT_DIR}/([^.]+)`)
   let name = filePath.match(reg)[1].replace('/index', '')
   if (name.substr(-1) === '/') {
     name = name.substr(0, name.length - 1)
@@ -101,7 +101,7 @@ function initDeps() {
   // 1. 是 vue,tsx,jsx 文件
   // 2. index.{js,ts} 文件，并且目录下有 index.{scss,less,styl,css}
   // 3. 拥有同名的样式文件，如 picker.js 目录下存在 picker.{scss,less,styl,css}
-  const globStr = `${LIB_DIR}/*/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`
+  const globStr = `${OUTPUT_DIR}/*/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`
   glob(globStr).forEach(filePath => {
     if (isIgnorePath(filePath)) return
       if (['.vue', '.jsx', 'tsx'].includes(path.extname(filePath)) === '.vue') {

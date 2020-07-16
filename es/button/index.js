@@ -18,7 +18,7 @@ render._withStripped = true;
 var _default = {
   render,
   staticRenderFns,
-  _scopeId: "data-v-b278a8a0",
+  _scopeId: "data-v-5e24e079",
   name: 'XiaoButton',
 
   data() {

@@ -1,4 +1,4 @@
-const { COMPONENTS, LIB_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config')
+const { COMPONENTS, OUTPUT_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config')
 const fs = require('fs-extra')
 const compileSass = require('../sass-compiler')
 const { getDeps } = require('../deps')
@@ -10,7 +10,7 @@ function generateStyleEntry() {
     const deps = []
     let importCodes = `@import "./${BASE_STYLE_FILE}";`
     COMPONENTS.forEach(component => {
-      const styleFile = getPreStyle(`${LIB_DIR}/${component}/`)
+      const styleFile = getPreStyle(`${OUTPUT_DIR}/${component}/`)
       if (styleFile.path) {
         deps.push(component)
         importCodes += `\n@import "./${component}/${styleFile.ext}";`
@@ -18,16 +18,16 @@ function generateStyleEntry() {
       getDeps(component).forEach(dep => {
         if (!deps.includes(dep.fullPath)) {
           deps.push(dep.fullPath)
-          const depStylePath = path.join(LIB_DIR, component, dep.path)
+          const depStylePath = path.join(OUTPUT_DIR, component, dep.path)
           const depStyleFile = getPreStyle(depStylePath)
           if (depStyleFile.path) {
             // sass 引入 css 要去掉 css 后缀
-            importCodes += `\n@import "${depStyleFile.path.replace(LIB_DIR, '.').replace('.css', '')}";`
+            importCodes += `\n@import "${depStyleFile.path.replace(OUTPUT_DIR, '.').replace('.css', '')}";`
           }
         }
       })
     })
-    const sassPath = `${LIB_DIR}/index${STYLE_EXT}`
+    const sassPath = `${OUTPUT_DIR}/index${STYLE_EXT}`
     const cssPath = sassPath.replace(new RegExp(`${STYLE_EXT}`), '.css')
     fs.outputFileSync(sassPath, importCodes)
     compileSass(sassPath).then(res => {
@@ -63,7 +63,7 @@ function install(Vue) {
 export default {
   install
 }`
-    fs.outputFileSync(`${LIB_DIR}/index.js`, code)
+    fs.outputFileSync(`${OUTPUT_DIR}/index.js`, code)
 }
 
 function generateEntry() {
