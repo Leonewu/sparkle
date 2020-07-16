@@ -28,7 +28,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "es"
   ],
   "keywords": [
     "vue"

@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackBar = require('webpackbar')
-const { DEV_OUTPUT_DIR } = require('../packages/compile/config')
+const { DEV_DIR } = require('./packages/compile/config')
 // 多页面： site 文档网站
 // mobile： 移动端预览
 
@@ -29,7 +29,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.vue', '.jsx', '.json'],
     mainFiles: ['index'],
     alias: {
-      '@COMPONENTS': DEV_OUTPUT_DIR
+      '@COMPONENTS': DEV_DIR
     }
   },
   resolveLoader: {
