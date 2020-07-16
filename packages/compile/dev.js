@@ -1,7 +1,7 @@
 const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require('../../scripts/webpack.site.config.js')
-const { DEV_OUTPUT_DIR, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT, SCRIPT_EXTS } = require('./config')
+const { DEV_DIR, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT, SCRIPT_EXTS } = require('./config')
 const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
 const configJson = require('../../components.config.js')
@@ -74,10 +74,10 @@ function genEntries() {
     `const config = ${JSON.stringify(configJson, null, 2)}\n` +
     `const routes = ${JSON.stringify(docRoutes, null, 2).replace(/"component":\s"(.+)"/g, '"component": $1')}\n` +
     'export { routes, components, config }'
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index.js`, scriptImports)
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/index${STYLE_EXT}`, styleImports)
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/demo.js`, demoImports)
-  fs.outputFileSync(`${DEV_OUTPUT_DIR}/doc.js`, docImports)
+  fs.outputFileSync(`${DEV_DIR}/index.js`, scriptImports)
+  fs.outputFileSync(`${DEV_DIR}/index${STYLE_EXT}`, styleImports)
+  fs.outputFileSync(`${DEV_DIR}/demo.js`, demoImports)
+  fs.outputFileSync(`${DEV_DIR}/doc.js`, docImports)
 }
 
 

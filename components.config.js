@@ -1,3 +1,7 @@
+
+// path 为 src 下的目录名称
+// 会用于编译时的组件查找
+// 以及作为 site 的路由
 module.exports = [
   {
     title: '基础组件',
