@@ -1,2 +1,2 @@
-require("../../common/base.scss")
-require("../index.scss")
+import "../../common/base.scss"
+import "../index.scss"

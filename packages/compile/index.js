@@ -2,13 +2,15 @@ const fs = require('fs-extra')
 const compileVue = require('./compile-vue')
 const compileJs = require('./compile-script')
 const generateEntry = require('./genCode/generate-entry')
-const { generateCssModule } = require('./genCode/generate-css-module')
-const { compileStyle } = require('./compile-style')
-const { LIB_DIR, SRC_DIR, ES_DIR } = require('./config')
+const generateCssModule = require('./genCode/generate-css-module')
+const compileStyle = require('./compile-style')
+const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS } = require('./config')
 const chalk = require('chalk')
 const path = require('path')
-const { getDeps, initDeps } = require('./deps')
+const { initDeps } = require('./deps')
 const { isIgnorePath, setBuildEnv } = require('./utils/')
+const babelTransform = require('./babel-compiler')
+const { cacheGlob: glob } = require('./utils/glob')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -19,7 +21,6 @@ const { isIgnorePath, setBuildEnv } = require('./utils/')
 // TODO css scope，css module
 // 组件内部依赖，第三方依赖
 // TODO babel transform runtime，转 es5
-// 抽取公共函数 getExt getComponentName
 // spinner
 
 
@@ -37,40 +38,41 @@ const { isIgnorePath, setBuildEnv } = require('./utils/')
 // 9. 编译 LIB_DIR，将所有 js 文件编译成 commonJs 规范
 
 
-function compileDir(dir) {
-  const results = fs.readdirSync(dir)
-  const dirs = []
-  const files = []
-  results.forEach(res => {
-    const filePath = path.join(dir, res)
-    if (isIgnorePath(filePath)) {
-      fs.removeSync(filePath)
-      return
-    }
-    if (fs.lstatSync(filePath).isDirectory()) {
-      dirs.push(filePath)
-    } else {
-      files.push(filePath)
-    }
-  })
-  dirs.map(compileDir)
-  const vueFiles = files.filter(file => /\.vue/.test(file))
-  const scriptFiles = files.filter(file => /\.(js|ts|jsx|tsx)/.test(file))
-  // 先编译 vue 和 jsx/tsx
-  vueFiles.forEach(compileVue)
-  scriptFiles.forEach(compileJs)
+async function compileScripts(dir) {
+  const files = glob(`${dir}/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
+  const vueFiles = files.filter(filePath => /\.vue$/.test(filePath))
+  const scriptFiles = files.filter(filePath => /\.(js|ts|jsx|tsx)$/.test(filePath))
+  const promises = vueFiles.map(compileVue).concat(scriptFiles.map(compileJs))
+  return Promise.all(promises)
 }
 
-// 清空目录
-fs.emptyDirSync(ES_DIR)
-fs.emptyDirSync(LIB_DIR)
-// 编译 es
-setBuildEnv('esmodule')
-fs.copySync(SRC_DIR, ES_DIR)
-initDeps()
-compileDir(ES_DIR)
-generateCssModule()
-compileStyle()
-generateEntry()
-// 编译 commonjs
-setBuildEnv('commonjs')
+function buildLib() {
+  // 编译成 commonjs
+  setBuildEnv('commonjs')
+  fs.emptyDirSync(LIB_DIR)
+  fs.copySync(ES_DIR, LIB_DIR)
+  glob(`${LIB_DIR}/**/*.js`).forEach(filePath => {
+    const content = fs.readFileSync(filePath, 'utf8')
+    babelTransform(filePath, content).then(result => {
+      fs.outputFileSync(filePath, result)
+    })
+  })
+}
+
+buildEs().then(() => {
+  buildLib()
+})
+
+
+function buildEs() {
+  // 编译成 esmodule
+  setBuildEnv('esmodule')
+  fs.emptyDirSync(ES_DIR)
+  fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
+  initDeps()
+  return compileScripts(ES_DIR).then(() => {
+    generateCssModule()
+    compileStyle()
+    generateEntry()
+  })
+}

@@ -8,7 +8,7 @@ const deps = {}
 function updateImport(filePath, source) {
   // 更新 import 语句，将 vue|jsx|tsx|ts 的引入改成 js
   // 并且根据 import 语句添加到全局依赖对象
-  const SCRIPT_REG = /\.(vue|jsx|tsx|ts)/g
+  const SCRIPT_REG = /\.(vue|jsx|tsx|ts)$/g
   const component = getUniqueName(filePath)
   // https://regexr.com/47jlq
   const IMPORT_REG = /import\s+?(?:(?:(?:[\w*\s{},]*)\s+from\s+?)|)(?:(?:".*?")|(?:'.*?'))[\s]*?(?:;|$|)/g
@@ -119,7 +119,7 @@ function initDeps() {
 }
 
 function getDeps(component) {
-  // 获取依赖并且会修正依赖路径
+  // 获取依赖并且会修正依赖的相对路径
   const temp = []
   if (component && deps[component] && deps[component].length) {
     deps[component].forEach(dep => {

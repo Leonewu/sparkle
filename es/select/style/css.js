@@ -1,6 +1,6 @@
-require("../../common/base.css")
-require("../index.css")
-require("../../button/index.css")
-require("../components/test.css")
-require("../components/components2/test2.css")
-require("../components3/test3.css")
+import "../../common/base.css"
+import "../index.css"
+import "../../button/index.css"
+import "../components/test.css"
+import "../components/components2/test2.css"
+import "../components3/test3.css"
