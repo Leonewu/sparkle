@@ -1,0 +1,19 @@
+
+@import '../common/mixin.scss';
+@import '../common/var.scss';
+
+.wrapper {
+  @include transition;
+  @include reset-list;
+
+  background: $base-color;
+  color: rgb(76, 0, 255);
+  // transition: all .5s;
+  display: flex;
+}
+
+/* sfc-style-block-0 */
+
+.test[data-v-5e24e079] {
+  background: #ddd;
+}

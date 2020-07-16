@@ -6,48 +6,50 @@ const { getPreStyle } = require('../utils/')
 const path = require('path')
 
 function generateStyleEntry() {
-  return new Promise((resolve, reject) => {
-    const deps = []
-    let importCodes = `@import "./${BASE_STYLE_FILE}";`
-    COMPONENTS.forEach(component => {
-      const styleFile = getPreStyle(`${OUTPUT_DIR}/${component}/`)
-      if (styleFile.path) {
-        deps.push(component)
-        importCodes += `\n@import "./${component}/${styleFile.ext}";`
-      }
-      getDeps(component).forEach(dep => {
-        if (!deps.includes(dep.fullPath)) {
-          deps.push(dep.fullPath)
-          const depStylePath = path.join(OUTPUT_DIR, component, dep.path)
-          const depStyleFile = getPreStyle(depStylePath)
-          if (depStyleFile.path) {
-            // sass 引入 css 要去掉 css 后缀
-            importCodes += `\n@import "${depStyleFile.path.replace(OUTPUT_DIR, '.').replace('.css', '')}";`
-          }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const deps = []
+      let importCodes = `@import "./${BASE_STYLE_FILE}";`
+      COMPONENTS.forEach(component => {
+        const styleFile = getPreStyle(`${OUTPUT_DIR}/${component}/`)
+        if (styleFile.path) {
+          deps.push(component)
+          importCodes += `\n@import "./${component}/${styleFile.ext}";`
         }
+        getDeps(component).forEach(dep => {
+          if (!deps.includes(dep.fullPath)) {
+            deps.push(dep.fullPath)
+            const depStylePath = path.join(OUTPUT_DIR, component, dep.path)
+            const depStyleFile = getPreStyle(depStylePath)
+            if (depStyleFile.path) {
+              // sass 引入 css 要去掉 css 后缀
+              importCodes += `\n@import "${depStyleFile.path.replace(OUTPUT_DIR, '.').replace('.css', '')}";`
+            }
+          }
+        })
       })
-    })
-    const sassPath = `${OUTPUT_DIR}/index${STYLE_EXT}`
-    const cssPath = sassPath.replace(new RegExp(`${STYLE_EXT}`), '.css')
-    fs.outputFileSync(sassPath, importCodes)
-    compileSass(sassPath).then(res => {
-      fs.outputFileSync(cssPath, res.content)
-    })
-    resolve()
+      const sassPath = `${OUTPUT_DIR}/index${STYLE_EXT}`
+      const cssPath = sassPath.replace(new RegExp(`${STYLE_EXT}`), '.css')
+      fs.outputFileSync(sassPath, importCodes)
+      const res = await compileSass(sassPath)
+      res.content && fs.outputFileSync(cssPath, res.content)
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
   })
 }
 
-function getStyle() {
-  
-}
 
 function generateScriptEntry() {
-  let code = COMPONENTS.reduce((sum, cur) => {
-      sum += `\nimport ${cur} from "./${cur}/index.js";`
-      return sum
-    }, '')
-    code += `
-const components = [${COMPONENTS.join(', ')}];
+  return new Promise((resolve, reject) => {
+    try {
+      let code = COMPONENTS.reduce((sum, cur) => {
+        sum += `\nimport ${cur} from "./${cur}/index.js";`
+        return sum
+      }, '')
+      code += `
+const components = [${COMPONENTS.join(', ')}];\n
 function install(Vue) {
   components.forEach(component => {
     if (component.install) {
@@ -63,11 +65,18 @@ function install(Vue) {
 export default {
   install
 }`
-    fs.outputFileSync(`${OUTPUT_DIR}/index.js`, code)
+      fs.outputFileSync(`${OUTPUT_DIR}/index.js`, code)
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
+  })
 }
 
 function generateEntry() {
-  generateStyleEntry()
-  generateScriptEntry()
+  return Promise.all([
+    generateStyleEntry(),
+    generateScriptEntry()
+  ])
 }
 module.exports = generateEntry

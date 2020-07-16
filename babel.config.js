@@ -3,7 +3,7 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        modules: false
+        modules: process.env.BUILD_ENV === 'commonjs' ? 'commonjs' : false
       }
     ],
     '@babel/preset-typescript'

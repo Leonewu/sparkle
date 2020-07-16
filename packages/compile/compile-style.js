@@ -6,18 +6,20 @@ const { cacheGlob: glob } = require('./utils/glob')
 
 function compileStyle() {
   // 编译所有样式文件
-  const styles = glob(`${OUTPUT_DIR}/**/*.{${STYLE_EXT.substr(1)}, css}`)
-  styles.forEach(filePath => {
-    const compiledPath = filePath.replace(new RegExp(`${STYLE_EXT}`), '.css')
-    compileSass(filePath).then(res => {
-      if (res.content) {
-        fs.outputFileSync(compiledPath, res.content)
-      }
-    })
+  return new Promise((resolve, reject) => {
+    try {
+      const styleFiles = glob(`${OUTPUT_DIR}/**/*.{${STYLE_EXT.substr(1)}, css}`)
+      styleFiles.forEach(async (filePath) => {
+        const compiledPath = filePath.replace(new RegExp(`${STYLE_EXT}`), '.css')
+        const res = await compileSass(filePath)
+        res.content && fs.outputFileSync(compiledPath, res.content)
+      })
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
   })
 }
 
 
-module.exports = {
-  compileStyle
-}
+module.exports = compileStyle
