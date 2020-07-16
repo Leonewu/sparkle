@@ -1,14 +1,14 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { SCRIPT_EXTS, OUTPUT_DIR, STYLE_EXT } = require('./config') 
+const { SCRIPT_EXTS, OUTPUT_DIR, STYLE_EXT } = require('./config')
 const { cacheGlob: glob } = require('./utils/glob')
-const { isIgnorePath  } = require('./utils/')
+const { isIgnorePath } = require('./utils/')
 const deps = {}
 
 function updateImport(filePath, source) {
   // 更新 import 语句，将 vue|jsx|tsx|ts 的引入改成 js
   // 并且根据 import 语句添加到全局依赖对象
-  const SCRIPT_REG = /\.(vue|jsx|tsx|ts)$/g
+  const SCRIPT_REG = /\.(vue|jsx|tsx|ts)/g
   const component = getUniqueName(filePath)
   // https://regexr.com/47jlq
   const IMPORT_REG = /import\s+?(?:(?:(?:[\w*\s{},]*)\s+from\s+?)|)(?:(?:".*?")|(?:'.*?'))[\s]*?(?:;|$|)/g
@@ -19,9 +19,9 @@ function updateImport(filePath, source) {
     const importPath = importCode.split(quote)[1]
     const dep = getDepByImport(filePath, importPath)
     // if (dep && deps[dep.name]) {
-      // 这里的判断没有写错
-      // deps[dep.name] 说明是组件
-      deps[component].push(dep)
+    // 这里的判断没有写错
+    // deps[dep.name] 说明是组件
+    deps[component].push(dep)
     // }
     // 将引入文件后缀改成 js
     if (SCRIPT_REG.test(importCode)) {
@@ -104,7 +104,7 @@ function initDeps() {
   const globStr = `${OUTPUT_DIR}/*/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`
   glob(globStr).forEach(filePath => {
     if (isIgnorePath(filePath)) return
-      if (['.vue', '.jsx', 'tsx'].includes(path.extname(filePath)) === '.vue') {
+    if (['.vue', '.jsx', 'tsx'].includes(path.extname(filePath)) === '.vue') {
       const dirName = getUniqueName(filePath)
       deps[dirName] = []
     } else {
@@ -126,7 +126,7 @@ function getDeps(component) {
       temp.push(dep)
       const sub = getDeps(dep.name)
       sub.forEach(subDep => {
-        const newPath = './' + path.join(dep.path, '..' , subDep.path)
+        const newPath = './' + path.join(dep.path, '..', subDep.path)
         temp.push({
           ...subDep, path: newPath
         })

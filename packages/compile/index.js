@@ -66,15 +66,16 @@ function buildEs() {
   fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
   initDeps()
   return compileScripts(ES_DIR).then(() => {
-    generateCssModule()
-    compileStyle()
-    generateEntry()
+    return Promise.all([
+      generateCssModule(),
+      compileStyle(),
+      generateEntry()])
   })
 }
 
-// buildEs().then(() => {
-//   buildLib()
-// })
+buildEs().then(() => {
+  buildLib()
+})
 
 const tasks = [
   {
@@ -107,7 +108,7 @@ const tasks = [
   },
 ]
 
-const spinner = ora(`${emoji.rocket_x3} ${chalk.cyan('unicorns')}`).start();
-setTimeout(() => {
-  spinner.succeed('哈哈哈')
-}, 1000)
+// const spinner = ora(`${emoji.rocket_x3} ${chalk.cyan('unicorns')}`).start();
+// setTimeout(() => {
+//   spinner.succeed('哈哈哈')
+// }, 1000)
