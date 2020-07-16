@@ -7,7 +7,7 @@ const postcssNormalize = require('postcss-normalize')
 function compile(file) {
   const css = sass.renderSync({ file }).css
   const processor = postcss([autoprefixer, postcssNormalize])
-  return processor.process(css)
+  return processor.process(css, { from: undefined })
 }
 
 module.exports = compile
