@@ -12,7 +12,7 @@ function compileJs(filePath) {
     content = updateImport(filePath, content)
     content = injectInstall(filePath, content)
     const result = await babelTransform(filePath, content)
-    fs.remove(filePath)
+    fs.removeSync(filePath)
     fs.outputFileSync(outputFile, result)
     resolve()
   })

@@ -100,7 +100,7 @@ function compileVue(filePath) {
     }
     const outputFile = filePath.replace('vue', 'js')
     const result = await babelTransform(filePath, script)
-    fs.remove(filePath)
+    fs.removeSync(filePath)
     fs.outputFileSync(outputFile, result)
     resolve(filePath)
   })
