@@ -53,9 +53,8 @@ function buildLib() {
   fs.copySync(ES_DIR, LIB_DIR)
   glob(`${LIB_DIR}/**/*.js`).forEach(filePath => {
     const content = fs.readFileSync(filePath, 'utf8')
-    babelTransform(filePath, content).then(result => {
-      fs.outputFileSync(filePath, result)
-    })
+    const result = babelTransform(filePath, content)
+    fs.outputFileSync(filePath, result)
   })
 }
 
@@ -69,7 +68,8 @@ function buildEs() {
     return Promise.all([
       generateCssModule(),
       compileStyle(),
-      generateEntry()])
+      generateEntry()
+    ])
   })
 }
 
