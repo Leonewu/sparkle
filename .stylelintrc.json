@@ -12,6 +12,7 @@
     "no-empty-source": null
   },
   "ignoreFiles": [
-    "./{site,mobile}/**/*.{vue,scss}"
+    "./{site,mobile}/**/*.{vue,scss}",
+    "./{es,lib}/**/*.css"
   ]
 }

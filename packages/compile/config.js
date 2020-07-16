@@ -19,7 +19,6 @@ const BASE_STYLE_FILE = `common/base.scss`
 const DEV_DIR = path.join(__dirname, '.dev')
 // 组件名前缀
 const COMPONENT_PREFIX = 'xiao'
-
 // 组件数组，将 json 文件拍平
 const COMPONENTS = componentsJson.reduce((sum, cur) => {
   return sum.concat(cur.components.map(component => component.path))
@@ -44,6 +43,9 @@ const COMPONENTS = componentsJson.reduce((sum, cur) => {
 //   return sum
 // }, [])
 
+// 当前打包输出目录
+// 如果是打包 commonjs 就用 LIB_DIR
+const OUTPUT_DIR = process.env.BUILD_ENV === 'commonjs' ? LIB_DIR : ES_DIR 
 
 module.exports = {
   DEV_DIR,
@@ -54,5 +56,6 @@ module.exports = {
   SCRIPT_EXTS,
   STYLE_EXT,
   COMPONENTS,
-  COMPONENT_PREFIX
+  COMPONENT_PREFIX,
+  OUTPUT_DIR
 }

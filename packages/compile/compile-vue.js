@@ -2,16 +2,16 @@
 const fs = require('fs-extra')
 const compiler = require('vue-template-compiler')
 const VueCompileUtils = require('@vue/component-compiler-utils')
-const babel = require('@babel/core')
 const { STYLE_EXT } = require('./config')
 const hash = require('hash-sum')
 const { updateImport } = require('./deps')
 const { isExist } = require('./utils/cache')
 const { injectInstall, removeComment } = require('./utils/')
+const babelTransform = require('./babel-compiler')
 
 function compileVue(filePath) {
-  const source = fs.readFileSync(filePath, 'utf8')
-  return new Promise(function(resolve, reject) {
+  return new Promise(async function(resolve, reject) {
+    const source = fs.readFileSync(filePath, 'utf8')
     // TODO 可能需要 sourceMap，估计需要改 needMap 还有 babel.transfrom(code, options)
     // TODO 需要控制好报错，readFile => parse => babel => uglify => writeFile
     // TODO 打印必要的信息，如文件以及处理状态，大小
@@ -99,10 +99,8 @@ function compileVue(filePath) {
       script = template
     }
     const outputFile = filePath.replace('vue', 'js')
-    const result = babel.transformSync(script, { filename: filePath }).code
-    // 到这里为止，打出来的是没有 uglify 的 esModule
-    // 这一部开始，可以继续编译出来 umd
-    // TODO uglify umd 去掉注释
+    const result = await babelTransform(filePath, script)
+    fs.remove(filePath)
     fs.outputFileSync(outputFile, result)
     resolve(filePath)
   })
