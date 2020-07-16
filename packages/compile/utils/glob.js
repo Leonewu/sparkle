@@ -37,11 +37,8 @@ function glob(str, isCache) {
       routes.push('*')
     }
   }
-  console.log('names: ', fileNames)
-  console.log('exts:', fileExts)
   routes[0] === '' && routes.shift()
   routes[routes.length - 1] === '' && routes.pop()
-  console.log(routes)
   const results = routes.map(() => [])
   routes.forEach((route, index) => {
     let res = []

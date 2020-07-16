@@ -4,7 +4,6 @@
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const path = require('path')
-const childProcess = require('child_process')
 
 function replaceFile(dir, componentName) {
   // 读取文件目录并且替换文件内容，重命名
@@ -25,7 +24,6 @@ function replaceFile(dir, componentName) {
 }
 
 function replaceName(str, componentName) {
-  // 替换字符串
   const capitalizeName = componentName.split('-').map(str => str[0].toUpperCase() + str.slice(1)).join('')
   return str
     // .replace(/xiao-example/g, `xiao-${componentName}`)
@@ -35,25 +33,8 @@ function replaceName(str, componentName) {
     .replace(/Example/g, capitalizeName)
 }
 
-// function updateComponentsJson() {
-//   // 根据文件目录更新 components.json 文件
-//   const filePath = path.resolve(__dirname, '../../src/components')
-//   const components = fs.readdirSync(filePath)
-//     .sort((a, b) =>
-//       fs.statSync(filePath + '/' + a).birthtimeMs - fs.statSync(filePath + '/' + b).birthtimeMs)
-//   const content = components.reduce((sum, cur, idx) => {
-//     if (idx < components.length - 1) {
-//       sum += `  "${cur}",\n`
-//     } else {
-//       sum += `  "${cur}"\n`
-//     }
-//     return sum
-//   }, '')
-//   fs.writeFileSync(path.resolve(__dirname, '../../components.json'), `[\n${content}]`)
-// }
-
 // main programe begin
-const components = fs.readdirSync(path.resolve(__dirname, '../../src/components'))
+const components = fs.readdirSync(path.resolve(__dirname, '../../src'))
 if (!process.argv[2]) {
   console.log(chalk.red('请输入组件名称，npm run create [component name]'))
   process.exit()
@@ -64,8 +45,8 @@ if (components.includes(name)) {
   process.exit()
 }
 const src = path.resolve(__dirname, './example')
-const dest = path.resolve(__dirname, `../../src/components/${name}`)
-childProcess.spawnSync('cp', ['-r', src, dest])
+const dest = path.resolve(__dirname, `../../src/${name}`)
+fs.copySync(src, dest)
 replaceFile(dest, name)
 // end
 const emoji = {
@@ -79,16 +60,13 @@ console.log(chalk.magenta(`${emoji.rocket_x3} 组件 ${name} 创建成功!`))
 // │ └ ├ ─
 console.log(chalk.cyan(
   'src\n' +
-  '├──components\n' +
-  `├──└── ${name}\n` +
-  '├──────└── index.js\n' +
-  `├──────└── ${name}.vue\n` +
-  `├──────└── ${name}.scss\n` +
-  '├──────└── demo\n' +
-  '├──────────└── index.vue\n' +
-  '├──────└── __test__\n' +
-  '└──────────└── index.spec.js\n'))
-console.log(chalk.red(`${emoji.point_right_x3} 请在` + chalk.bgMagentaBright.black.italic(' src/index.js ') + `中手动添加组件入口! ${emoji.point_left_x3}`))
+  `├── ${name}\n` +
+  '├───└── index.vue\n' +
+  '├───└── index.scss\n' +
+  '├───└── README.md\n' +
+  '├───└── demo\n' +
+  '├───────└── index.vue\n' +
+  '├───└── __test__\n' +
+  '└───────└── index.spec.js\n'))
+console.log(chalk.red(`${emoji.point_right_x3} 请在` + chalk.bgMagentaBright.black.italic(' components.config.js ') + `中手动添加组件配置! ${emoji.point_left_x3}`))
 console.log(chalk.yellow(`${emoji.fire} Getting started with ` + chalk.magenta.italic('`npm run dev`')))
-console.log(chalk.yellow(`${emoji.fire} 移动端预览: http://127.0.0.1:2333/mobile.html/${name}`))
-console.log(chalk.yellow(`${emoji.fire} 网站预览: http://127.0.0.1:2333/index.html/${name}`))
