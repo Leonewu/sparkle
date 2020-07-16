@@ -32,7 +32,7 @@ function generateStyleEntry() {
       const cssPath = sassPath.replace(new RegExp(`${STYLE_EXT}`), '.css')
       fs.outputFileSync(sassPath, importCodes)
       const res = await compileSass(sassPath)
-      res.content && fs.outputFileSync(cssPath, res.content)
+      res.css && fs.outputFileSync(cssPath, res.css)
       resolve()
     } catch (e) {
       reject(e)

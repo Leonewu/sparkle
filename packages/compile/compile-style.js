@@ -12,7 +12,7 @@ function compileStyle() {
       styleFiles.forEach(async (filePath) => {
         const compiledPath = filePath.replace(new RegExp(`${STYLE_EXT}`), '.css')
         const res = await compileSass(filePath)
-        res.content && fs.outputFileSync(compiledPath, res.content)
+        res.css && fs.outputFileSync(compiledPath, res.css)
       })
       resolve()
     } catch (e) {
