@@ -11,8 +11,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      // "program": "${workspaceFolder}/packages/compile/index.js"
-      "program": "${workspaceFolder}/packages/compile/utils/cache.js"
+      "program": "${workspaceFolder}/packages/compile/index.js"
+      // "program": "${workspaceFolder}/packages/compile/utils/cache.js"
     }
   ]
 }

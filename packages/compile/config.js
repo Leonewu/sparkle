@@ -8,7 +8,7 @@ const STYLE_EXT = '.scss'
 // 根目录
 const ROOT = path.resolve(__dirname, '../../')
 // 打包输出 commonjs 目录
-const OUTPUT_DIR = `${ROOT}/fs-lib-2`
+const OUTPUT_DIR = `${ROOT}/lib`
 // 打包输出 esModule 目录
 const ES_DIR = `${ROOT}/es`
 // 源目录

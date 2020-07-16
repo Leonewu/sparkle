@@ -8,7 +8,10 @@ module.exports = {
     ],
     '@babel/preset-typescript'
   ],
-  plugins: ['transform-vue-jsx'],
+  plugins: [
+    'transform-vue-jsx',
+    '@babel/plugin-transform-runtime'
+  ],
   env: {
     test: {
       presets: [
