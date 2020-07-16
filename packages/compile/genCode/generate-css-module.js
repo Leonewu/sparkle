@@ -6,7 +6,7 @@ const { getPreStyle } = require('../utils/')
 function generateCssModule() {
   // 生成样式依赖文件
   // button/style/css.js
-  // button/style/sass.js
+  // button/style/scss.js
   return new Promise((resolve, reject) => {
     COMPONENTS.forEach(component => {
       let sassImports = `require("../../${BASE_STYLE_FILE}")`
@@ -26,7 +26,7 @@ function generateCssModule() {
       })
       const cssImports = sassImports.replace(new RegExp(`${STYLE_EXT}`, 'g'), '.css')
       const styleModuleDir = `${LIB_DIR}/${component}/style`
-      fs.outputFileSync(`${styleModuleDir}/sass.js`, sassImports)
+      fs.outputFileSync(`${styleModuleDir}/${STYLE_EXT.substr(1)}.js`, sassImports)
       fs.outputFileSync(`${styleModuleDir}/css.js`, cssImports)
     })
     resolve()

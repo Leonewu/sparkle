@@ -1,7 +1,5 @@
 node_module
 lib
-fs-lib
-fs-lib-2
-gulp-lib
+es
 site-dist
 packages/compile

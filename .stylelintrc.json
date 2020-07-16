@@ -12,13 +12,6 @@
     "no-empty-source": null
   },
   "ignoreFiles": [
-    "./mobile/**/*.scss",
-    "./mobile/**/*.vue",
-    "./site/**/*.scss",
-    "./site/**/*.vue",
-    "./lib/**/*.css",
-    "./gulp-lib/**/*.css",
-    "./fs-lib/**/*.{scss,css}",
-    "./fs-lib-2/**/*.{scss,css}"
+    "./{site,mobile}/**/*.{vue,scss}"
   ]
 }
