@@ -4,7 +4,7 @@ const compileJs = require('./compile-script')
 const generateEntry = require('./genCode/generate-entry')
 const { generateCssModule } = require('./genCode/generate-css-module')
 const { compileStyle } = require('./compile-style')
-const { OUTPUT_DIR, SRC_DIR } = require('./config')
+const { LIB_DIR, SRC_DIR } = require('./config')
 const chalk = require('chalk')
 const path = require('path')
 const { getDeps, initDeps } = require('./deps')
@@ -25,9 +25,9 @@ const { isIgnorePath } = require('./utils/')
 
 // 顺序
 // 1. 清空目录
-// 2. 复制目录（SRC_DIR => OUTPUT_DIR）
+// 2. 复制目录（SRC_DIR => LIB_DIR）
 // 3. 初始化依赖对象
-// 4. 编译目录（OUTPUT_DIR）
+// 4. 编译目录（LIB_DIR）
 // 4-1. 编译时，根据文件类型编译
 // 4-2. 编译时，会补充第3步中的依赖对象
 // 5. 生成 css module 文件
@@ -63,10 +63,10 @@ function compileDir(dir) {
   scriptFiles.forEach(compileJs)
 }
 
-fs.emptyDirSync(OUTPUT_DIR)
-fs.copySync(SRC_DIR, OUTPUT_DIR)
+fs.emptyDirSync(LIB_DIR)
+fs.copySync(SRC_DIR, LIB_DIR)
 initDeps()
-compileDir(OUTPUT_DIR)
+compileDir(LIB_DIR)
 generateCssModule()
 compileStyle()
 generateEntry()

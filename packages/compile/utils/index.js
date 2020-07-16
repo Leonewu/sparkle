@@ -1,5 +1,5 @@
 const { isExist } = require('./cache')
-const { STYLE_EXT, COMPONENTS, OUTPUT_DIR, SCRIPT_EXTS } = require('../config')
+const { STYLE_EXT, COMPONENTS, LIB_DIR, SCRIPT_EXTS } = require('../config')
 function isTestPath(filePath) {
   return /__test__/.test(filePath)
 }
@@ -46,7 +46,7 @@ function getPreStyle(filePath) {
 }
 
 function isComponent(filePath) {
-  const paths = COMPONENTS.map(com => new RegExp(`${OUTPUT_DIR}/${com}/index\.(${SCRIPT_EXTS.map(s => s.substr(1)).join('|')})`))
+  const paths = COMPONENTS.map(com => new RegExp(`${LIB_DIR}/${com}/index\.(${SCRIPT_EXTS.map(s => s.substr(1)).join('|')})`))
   let flag = false
   for (reg of paths) {
     if (reg.test(filePath)) {

@@ -8,7 +8,7 @@ const STYLE_EXT = '.scss'
 // 根目录
 const ROOT = path.resolve(__dirname, '../../')
 // 打包输出 commonjs 目录
-const OUTPUT_DIR = `${ROOT}/lib`
+const LIB_DIR = `${ROOT}/lib`
 // 打包输出 esModule 目录
 const ES_DIR = `${ROOT}/es`
 // 源目录
@@ -16,7 +16,7 @@ const SRC_DIR = `${ROOT}/src`
 // 公共的样式文件
 const BASE_STYLE_FILE = `common/base.scss`
 // development 下的输出目录
-const DEV_OUTPUT_DIR = path.join(__dirname, '.dev')
+const DEV_DIR = path.join(__dirname, '.dev')
 // 组件名前缀
 const COMPONENT_PREFIX = 'xiao'
 
@@ -46,8 +46,8 @@ const COMPONENTS = componentsJson.reduce((sum, cur) => {
 
 
 module.exports = {
-  DEV_OUTPUT_DIR,
-  OUTPUT_DIR,
+  DEV_DIR,
+  LIB_DIR,
   ES_DIR,
   SRC_DIR,
   BASE_STYLE_FILE,
