@@ -35,10 +35,12 @@ function compileVue(filePath) {
               trim: true
             })
             if (errors.length) {
-              console.log(errors)
-            } else {
-              content = code
+              errors.forEach(err => {
+                console.log(`Errors compiling vue style${err.msg}`)
+              })
+              throw new Error(`file: ${filePath}`)
             }
+            content = code
           }
           content = content ? `\n/* sfc-style-block-${index} */\n${content}` : ''
           if (style.lang && style.lang !== 'css') {
