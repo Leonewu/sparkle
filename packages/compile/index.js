@@ -37,9 +37,9 @@ const emoji = require('../emoji/')
 // 9. 编译 LIB_DIR，将所有 js 文件编译成 commonJs 规范
 
 
-async function compileScripts(dir) {
+async function compileScripts() {
   // 编译所有 vue|jsx|tsx|ts|js 文件
-  const files = glob(`${dir}/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
+  const files = glob(`${ES_DIR}/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
   const vueFiles = files.filter(filePath => /\.vue$/.test(filePath))
   const scriptFiles = files.filter(filePath => /\.(js|ts|jsx|tsx)$/.test(filePath))
   const promises = vueFiles.map(compileVue).concat(scriptFiles.map(compileJs))
@@ -64,41 +64,47 @@ function buildEs() {
   fs.emptyDirSync(ES_DIR)
   fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
   initDeps()
-  return compileScripts(ES_DIR).then(() => {
-    return Promise.all([
-      generateCssModule(),
-      compileStyle(),
-      generateEntry()
-    ])
-  })
+  return compileScripts()
+    .then(generateCssModule)
+    .then(compileStyle)
+    .then(generateEntry)
 }
 
-buildEs().then(() => {
-  buildLib()
-})
+// buildEs().then(() => {
+//   buildLib()
+// })
 
 const tasks = [
   {
     name: '编译esModule目录',
-    task: buildEs,
-    subTasks: [
+    task: [
       {
-        name: '设置环境变量',
+        name: '清空复制编译目录',
         task: function() {
           setBuildEnv('esmodule')
-        }
-      },
-      {
-        name: '清空编译目录',
-        task: function() {
           fs.emptyDirSync(ES_DIR)
-        }
-      },
-      {
-        name: '复制源目录',
-        task: function() {
           fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
         }
+      },
+      {
+        name: '初始化组件依赖',
+        task: initDeps
+      },
+      {
+        name: '编译脚本文件',
+        task: compileScripts
+      },
+      {
+        name: '生成样式依赖文件',
+        task: generateCssModule
+      },
+      {
+        name: '编译样式文件',
+        task: compileStyle
+      },
+      {
+        name: '生成入口文件',
+        task: generateEntry
       },
     ]
   },
@@ -107,8 +113,21 @@ const tasks = [
     task: buildLib
   },
 ]
+async function build() {
+  const spinner = ora(`${emoji.rocket_x3} ${chalk.cyan('unicorns')}`).start();
+  setTimeout(() => {
+    spinner.succeed('哈哈哈')
+  }, 1000)
+  for (const task of tasks) {
+    if (typeof task.task === 'function') {
+      await task.task()
+    } else if (Object.prototype.toString.call(task.task) === '[object Array]') {
+      for (const sub of task.task) {
+        await sub.task()
+      }
+    }
+  }
+}
 
-// const spinner = ora(`${emoji.rocket_x3} ${chalk.cyan('unicorns')}`).start();
-// setTimeout(() => {
-//   spinner.succeed('哈哈哈')
-// }, 1000)
+build()
+
