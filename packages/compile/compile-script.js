@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const { injectInstall, removeComment } = require('./utils/')
-const { updateImport } = require('./deps')
+const { addDepByImport } = require('./deps')
 const babelTransform = require('./babel-compiler')
 
 
@@ -18,4 +18,27 @@ function compileJs(filePath) {
   })
 }
 
-module.exports = compileJs
+function updateImport(filePath, source) {
+  // 更新 import 语句，并将 vue|jsx|tsx|ts 的引入替换 js
+  // 并且根据 import 语句拿到对应的依赖，更新到 deps
+  const SCRIPT_REG = /\.(vue|jsx|tsx|ts)/g
+  // https://regexr.com/47jlq
+  const IMPORT_REG = /import\s+?(?:(?:(?:[\w*\s{},]*)\s+from\s+?)|)(?:(?:".*?")|(?:'.*?'))[\s]*?(?:;|$|)/g
+  source = source || fs.readFileSync(filePath, 'utf8')
+  const imports = source.match(IMPORT_REG)
+  imports && imports.forEach(importCode => {
+    const quote = importCode.includes('"') ? '"' : "'"
+    const importPath = importCode.split(quote)[1]
+    addDepByImport(filePath, importPath)
+    // 将引入文件后缀改成 js
+    if (SCRIPT_REG.test(importCode)) {
+      source = source.replace(importCode, importCode.replace(SCRIPT_REG, '.js'))
+    }
+  })
+  return source
+}
+
+module.exports = {
+  compileJs,
+  updateImport
+}

@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const compileVue = require('./compile-vue')
-const compileJs = require('./compile-script')
+const { compileJs } = require('./compile-script')
 const generateEntry = require('./codegen/generate-entry')
 const generateCssModule = require('./codegen/generate-css-module')
 const compileStyle = require('./compile-style')
@@ -27,7 +27,7 @@ const emoji = require('../emoji/')
 // 1. 清空目录
 // 2. 复制目录（SRC_DIR => ES_DIR）
 // 3. 初始化依赖对象
-// 4. 编译目录（ES_DIR）
+// 4. 编译脚本文件
 // 4-1. 编译时，根据文件类型编译
 // 4-2. 编译时，会补充第3步中的依赖对象
 // 5. 生成 css module 文件
@@ -37,8 +37,9 @@ const emoji = require('../emoji/')
 // 9. 编译 LIB_DIR，将所有 js 文件编译成 commonJs 规范
 
 
-async function compileScripts() {
+async function compileFiles() {
   // 编译所有 vue|jsx|tsx|ts|js 文件
+  // 先不编译样式文件
   const files = glob(`${ES_DIR}/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
   const vueFiles = files.filter(filePath => /\.vue$/.test(filePath))
   const scriptFiles = files.filter(filePath => /\.(js|ts|jsx|tsx)$/.test(filePath))
@@ -58,21 +59,6 @@ function buildLib() {
   })
 }
 
-function buildEs() {
-  // 编译成 esmodule
-  setBuildEnv('esmodule')
-  fs.emptyDirSync(ES_DIR)
-  fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
-  initDeps()
-  return compileScripts()
-    .then(generateCssModule)
-    .then(compileStyle)
-    .then(generateEntry)
-}
-
-// buildEs().then(() => {
-//   buildLib()
-// })
 
 const tasks = [
   {
@@ -92,7 +78,7 @@ const tasks = [
       },
       {
         name: '编译脚本文件',
-        task: compileScripts
+        task: compileFiles
       },
       {
         name: '生成样式依赖文件',

@@ -1,37 +1,10 @@
-const fs = require('fs-extra')
 const path = require('path')
 const { SCRIPT_EXTS, ES_DIR, STYLE_EXT } = require('./config')
 const { cacheGlob: glob } = require('./utils/glob')
 const { isIgnorePath } = require('./utils/')
 const deps = {}
 
-function updateImport(filePath, source) {
-  // 更新 import 语句，将 vue|jsx|tsx|ts 的引入改成 js
-  // 并且根据 import 语句添加到全局依赖对象
-  const SCRIPT_REG = /\.(vue|jsx|tsx|ts)/g
-  const component = getUniqueName(filePath)
-  // https://regexr.com/47jlq
-  const IMPORT_REG = /import\s+?(?:(?:(?:[\w*\s{},]*)\s+from\s+?)|)(?:(?:".*?")|(?:'.*?'))[\s]*?(?:;|$|)/g
-  source = source || fs.readFileSync(filePath, 'utf8')
-  const imports = source.match(IMPORT_REG)
-  imports && imports.forEach(importCode => {
-    const quote = importCode.includes('"') ? '"' : "'"
-    const importPath = importCode.split(quote)[1]
-    const dep = getDepByImport(filePath, importPath)
-    // if (dep && deps[dep.name]) {
-    // 这里的判断没有写错
-    // deps[dep.name] 说明是组件
-    deps[component].push(dep)
-    // }
-    // 将引入文件后缀改成 js
-    if (SCRIPT_REG.test(importCode)) {
-      source = source.replace(importCode, importCode.replace(SCRIPT_REG, '.js'))
-    }
-  })
-  return source
-}
-
-function getDepByImport(filePath, importPath) {
+function addDepByImport(filePath, importPath) {
   /** 
    * 根据引入路径生成依赖对象
    * @params '../button/' filpath
@@ -56,13 +29,14 @@ function getDepByImport(filePath, importPath) {
   const file = glob(globStr)[0]
   if (file) {
     const name = getUniqueName(file)
-    return {
+    const dep = {
       name,
       path: getShortPath(importPath),
       fullPath: name
     }
+    const component = getUniqueName(filePath)
+    addDep(component, dep)
   }
-  return null
 }
 
 function getShortPath(importPath) {
@@ -118,6 +92,10 @@ function initDeps() {
   })
 }
 
+function addDep(component, dep) {
+  deps[component].push(dep)
+}
+
 function getDeps(component) {
   // 获取依赖并且会修正依赖的相对路径
   const temp = []
@@ -138,7 +116,7 @@ function getDeps(component) {
 
 
 module.exports = {
-  updateImport,
+  addDepByImport,
   getDeps,
   initDeps
 }
