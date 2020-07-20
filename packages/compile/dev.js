@@ -6,7 +6,7 @@ const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
 const configJson = require('../../components.config.js')
 
-// 生成 dev 的入口
+// 生成文件并启动 dev server
 
 const flatConfig = []
 

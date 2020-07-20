@@ -7,7 +7,7 @@ const hash = require('hash-sum')
 const { updateImport } = require('./compile-script')
 const { isExist } = require('./utils/cache')
 const { injectInstall, removeComment } = require('./utils/')
-const babelTransform = require('./babel-compiler')
+const babelTransform = require('./utils/babel-compiler')
 
 function compileVue(filePath) {
   return new Promise((resolve, reject) => {
