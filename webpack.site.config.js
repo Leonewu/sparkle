@@ -21,14 +21,15 @@ module.exports = {
   },
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, '../', 'site-dist'),
+    path: path.resolve(__dirname, 'site-dist'),
     chunkFilename: 'js-chunk/[name].[chunkhash].js'
   },
   resolve: {
     extensions: ['.ts', '.js', '.vue', '.jsx', '.json'],
     mainFiles: ['index'],
     alias: {
-      '@COMPONENTS': DEV_DIR
+      '@COMPONENTS': DEV_DIR,
+      '@assets': path.resolve(__dirname, './site/assets')
     }
   },
   resolveLoader: {
@@ -108,7 +109,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: 'img'
+              esModule: false,
+              outputPath: 'image'
             }
           }
         ]
@@ -121,22 +123,22 @@ module.exports = {
   },
   plugins: [
     new WebpackBar({
-      name: 'Starity UI',
+      name: 'Starry UI',
       color: '#c94bff'
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './site/doc/index.html',
-      logo: './site/icon/favicon-32x32.png',
-      title: 'Starity UI | Vue移动端组件库',
+      logo: './site/favicon.ico',
+      title: 'Starry UI | Vue移动端组件库',
       chunks: ['site']
     }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './site/mobile/index.html',
-      logo: './site/icon/favicon-32x32.png',
-      title: 'Starity UI | Vue移动端组件库',
+      logo: './site/favicon.ico',
+      title: 'Starry UI | Vue移动端组件库',
       chunks: ['mobile']
     }),
     new CleanWebpackPlugin()

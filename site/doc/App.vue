@@ -45,7 +45,7 @@ export default {
         s.title === '基础组件' && s.components
       ).components
       return {
-        title: 'Starity UI',
+        title: 'Starry UI',
         description: 'Mobile UI Components built on Vue',
         logo: 'https://img.yzcdn.cn/vant/logo.png',
         links: [{ logo: 'https://b.yzcdn.cn/vant/logo/github.svg', url: 'https://gitlab.xinghuolive.com/web' }],

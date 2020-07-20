@@ -105,6 +105,7 @@
 - [minify benchmarks](https://github.com/babel/minify#benchmarks)
 - [2B 场景下的前端组件库换肤设计理念与实践](https://mp.weixin.qq.com/s/zIA01wtk_bu4E-8SoEzLvQ)
 - [React组件库打包总结](https://juejin.im/post/5ebcf12df265da7bc55df460#heading-24)
+- [logo 来源](https://www.iconfinder.com/search/?q=minion)
 
 ## 拓展阅读
 

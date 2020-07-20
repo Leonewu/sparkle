@@ -3,7 +3,7 @@
     <div class="doc-row">
       <div class="doc-header__top">
         <a class="doc-header__logo">
-          <img :src="config.logo">
+          <img src="../../assets/logo.png">
           <span>{{ config.title }}</span>
         </a>
 
@@ -73,7 +73,6 @@
 
 <script>
 import SearchInput from './SearchInput.vue'
-
 export default {
   name: 'DocHeader',
 
@@ -250,10 +249,14 @@ export default {
     span {
       display: inline-block;
       vertical-align: middle;
+      background: linear-gradient(45deg, #25C070 0%, #33B5FB 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     img {
-      width: 24px;
+      width: 32px;
       margin-right: 10px;
     }
 
