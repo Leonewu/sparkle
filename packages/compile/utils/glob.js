@@ -93,11 +93,17 @@ function glob(str, isCache) {
         if (index === routes.length - 1 && !shouldPickDir) {
           // 刚好第一层就是最后一层，并且不用只筛出目录
           res = fs.readdirSync(entry).filter(s => {
-            return includeDirs.includes(s) && !excludeDirs.includes(s)
+            if (includeDirs.length && !includeDirs.includes('*')) {
+              return includeDirs.includes(s) && !excludeDirs.includes(s)
+            }
+            return !excludeDirs.includes(s)
           }).map(s => `${entry}/${s}`)
         } else {
           res = fs.readdirSync(entry).filter(s => {
-            return includeDirs.includes(s) && !excludeDirs.includes(s)
+            if (includeDirs.length && !includeDirs.includes('*')) {
+              return includeDirs.includes(s) && !excludeDirs.includes(s)
+            }
+            return !excludeDirs.includes(s)
           }).map(s => `${entry}/${s}`)
           res = res.filter(p => isDirectory(p, isCache))
         }
@@ -105,7 +111,10 @@ function glob(str, isCache) {
         // 不是第一个 *
         results[index - 1].forEach(parent => {
           const sub = fs.readdirSync(parent).filter(s => {
-            return includeDirs.includes(s) && !excludeDirs.includes(s)
+            if (includeDirs.length && !includeDirs.includes('*')) {
+              return includeDirs.includes(s) && !excludeDirs.includes(s)
+            }
+            return !excludeDirs.includes(s)
           }).map(s => `${parent}/${s}`)
           if (index < routes.length - 1 || shouldPickDir) {
             // 不是最后一个
