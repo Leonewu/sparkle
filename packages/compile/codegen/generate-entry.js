@@ -1,6 +1,6 @@
 const { COMPONENTS, ES_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config')
 const fs = require('fs-extra')
-const compileSass = require('../sass-compiler')
+const compileSass = require('../utils/sass-compiler')
 const { getDeps } = require('../deps')
 const { getPreStyle } = require('../utils/')
 const path = require('path')

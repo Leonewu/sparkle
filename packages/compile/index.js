@@ -3,13 +3,13 @@ const compileVue = require('./compile-vue')
 const { compileJs } = require('./compile-script')
 const generateEntry = require('./codegen/generate-entry')
 const generateCssModule = require('./codegen/generate-css-module')
-const compileStyle = require('./compile-style')
+const compileStyles = require('./compile-styles')
 const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS } = require('./config')
 const chalk = require('chalk')
 const ora = require('ora')
 const { initDeps } = require('./deps')
 const { isIgnorePath, setBuildEnv } = require('./utils/')
-const babelTransform = require('./babel-compiler')
+const babelTransform = require('./utils/babel-compiler')
 const { cacheGlob: glob } = require('./utils/glob')
 const emoji = require('../emoji/')
 // TODO 用 ts 写编译代码，减少出错
@@ -37,7 +37,7 @@ const emoji = require('../emoji/')
 // 9. 编译 LIB_DIR，将所有 js 文件编译成 commonJs 规范
 
 
-async function compileFiles() {
+async function compileScripts() {
   // 编译所有 vue|jsx|tsx|ts|js 文件
   // 先不编译样式文件
   const files = glob(`${ES_DIR}/**/*.{${SCRIPT_EXTS.map(s => s.substr(1)).join(',')}}`)
@@ -78,7 +78,7 @@ const tasks = [
       },
       {
         name: '编译脚本文件',
-        task: compileFiles
+        task: compileScripts
       },
       {
         name: '生成样式依赖文件',
@@ -86,7 +86,7 @@ const tasks = [
       },
       {
         name: '编译样式文件',
-        task: compileStyle
+        task: compileStyles
       },
       {
         name: '生成入口文件',

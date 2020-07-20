@@ -1,20 +1,25 @@
 const fs = require('fs-extra')
 const { injectInstall, removeComment } = require('./utils/')
 const { addDepByImport } = require('./deps')
-const babelTransform = require('./babel-compiler')
+const babelTransform = require('./utils/babel-compiler')
 
+/* 编译 js|ts|tsx|jsx 文件 */
 
 function compileJs(filePath) {
   return new Promise((resolve, reject) => {
-    let content = fs.readFileSync(filePath, 'utf8')
-    const outputFile = filePath.replace(/\.(jsx|tsx|ts)/, '.js')
-    content = removeComment(content)
-    content = updateImport(filePath, content)
-    content = injectInstall(filePath, content)
-    const result = babelTransform(filePath, content)
-    fs.removeSync(filePath)
-    fs.outputFileSync(outputFile, result)
-    resolve()
+    try {
+      let content = fs.readFileSync(filePath, 'utf8')
+      const outputFile = filePath.replace(/\.(jsx|tsx|ts)/, '.js')
+      content = removeComment(content)
+      content = updateImport(filePath, content)
+      content = injectInstall(filePath, content)
+      const result = babelTransform(filePath, content)
+      fs.removeSync(filePath)
+      fs.outputFileSync(outputFile, result)
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
   })
 }
 

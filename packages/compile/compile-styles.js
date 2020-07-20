@@ -1,10 +1,10 @@
 
-const compileSass = require('./sass-compiler')
+const compileSass = require('./utils/sass-compiler')
 const fs = require('fs-extra')
 const { ES_DIR, STYLE_EXT } = require('./config')
 const { cacheGlob: glob } = require('./utils/glob')
 
-function compileStyle() {
+function compileStyles() {
   // 编译所有样式文件
   const styleFiles = glob(`${ES_DIR}/**/*.{${STYLE_EXT.substr(1)}, css}`)
   const promises = styleFiles.map(filePath => {
@@ -23,4 +23,4 @@ function compileStyle() {
 }
 
 
-module.exports = compileStyle
+module.exports = compileStyles
