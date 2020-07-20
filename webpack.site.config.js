@@ -16,9 +16,8 @@ module.exports = {
   },
   devtool: 'eval-cheap-source-map',
   entry: {
-    site: './site/main.js',
-    mobile: './mobile/main.js'
-    // mobile: './mobile/main.js'
+    site: './site/doc/main.js',
+    mobile: './site/mobile/main.js'
   },
   output: {
     filename: '[name].[chunkhash].js',
@@ -128,14 +127,14 @@ module.exports = {
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './site/index.html',
+      template: './site/doc/index.html',
       logo: './site/icon/favicon-32x32.png',
       title: 'Starity UI | Vue移动端组件库',
       chunks: ['site']
     }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
-      template: './mobile/index.html',
+      template: './site/mobile/index.html',
       logo: './site/icon/favicon-32x32.png',
       title: 'Starity UI | Vue移动端组件库',
       chunks: ['mobile']
