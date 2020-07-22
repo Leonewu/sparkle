@@ -12,6 +12,7 @@ const { isIgnorePath, setBuildEnv } = require('./utils/')
 const babelTransform = require('./utils/babel-compiler')
 const { cacheGlob: glob } = require('./utils/glob')
 const emoji = require('../emoji/')
+const webpack = require('webpack')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -60,60 +61,70 @@ function buildLib() {
 }
 
 
-const tasks = [
-  {
-    name: '编译esModule目录',
-    task: [
-      {
-        name: '清空复制编译目录',
-        task: function() {
-          setBuildEnv('esmodule')
-          fs.emptyDirSync(ES_DIR)
-          fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
-        }
-      },
-      {
-        name: '初始化组件依赖',
-        task: initDeps
-      },
-      {
-        name: '编译脚本文件',
-        task: compileScripts
-      },
-      {
-        name: '生成样式依赖文件',
-        task: generateCssModule
-      },
-      {
-        name: '编译样式文件',
-        task: compileStyles
-      },
-      {
-        name: '生成入口文件',
-        task: generateEntry
-      },
-    ]
-  },
-  {
-    name: '编译commonJs目录',
-    task: buildLib
-  },
-]
-async function build() {
-  const spinner = ora(`${emoji.rocket_x3} ${chalk.cyan('unicorns')}`).start();
-  setTimeout(() => {
-    spinner.succeed('哈哈哈')
-  }, 1000)
+
+function build() {
+  const tasks = [
+    {
+      name: '编译esModule目录',
+      task: [
+        {
+          name: '编译前初始化',
+          task: function() {
+            setBuildEnv('esmodule')
+            fs.emptyDirSync(ES_DIR)
+            fs.copySync(SRC_DIR, ES_DIR, { filter: filePath => !isIgnorePath(filePath) })
+            initDeps()
+          }
+        },
+        {
+          name: '编译脚本文件',
+          task: compileScripts
+        },
+        {
+          name: '生成样式依赖',
+          task: generateCssModule
+        },
+        {
+          name: '编译样式文件',
+          task: compileStyles
+        },
+        {
+          name: '生成入口文件',
+          task: generateEntry
+        },
+      ]
+    },
+    {
+      name: '编译commonJs目录',
+      task: buildLib
+    },
+  ]
+  runTasks(tasks)
+}
+
+async function runTasks(tasks) {
   for (const task of tasks) {
     if (typeof task.task === 'function') {
-      await task.task()
+      try {
+        const spinner = ora(`${chalk.cyan(task.name)}`).start();
+        await task.task()
+        spinner.succeed(chalk.magenta(task.name))
+      } catch (e) {
+        console.log(err)
+        spinner.fail(chalk.redBright(task.name))
+      }
     } else if (Object.prototype.toString.call(task.task) === '[object Array]') {
-      for (const sub of task.task) {
-        await sub.task()
+      try {
+        // const spinner = ora(`${chalk.cyan(task.name)}`).start();
+        await runTasks(task.task)
+        // spinner.succeed(chalk.magenta(task.name))
+      } catch (e) {
+        console.log(err)
+        // spinner.fail(chalk.redBright(task.name))
       }
     }
+
   }
 }
 
 build()
-
