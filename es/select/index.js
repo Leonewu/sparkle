@@ -29,6 +29,7 @@ var _default = {
   }
 
 };
+_default.name = 'starry-' + _default.name.toLowerCase();
 
 function install(Vue) {
   Vue.component(_default.name, _default);

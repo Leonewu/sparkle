@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import './example.scss'
 export default {
-  name: 'XiaoExample'
+  name: 'Example'
 }
 </script>

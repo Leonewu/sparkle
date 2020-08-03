@@ -6,11 +6,7 @@ const components = [button, select, card];
 
 function install(Vue) {
   components.forEach(component => {
-    if (component.install) {
-      component.install(Vue);
-    } else {
-      Vue.component(component.name, component);
-    }
+    component.install(Vue);
   })
 }
 // if (Vue) {

@@ -1,5 +1,5 @@
 const { isExist } = require('./cache')
-const { STYLE_EXT, COMPONENTS, ES_DIR, SCRIPT_EXTS } = require('../config/')
+const { STYLE_EXT, COMPONENTS, ES_DIR, SCRIPT_EXTS, PREFIX } = require('../config/')
 function isTestPath(filePath) {
   return /__test__/.test(filePath)
 }
@@ -64,8 +64,12 @@ function removeComment(str) {
 function injectInstall(filePath, content) {
   if (isComponent(filePath)) {
     const install = 'function install(Vue) {\n Vue.component(_default.name, _default)\n}'
+    let name = ''
+    if (PREFIX) {
+      name = `_default.name = '${PREFIX.toLowerCase()}-' + _default.name.toLowerCase()`
+    }
     content = content.replace('export default', 'var _default = ')
-    content += `${install}\nexport default {\n_default,\ninstall\n}`
+    content += `${name}\n${install}\nexport default {\n_default,\ninstall\n}`
   }
   return content
 }
