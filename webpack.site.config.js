@@ -3,6 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackBar = require('webpackbar')
+const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugin')
 const { DEV_DIR, LIB_NAME } = require('./packages/compile/config')
 // 多页面： site 文档网站
 // mobile： 移动端预览
@@ -10,9 +11,10 @@ const { DEV_DIR, LIB_NAME } = require('./packages/compile/config')
 module.exports = {
   mode: 'development',
   devServer: {
-    // contentBase: path.join(__dirname, 'dist'),
-    // compress: true,
-    port: 2333
+    port: 2333,
+    quiet: true,
+    host: '0.0.0.0',
+    stats: 'errors-only'
   },
   devtool: 'eval-cheap-source-map',
   entry: {
@@ -141,6 +143,10 @@ module.exports = {
       title: `${LIB_NAME} | Vue移动端组件库`,
       chunks: ['mobile']
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new FriendlyErrorsWebpackPlugin({
+      clearConsole: false,
+      logLevel: 'WARNING'
+    })
   ]
 }

@@ -5,7 +5,7 @@ const { DEV_DIR, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT, SCRIPT_EXTS } = require('.
 const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
 const configJson = require('../../components.config.js').components
-
+const chalk = require('chalk')
 // 生成文件并启动 dev server
 
 const flatConfig = []
@@ -87,5 +87,11 @@ genEntries()
 
 const compiler = Webpack(config)
 process.env.NODE_ENV = 'development'
-const server = new WebpackDevServer(compiler)
-server.listen(config.devServer.port)
+const port = config.devServer.port
+const local = `http://localhost:${port}/`;
+// const network = `http://${address.ip()}:${port}/`;
+console.log('\n  Site running at:\n');
+console.log(`  ${chalk.bold('Local')}:    ${chalk.magenta(local)} `);
+const server = new WebpackDevServer(compiler, config.devServer)
+server.showStatus = function(){}
+server.listen(port)
