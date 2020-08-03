@@ -1,6 +1,6 @@
 const { COMPONENTS, ES_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config')
 const fs = require('fs-extra')
-const compileSass = require('../utils/sass-compiler')
+const { compile } = require('../utils/processor-compiler')
 const { getDeps } = require('../deps')
 const { getPreStyle } = require('../utils/')
 const path = require('path')
@@ -31,7 +31,7 @@ function generateStyleEntry() {
       const sassPath = `${ES_DIR}/index${STYLE_EXT}`
       const cssPath = sassPath.replace(new RegExp(`${STYLE_EXT}`), '.css')
       fs.outputFileSync(sassPath, importCodes)
-      const res = await compileSass(sassPath)
+      const res = await compile(sassPath)
       res.css && fs.outputFileSync(cssPath, res.css)
       resolve()
     } catch (e) {

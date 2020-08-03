@@ -1,6 +1,8 @@
 
 const path = require('path')
 const componentsJson = require('../../components.config')
+// 前缀
+const PREFIX = 'starry'
 // 脚本文件后缀
 const SCRIPT_EXTS = ['.js', '.ts', '.vue', '.jsx', '.tsx']
 // css 预处理后缀
@@ -57,5 +59,6 @@ module.exports = {
   STYLE_EXT,
   COMPONENTS,
   COMPONENT_PREFIX,
-  OUTPUT_DIR
+  OUTPUT_DIR,
+  PREFIX
 }
