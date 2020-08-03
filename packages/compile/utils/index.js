@@ -1,5 +1,5 @@
 const { isExist } = require('./cache')
-const { STYLE_EXT, COMPONENTS, ES_DIR, SCRIPT_EXTS } = require('../config')
+const { STYLE_EXT, COMPONENTS, ES_DIR, SCRIPT_EXTS } = require('../config/')
 function isTestPath(filePath) {
   return /__test__/.test(filePath)
 }

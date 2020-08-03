@@ -1,7 +1,7 @@
 
 const { compile } = require('./utils/processor-compiler')
 const fs = require('fs-extra')
-const { ES_DIR, STYLE_EXT } = require('./config')
+const { ES_DIR, STYLE_EXT } = require('./config/')
 const { cacheGlob: glob } = require('./utils/glob')
 
 function compileStyles() {

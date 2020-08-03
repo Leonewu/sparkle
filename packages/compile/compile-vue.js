@@ -2,7 +2,7 @@
 const fs = require('fs-extra')
 const compiler = require('vue-template-compiler')
 const VueCompileUtils = require('@vue/component-compiler-utils')
-const { STYLE_EXT } = require('./config')
+const { STYLE_EXT } = require('./config/')
 const hash = require('hash-sum')
 const { updateImport } = require('./compile-script')
 const { isExist } = require('./utils/cache')

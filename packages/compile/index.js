@@ -5,7 +5,7 @@ const generateEntry = require('./codegen/generate-entry')
 const generateCssModule = require('./codegen/generate-css-module')
 const compileStyles = require('./compile-styles')
 const { minify } = require('./utils/processor-compiler')
-const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS } = require('./config')
+const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS } = require('./config/')
 const chalk = require('chalk')
 const ora = require('ora')
 const { initDeps } = require('./deps')
@@ -14,7 +14,7 @@ const babelTransform = require('./utils/babel-compiler')
 const { cacheGlob: glob } = require('./utils/glob')
 const emoji = require('../emoji/')
 const webpack = require('webpack')
-const umdConfig = require('./webpack.umd.config')
+const umdConfig = require('./config/webpack.umd.config')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -73,9 +73,9 @@ async function buildUmd() {
         resolve()
       })
     })
-    const cssFile = `${ES_DIR}/index.css`
+    const cssFile = `${LIB_DIR}/index.css`
     const css = fs.readFileSync(cssFile, 'utf8')
-    const miniFile = `${ES_DIR}/starry-ui.min.css`
+    const miniFile = `${LIB_DIR}/starry-ui.min.css`
     const miniCss = await minify(css)
     fs.outputFileSync(miniFile, miniCss)
   } catch (e) {

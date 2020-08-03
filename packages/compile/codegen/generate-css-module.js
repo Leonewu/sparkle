@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const { BASE_STYLE_FILE, COMPONENTS, ES_DIR, STYLE_EXT } = require('../config')
+const { BASE_STYLE_FILE, COMPONENTS, ES_DIR, STYLE_EXT } = require('../config/')
 const path = require('path')
 const { getDeps } = require('../deps')
 const { getPreStyle } = require('../utils/')
