@@ -4,7 +4,7 @@
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const path = require('path')
-const PREFIX = 'starry'
+const PREFIX = require('../../components.config').prefix
 
 function replaceFile(dir, componentName) {
   // 读取文件目录并且替换文件内容，重命名

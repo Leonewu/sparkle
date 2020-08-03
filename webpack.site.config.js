@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackBar = require('webpackbar')
-const { DEV_DIR } = require('./packages/compile/config')
+const { DEV_DIR, LIB_NAME } = require('./packages/compile/config')
 // 多页面： site 文档网站
 // mobile： 移动端预览
 
@@ -123,7 +123,7 @@ module.exports = {
   },
   plugins: [
     new WebpackBar({
-      name: 'Starry UI',
+      name: LIB_NAME,
       color: '#c94bff'
     }),
     new VueLoaderPlugin(),
@@ -131,14 +131,14 @@ module.exports = {
       filename: 'index.html',
       template: './site/doc/index.html',
       logo: './site/favicon.ico',
-      title: 'Starry UI | Vue移动端组件库',
+      title: `${LIB_NAME} | Vue移动端组件库`,
       chunks: ['site']
     }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './site/mobile/index.html',
       logo: './site/favicon.ico',
-      title: 'Starry UI | Vue移动端组件库',
+      title: `${LIB_NAME} | Vue移动端组件库`,
       chunks: ['mobile']
     }),
     new CleanWebpackPlugin()

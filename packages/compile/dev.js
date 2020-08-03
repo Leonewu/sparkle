@@ -4,7 +4,7 @@ const config = require('../../webpack.site.config.js')
 const { DEV_DIR, SRC_DIR, BASE_STYLE_FILE, STYLE_EXT, SCRIPT_EXTS } = require('./config')
 const fs = require('fs-extra')
 const { glob } = require('./utils/glob')
-const configJson = require('../../components.config.js')
+const configJson = require('../../components.config.js').components
 
 // 生成文件并启动 dev server
 
