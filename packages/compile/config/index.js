@@ -1,8 +1,10 @@
 
 const path = require('path')
-const componentsJson = require('../../../components.config')
-// 前缀
-const PREFIX = 'starry'
+const componentsJson = require('../../../components.config').components
+// 组件库名称
+const LIB_NAME = require('../../../components.config').name || 'Demo UI'
+// 组件名前缀
+const COMPONENT_PREFIX = require('../../../components.config').prefix
 // 脚本文件后缀
 const SCRIPT_EXTS = ['.js', '.ts', '.vue', '.jsx', '.tsx']
 // css 预处理后缀
@@ -19,8 +21,7 @@ const SRC_DIR = `${ROOT}/src`
 const BASE_STYLE_FILE = `common/base.scss`
 // development 下的输出目录
 const DEV_DIR = path.join(__dirname, '.dev')
-// 组件名前缀
-const COMPONENT_PREFIX = 'xiao'
+
 // 组件数组，将 json 文件拍平
 const COMPONENTS = componentsJson.reduce((sum, cur) => {
   return sum.concat(cur.components.map(component => component.path))
@@ -45,9 +46,6 @@ const COMPONENTS = componentsJson.reduce((sum, cur) => {
 //   return sum
 // }, [])
 
-// 当前打包输出目录
-// 如果是打包 commonjs 就用 LIB_DIR
-const OUTPUT_DIR = process.env.BUILD_ENV === 'commonjs' ? LIB_DIR : ES_DIR 
 
 module.exports = {
   DEV_DIR,
@@ -59,6 +57,5 @@ module.exports = {
   STYLE_EXT,
   COMPONENTS,
   COMPONENT_PREFIX,
-  OUTPUT_DIR,
-  PREFIX
+  LIB_NAME
 }

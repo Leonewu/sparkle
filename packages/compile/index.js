@@ -5,7 +5,7 @@ const generateEntry = require('./codegen/generate-entry')
 const generateCssModule = require('./codegen/generate-css-module')
 const compileStyles = require('./compile-styles')
 const { minify } = require('./utils/processor-compiler')
-const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS } = require('./config/')
+const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS, LIB_NAME } = require('./config/')
 const chalk = require('chalk')
 const ora = require('ora')
 const { initDeps } = require('./deps')
@@ -75,7 +75,8 @@ async function buildUmd() {
     })
     const cssFile = `${LIB_DIR}/index.css`
     const css = fs.readFileSync(cssFile, 'utf8')
-    const miniFile = `${LIB_DIR}/starry-ui.min.css`
+    const name = LIB_NAME.toLowerCase().replace(/\s/g, '-')
+    const miniFile = `${LIB_DIR}/${name}.min.css`
     const miniCss = await minify(css)
     fs.outputFileSync(miniFile, miniCss)
   } catch (e) {
