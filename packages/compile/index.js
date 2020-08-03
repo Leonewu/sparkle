@@ -4,6 +4,7 @@ const { compileJs } = require('./compile-script')
 const generateEntry = require('./codegen/generate-entry')
 const generateCssModule = require('./codegen/generate-css-module')
 const compileStyles = require('./compile-styles')
+const { minify } = require('./utils/processor-compiler')
 const { LIB_DIR, SRC_DIR, ES_DIR, SCRIPT_EXTS } = require('./config')
 const chalk = require('chalk')
 const ora = require('ora')
@@ -13,6 +14,7 @@ const babelTransform = require('./utils/babel-compiler')
 const { cacheGlob: glob } = require('./utils/glob')
 const emoji = require('../emoji/')
 const webpack = require('webpack')
+const umdConfig = require('./webpack.umd.config')
 // TODO 用 ts 写编译代码，减少出错
 // TODO 编译缓存 sass，babel，vue
 // TODO sourceMap sass babel vue
@@ -60,12 +62,32 @@ function buildLib() {
   })
 }
 
+async function buildUmd() {
+  try {
+    const compiler = webpack(umdConfig)
+    await new Promise((resolve, reject) => {
+      compiler.run(async (err, stats) => {
+        if (err || stats.hasErrors()) {
+          return reject(err)
+        }
+        resolve()
+      })
+    })
+    const cssFile = `${ES_DIR}/index.css`
+    const css = fs.readFileSync(cssFile, 'utf8')
+    const miniFile = `${ES_DIR}/starry-ui.min.css`
+    const miniCss = await minify(css)
+    fs.outputFileSync(miniFile, miniCss)
+  } catch (e) {
+    throw new Error('编译umd出错')
+  }
+}
 
 
 function build() {
   const tasks = [
     {
-      name: '编译esModule目录',
+      name: '编译esModule',
       task: [
         {
           name: '编译前初始化',
@@ -95,9 +117,13 @@ function build() {
       ]
     },
     {
-      name: '编译commonJs目录',
+      name: '编译commonJs',
       task: buildLib
     },
+    {
+      name: '编译umd',
+      task: buildUmd
+    }
   ]
   runTasks(tasks)
 }
@@ -105,12 +131,12 @@ function build() {
 async function runTasks(tasks) {
   for (const task of tasks) {
     if (typeof task.task === 'function') {
+      const spinner = ora(`${chalk.cyan(task.name)}`).start();
       try {
-        const spinner = ora(`${chalk.cyan(task.name)}`).start();
         await task.task()
         spinner.succeed(chalk.magenta(task.name))
       } catch (e) {
-        console.log(err)
+        console.log(e)
         spinner.fail(chalk.redBright(task.name))
       }
     } else if (Object.prototype.toString.call(task.task) === '[object Array]') {
@@ -119,7 +145,7 @@ async function runTasks(tasks) {
         await runTasks(task.task)
         // spinner.succeed(chalk.magenta(task.name))
       } catch (e) {
-        console.log(err)
+        console.log(e)
         // spinner.fail(chalk.redBright(task.name))
       }
     }

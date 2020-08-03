@@ -54,11 +54,13 @@
 - [ ] 文档优化，夜间模式？<https://gridjs.io/docs/examples/hello-world，代码可编辑？>
 - [ ] postcss 用配置文件
 - [ ] package.json 缺少 repository 字段
-- [ ] 处理编译 sass 时的 warning
+- [x] 处理编译 sass 时的 warning
 - [ ] 前缀可配置，组件名转成首字母小写，去除-
 - [ ] 路由切换动画，黑暗模式
 - [ ] 文档国际化？
 - [ ] dockerfile
+- [ ] 为了方便展示，文档可能需要支持使用 vue，比如图标需要完整展示在 web 端
+- [ ] 随着组件库越来越庞大，每次打包后都需要检查打包前后的差异
 
 ## 遇到的问题
 

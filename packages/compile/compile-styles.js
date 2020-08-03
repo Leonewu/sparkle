@@ -1,5 +1,5 @@
 
-const compileSass = require('./utils/sass-compiler')
+const { compile } = require('./utils/processor-compiler')
 const fs = require('fs-extra')
 const { ES_DIR, STYLE_EXT } = require('./config')
 const { cacheGlob: glob } = require('./utils/glob')
@@ -11,7 +11,7 @@ function compileStyles() {
     return new Promise(async (resolve, reject) => {
       try {
         const cssPath = filePath.replace(new RegExp(`${STYLE_EXT}`), '.css')
-        const res = await compileSass(filePath)
+        const res = await compile(filePath)
         res.css && fs.outputFileSync(cssPath, res.css)
         resolve(filePath)
       } catch(e) {
