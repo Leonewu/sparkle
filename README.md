@@ -40,8 +40,10 @@ Vue.use(Button)
 
 ## 开发注意事项
 
-- `npm run create` 会自动创建组件开发目录，如 `npm run create button`
-- 需要在 `components.config.js` 中添加组件配置，否则将不会生成 site 的路由
+- `npm run create` 创建组件目录，如 `npm run create button`
+- 组件目录使用中划线命名方式如 `npm run create date-time-picker`
+- 组件名不需要自动加前缀
+- 创建组件目录后需在 `components.config.js` 中配置组件路径，否则将不会生成 site 的路由
 
 ## 脚本
 

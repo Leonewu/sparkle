@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import example from '../example'
+import example from '../index.vue'
 
 describe('example', () => {
   test('init example test', () => {

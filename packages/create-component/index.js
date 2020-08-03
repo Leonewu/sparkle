@@ -1,9 +1,10 @@
 #! /usr/bin/env node
 // npm run create button
-// 把 example 的文件复制到组件目录，并修改内容
+// 复制组件模板
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const path = require('path')
+const PREFIX = 'starry'
 
 function replaceFile(dir, componentName) {
   // 读取文件目录并且替换文件内容，重命名
@@ -24,13 +25,19 @@ function replaceFile(dir, componentName) {
 }
 
 function replaceName(str, componentName) {
-  const capitalizeName = componentName.split('-').map(str => str[0].toUpperCase() + str.slice(1)).join('')
+  const capitaName = componentName.split('-').map(str => str[0].toUpperCase() + str.slice(1)).join('')
+  if (!PREFIX) {
+    str = str.replace(/(prefix-|prefix|Prefix)/g, '')
+  }
+  const capitalPrefix = PREFIX.replace(/^\S/, s => s.toUpperCase())
   return str
     // .replace(/xiao-example/g, `xiao-${componentName}`)
-    // .replace(/XiaoExample/g, `Xiao${capitalizeName}`)
+    // .replace(/XiaoExample/g, `Xiao${capitaName}`)
     // .replace(/(example)(\.vue|\.scss)/, `${componentName}$2`)
     .replace(/example/g, componentName)
-    .replace(/Example/g, capitalizeName)
+    .replace(/Example/g, capitaName)
+    .replace(/prefix/g, PREFIX.toLowerCase())
+    .replace(/Prefix/g, capitalPrefix)
 }
 
 // main programe begin
@@ -41,7 +48,7 @@ if (!process.argv[2]) {
 }
 const name = process.argv[2].toLowerCase()
 if (components.includes(name)) {
-  console.log(chalk.red(`组件 ${name} 已存在`))
+  console.log(chalk.red(`目录 src/${name} 已存在`))
   process.exit()
 }
 const src = path.resolve(__dirname, './example')
