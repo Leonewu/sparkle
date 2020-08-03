@@ -1,16 +1,16 @@
 <template>
   <div>
     <demo-block title="描述...">
-      <xiao-example />
+      <prefix-example />
     </demo-block>
   </div>
 </template>
 
 <script>
-import XiaoExample from '../example.vue'
+import PrefixExample from '../example.vue'
 export default {
   components: {
-    XiaoExample
+    PrefixExample
   }
 }
 </script>
