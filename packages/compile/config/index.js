@@ -1,6 +1,6 @@
 
 const path = require('path')
-const componentsJson = require('../../components.config')
+const componentsJson = require('../../../components.config')
 // 前缀
 const PREFIX = 'starry'
 // 脚本文件后缀
@@ -8,7 +8,7 @@ const SCRIPT_EXTS = ['.js', '.ts', '.vue', '.jsx', '.tsx']
 // css 预处理后缀
 const STYLE_EXT = '.scss'
 // 根目录
-const ROOT = path.resolve(__dirname, '../../')
+const ROOT = path.resolve(__dirname, '../../../')
 // 打包输出 commonjs 目录
 const LIB_DIR = `${ROOT}/lib`
 // 打包输出 esModule 目录

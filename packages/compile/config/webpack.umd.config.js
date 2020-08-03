@@ -1,5 +1,5 @@
 
-const { ES_DIR, LIB_DIR } = require('./config')
+const { ES_DIR, LIB_DIR } = require('./')
 const path = require('path')
 const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugin')
 module.exports = {

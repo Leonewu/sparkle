@@ -1,5 +1,5 @@
 const path = require('path')
-const { SCRIPT_EXTS, ES_DIR, STYLE_EXT } = require('./config')
+const { SCRIPT_EXTS, ES_DIR, STYLE_EXT } = require('./config/')
 const { cacheGlob: glob } = require('./utils/glob')
 const { isIgnorePath } = require('./utils/')
 

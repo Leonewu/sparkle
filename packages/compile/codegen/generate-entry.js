@@ -1,4 +1,4 @@
-const { COMPONENTS, ES_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config')
+const { COMPONENTS, ES_DIR, BASE_STYLE_FILE, STYLE_EXT } = require('../config/')
 const fs = require('fs-extra')
 const { compile } = require('../utils/processor-compiler')
 const { getDeps } = require('../deps')
