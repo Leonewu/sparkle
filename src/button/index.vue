@@ -8,7 +8,7 @@
 // import './button.scss'
 import { add } from '../utils/'
 export default {
-  name: 'XiaoButton',
+  name: 'Button',
   data() {
     return {}
   },

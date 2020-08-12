@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-block title="描述...">
-      <xiao-card />
+      <Card />
     </demo-block>
   </div>
 </template>

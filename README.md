@@ -40,10 +40,21 @@ Vue.use(Button)
 
 ## 开发注意事项
 
+### 创建组件
+
 - `npm run create` 创建组件目录，如 `npm run create button`
 - 组件目录使用中划线命名方式如 `npm run create date-time-picker`
 - 组件名不需要自动加前缀
 - 创建组件目录后需在 `components.config.js` 中配置组件路径，否则将不会生成 site 的路由
+- 注册的组件名不需要加前缀，编译的时候会自动补全前缀，但是必须以大写字母开头，如 name: "Button"
+
+### 文档/demo编写
+
+- 文档为组件目录下 README.md 文件
+- demo 为组件目录下 demo 文件夹
+— 文档和 demo 均支持使用项目中的组件，引用时可直接用组件注册的 name（必须以大写字母开头）
+
+### 单元测试
 
 ## 脚本
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-block title="选择组件">
-      <xiao-select />
+      <Select />
     </demo-block>
   </div>
 </template>

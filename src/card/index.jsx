@@ -2,7 +2,7 @@
 // import './card.scss'
 
 export default {
-  name: 'XiaoCard',
+  name: 'Card',
   props: {
     name: String,
     dot: Boolean

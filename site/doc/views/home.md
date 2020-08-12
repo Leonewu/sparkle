@@ -10,4 +10,4 @@ logo here
 
 ### 浏览器支持
 
-现在浏览器以及 Android 4.0+, iOS 8.0+。
+现代浏览器以及 Android 4.0+, iOS 8.0+。

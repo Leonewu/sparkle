@@ -132,14 +132,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './site/doc/index.html',
-      logo: './site/favicon.ico',
+      logo: './site/assets/favicon.ico',
       title: `${LIB_NAME} | Vue移动端组件库`,
       chunks: ['site']
     }),
     new HtmlWebpackPlugin({
       filename: 'mobile.html',
       template: './site/mobile/index.html',
-      logo: './site/favicon.ico',
+      logo: './site/assets/favicon.ico',
       title: `${LIB_NAME} | Vue移动端组件库`,
       chunks: ['mobile']
     }),

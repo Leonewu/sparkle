@@ -31,10 +31,10 @@
 - [x] mobile 根据屏幕宽度动态设置 font-size
 - [ ] 版本管理 semver 规范
 - [ ] ci
-- [ ] 导出 es module，并且配置 package.json 的 files 选项， treeshaking
-- [ ] logo
-- [ ] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
-- [ ] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配 polyfill
+- [x] 导出 es module，并且配置 package.json 的 files 选项， treeshaking
+- [x] logo
+- [x] 换肤 通过暴露出 sass 的主题入口，让用户自行覆盖 sass 变量样式
+- [x] 整理一下冗余的 webpack 配置文件，打包清空目录，配一下 alias，替换 vant 前缀，去掉百度统计,引入 scss，json 自动补后缀处理一下，检查一下 babel 有没有配漏的，没有配 polyfill
 - [ ] 优化项:iframe 内外可以滚动联动，锚点点击滚动
 - [ ] 开发时引入方式的文档，npm link 或者 npm install file:../../ 或者 git ssh
 - [ ] demo-block 和 demo-section 用法注明
@@ -50,7 +50,7 @@
 - [x] 支持 tsx
 - [x] 用 js 处理 scss 样式依赖
 - [x] 去掉组件入口，用代码生成，因为只是简单的 import 加上 install 再 export，都是重复的东西
-- [ ] 沉淀脚手架，支持 react，vue，ts
+- [ ] 沉淀脚手架，支持 react，vue，ts，less，pc 端文档
 - [ ] 文档优化，夜间模式？<https://gridjs.io/docs/examples/hello-world，代码可编辑？>
 - [ ] postcss 用配置文件
 - [ ] package.json 缺少 repository 字段
@@ -62,6 +62,8 @@
 - [ ] 为了方便展示，文档可能需要支持使用 vue，比如图标需要完整展示在 web 端
 - [ ] 随着组件库越来越庞大，每次打包后都需要检查打包前后的差异
 - [x] 组件名规范，中划线区分，不加前缀
+- [] codesandbox
+- [] site 搬进 packages 里面
 
 ## 遇到的问题
 

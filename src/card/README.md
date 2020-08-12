@@ -18,6 +18,14 @@ Vue.use(Card);
 <xiao-card></xiao-card>
 ```
 
+## 同时也支持 vue 语法
+
+### 
+
+```vue
+<p v-for="i in [1,2]">支持引用组件库内的组件作为展示用</p>
+```
+
 ## API
 
 ### Props

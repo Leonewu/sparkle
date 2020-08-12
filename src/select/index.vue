@@ -14,7 +14,7 @@
 import XiaoButton from '../button/'
 import picker from './picker'
 export default {
-  name: 'XiaoSelect',
+  name: 'Select',
   components: { XiaoButton, picker },
   data() {
     return {

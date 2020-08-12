@@ -1,14 +1,5 @@
 # Button 按钮
 
-### 引入
-
-```js
-import Vue from 'vue';
-import { Button } from 'vant';
-
-Vue.use(Button);
-```
-
 ## 代码演示
 
 ### 按钮类型

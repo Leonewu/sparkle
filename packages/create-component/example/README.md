@@ -15,7 +15,13 @@ Vue.use(Example);
 ***这里写代码片段的描述***
 
 ```html
-<xiao-example></xiao-example>
+<example></example>
+```
+
+## 同时也支持 vue 语法
+
+```vue
+<p v-for="i in [1,2]">支持引用组件库内的组件作为展示用</p>
 ```
 
 ## API
