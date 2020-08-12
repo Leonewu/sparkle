@@ -20,7 +20,7 @@ const SRC_DIR = `${ROOT}/src`
 // 公共的样式文件
 const BASE_STYLE_FILE = `common/base.scss`
 // development 下的输出目录
-const DEV_DIR = path.join(__dirname, '.dev')
+const DEV_DIR = path.join(__dirname, '..', '.dev')
 
 // 组件数组，将 json 文件拍平
 const COMPONENTS = componentsJson.reduce((sum, cur) => {
