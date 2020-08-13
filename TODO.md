@@ -64,6 +64,19 @@
 - [x] 组件名规范，中划线区分，不加前缀
 - [] codesandbox
 - [] site 搬进 packages 里面
+- [] doc 首页，mobile 首页
+
+### 兼容 react 的成本
+
+- 打包流程不需要变，不用处理 sfc，更加简单
+- 需要配置 react 的 babel
+- 单元测试需要更换，直接用 jest，问题更少一些
+- demo 的 vue 组件改写成 react 的高阶组件
+- 文档方面，markdown-loader 需要重写，兼容 react 语法
+
+### 兼容 pc 端的成本
+
+- 文档和 demo 需要重写
 
 ## 遇到的问题
 

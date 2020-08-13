@@ -1,16 +1,16 @@
 <template>
   <div>
     <demo-block title="描述...">
-      <prefix-example />
+      <starry-icon />
     </demo-block>
   </div>
 </template>
 
 <script>
-import PrefixExample from '../'
+import StarryIcon from '../'
 export default {
   components: {
-    PrefixExample
+    StarryIcon
   }
 }
 </script>

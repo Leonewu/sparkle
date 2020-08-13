@@ -14,6 +14,10 @@ module.exports = {
           title: 'Button 按钮'
         },
         {
+          path: 'icon',
+          title: 'Icon 图标'
+        },
+        {
           path: 'select',
           title: 'Select 选择'
         },

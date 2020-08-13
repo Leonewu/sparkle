@@ -1,11 +1,11 @@
-# Example
+# Icon
 
 ### 引入
 
 ```js
 import Vue from 'vue';
-import { Example } from 'vant';
-Vue.use(Example);
+import { Icon } from 'vant';
+Vue.use(Icon);
 ```
 
 ## 代码演示
@@ -15,10 +15,12 @@ Vue.use(Example);
 ***这里写代码片段的描述***
 
 ```html
-<prefix-example></prefix-example>
+<starry-icon></starry-icon>
 ```
 
-## 同时也支持 vue 语法
+## 某些组件需要在这里展示
+
+### 同时也支持 vue 语法
 
 ```vue
 <p>支持引用组件库内的组件</p>
