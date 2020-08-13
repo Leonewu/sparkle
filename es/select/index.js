@@ -1,7 +1,7 @@
 import XiaoButton from '../button/';
 import picker from './picker';
 
-var render = function render() {
+var render = function () {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -18,7 +18,7 @@ render._withStripped = true;
 var _default = {
   render,
   staticRenderFns,
-  name: 'XiaoSelect',
+  name: 'Select',
   components: {
     XiaoButton,
     picker

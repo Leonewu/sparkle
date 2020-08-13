@@ -33,22 +33,12 @@ ul dl {
   margin: 0;
 }
 /**
- * Remove the margin on nested lists in Edge 18- and IE.
- */
-ol ol,
-ol ul,
-ul ol,
-ul ul {
-  margin: 0;
-}
-/**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge 18- and IE.
  */
 hr {
   box-sizing: content-box; /* 1 */
   height: 0; /* 1 */
-  overflow: visible; /* 2 */
 }
 /**
  * 1. Correct the inheritance and scaling of font size in all browsers.
@@ -125,27 +115,10 @@ fieldset {
   padding: 0.35em 0.75em 0.625em;
 }
 /**
- * Show the overflow in Edge 18- and IE.
- */
-input {
-  overflow: visible;
-}
-/**
- * 1. Correct the text wrapping in Edge 18- and IE.
- * 2. Correct the color inheritance from `fieldset` elements in IE.
- */
-legend {
-  box-sizing: border-box; /* 1 */
-  display: table; /* 1 */
-  max-width: 100%; /* 1 */
-  white-space: normal; /* 1 */
-}
-/**
  * 1. Add the correct display in Edge 18- and IE.
  * 2. Add the correct vertical alignment in Chrome, Edge, and Firefox.
  */
 progress {
-  display: inline-block; /* 1 */
   vertical-align: baseline; /* 2 */
 }
 /**

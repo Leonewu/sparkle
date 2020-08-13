@@ -11,6 +11,7 @@
 
 ```
 import XiaoUI from 'xiao-ui'
+import 'xiao-ui/lib/index.css'
 Vue.use(XiaoUI)
 ```
 

@@ -1,15 +1,16 @@
 {
-  "name": "xiao-ui",
+  "name": "starry-ui",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint && stylelint ./**/*.scss",
-    "build": "node ./packages/compile/index.js",
+    "lint": "eslint && stylelint ./src/**/*.scss",
+    "build": "node ./packages/compile/build.js",
+    "build:umd": "webpack --progress --colors --mode=development --config ./packages/compile/config/webpack.umd.config.js",
     "dev": "node ./packages/compile/dev.js",
-    "build:site": "webpack --progress --colors --mode=development --config ./scripts/build/webpack.site.config.js",
+    "build:site": "webpack --progress --colors --mode=development --config ./webpack.site.config.js",
     "create": "node ./packages/create-component/index.js"
   },
   "husky": {

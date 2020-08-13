@@ -1,7 +1,7 @@
 import _asyncToGenerator from "@babel/runtime/helpers/asyncToGenerator";
 import { add } from '../utils/';
 
-var render = function render() {
+var render = function () {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -18,8 +18,8 @@ render._withStripped = true;
 var _default = {
   render,
   staticRenderFns,
-  _scopeId: "data-v-5e24e079",
-  name: 'XiaoButton',
+  _scopeId: "data-v-6738b558",
+  name: 'Button',
 
   data() {
     return {};

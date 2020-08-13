@@ -1,6 +1,6 @@
 import test from './components/test';
 
-var render = function render() {
+var render = function () {
   var _vm = this;
 
   var _h = _vm.$createElement;

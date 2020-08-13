@@ -82,6 +82,7 @@
 13. sass 可以通过 @at-root 避免 bem 的嵌套
 14. 为什么组件都统一放在 src 下的一级目录，而不是单独放在同一个只放组件的目录，原因编译后的目录和 src 目录的层级不一样，假如编译前的组件目录是 src/components/button，编译后是 lib/button，在组件中引入了 common 或者 utils，是使用相对路径引入的， `import utils from '../../utils/'`,`@import '../../common/var.scss'`，编译过程中，由于层级变了，会提示找不到文件，只能改成`import utils from '../utils/'`，然而如果在编译过程中去替换目录是比较麻烦的，并且需要知道编译后的目录名，做成目录名可配置，这样也会造成配置项越来越庞大，所以干脆都提取出来了，比如 vant。antd 则是将 common， utils 都放在 src/components 中
 15. sass 中如果引入 css，要省略 css 后缀，如 `@import './button/icon'`
+16. vscode WSL 环境中，如果有A项目通过本地相对路径安装了该组件库，此时组件库重装依赖就会报错，如 permission denied 或者 maximum call stack size exceeded，解决方法是关闭A项目或者删除A项目的 node_module
 
 >
 > 1. 要考虑全量引入的时候能保证样式的成功引入，有两种方案：
