@@ -10,7 +10,7 @@
     "build": "node ./packages/compile/build.js",
     "build:umd": "webpack --progress --colors --mode=development --config ./packages/compile/config/webpack.umd.config.js",
     "dev": "node ./packages/compile/dev.js",
-    "build:site": "webpack --progress --colors --mode=development --config ./webpack.site.config.js",
+    "build:site": "node ./packages/compile/build-site.js",
     "create": "node ./packages/create-component/index.js"
   },
   "husky": {
