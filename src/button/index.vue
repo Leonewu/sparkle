@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    button component
+    button component test
   </div>
 </template>
 
