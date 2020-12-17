@@ -1,7 +1,7 @@
 version: "3"
 services:
     web:
-        image: sparkle-web:v1
+        image: sparkle:v1
         container_name: sparkle_web_nginx
         ports:
         - "2333:2333"
