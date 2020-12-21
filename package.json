@@ -76,7 +76,7 @@
     "jest": "^26.0.1",
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^10.2.2",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^12.0.4",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "ora": "^4.0.4",
