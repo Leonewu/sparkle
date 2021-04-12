@@ -5,6 +5,10 @@ import { routes as docRoutes } from '@COMPONENTS/doc'
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home'
+  },
+  {
     path: '/home',
     component: () => import(/* webpackChunkName: "[request]" */'./views/home.md')
   },

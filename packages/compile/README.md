@@ -4,7 +4,18 @@
 - 生成 scss 和 css 主文件入口 (index.scss,index.css)
 - 生成 css/scss 依赖管理目录 (css.js,scss.js)
 
+## 需要注意的地方
+
+- 打包出来的目录分开 commonjs 和 esmodule 规范
+- 打包出来的单个组件的入口 js 文件不要有样式代码，所以不能用 webpack style-loader，因为这样会导致公共样式模块代码重复打包。可以考虑用 miniCssExtractPlugin.loader，但这样，每次新增公共样式文件都要手动添加设置
+
+## 问题
+
+为什么不在组件中显示引入样式文件
+
 ## 为什么要这样做
+
+- ~~满足开发和生产需要，生产环境下，不需要在组件中引入样式文件。由于有按需引入的场景，假设用户同时引入了 a，b 组件，如果打包出来的组件中都显示引入样式文件，那这个时候 a 和 b 的公共样式文件就会被引入两次。~~不会的，因为 webpack 会做处理
 
 - 为了满足全量加载打包的时候必须打包出入口 js 文件，由于 css 文件会十分庞大，如果用 style-loader 处理，会导致 js 文件很庞大(ps：这里可以用 miniCssExtarctPlugin.loader 代替 style-loader 处理，将入口 css 提取出单独的文件)，所以最好是打包出单独的 css 入口文件
 
