@@ -1,5 +1,4 @@
-@import './var.scss';
-
+@import '../../common/style/var.scss';
 code {
   color: $doc-code-color;
   // display: block;
@@ -60,10 +59,16 @@ pre {
 .hljs-literal,
 .hljs-bullet,
 .hljs-link {
-  color: #eb6f6f;
+  // color: #eb6f6f;
+  color: $doc-vocalno;
 }
 
-.hljs-attr,
+.hljs-attr {
+  // color: #4569d4;
+  color: $doc-geekblue;
+}
+
+.hljs-tag,
 .hljs-selector-tag,
 .hljs-title,
 .hljs-section,
@@ -74,7 +79,7 @@ pre {
 .hljs-selector-id,
 .hljs-selector-class,
 .hljs-strong {
-  color: #4994df;
+  color: $doc-magenta;
 }
 
 .hljs-emphasis {

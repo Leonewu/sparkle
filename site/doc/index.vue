@@ -16,24 +16,30 @@
           <ul class="aside-menu">
             <li v-for="(item, index) in config.nav" :key="index">
               <template v-if="item.children && item.children.length">
-                <div>{{ item.title }}</div>
+                <div class="aside-menu-label">{{ item.title }}</div>
                 <ul class="aside-submenu">
-                  <li v-for="(child, i) in item.children" :key="i">
-                    {{ child.title }}
-                  </li>
+                  <li
+                    v-for="(child, i) in item.children"
+                    :key="i"
+                    :class="['aside-submenu-title', { 'active': $route.path === `/${child.path}` }]"
+                    @click="$router.push({ path: '/' + child.path })"
+                  >{{ child.title }}</li>
                 </ul>
               </template>
-              <template v-else>
-                <div>{{ item.title }}</div>
-              </template>
+              <div
+                v-else
+                :class="['aside-menu-title', { 'active': $route.path === `/${item.path}` }]"
+              >{{ item.title }}</div>
             </li>
           </ul>
         </aside>
         <article>
-          <router-view />
+          <Content>
+            <router-view />
+          </Content>
         </article>
         <div>
-          <Simulator :src="simulator" />
+          <!-- <Simulator :src="simulator" /> -->
         </div>
         <!-- <div>slug</div> -->
       </section>
@@ -42,11 +48,12 @@
 </template>
 
 <script>
-import Simulator from './components/Simulator.vue'
+// import Simulator from './components/Simulator.vue'
+import Content from './components/Content/index.vue'
 import { config } from '@COMPONENTS/doc'
 export default {
   components: {
-    Simulator
+    Content
   },
 
   data() {
@@ -106,8 +113,8 @@ export default {
 
 <style lang="scss">
 @import './common/style/base.scss';
-@import './common/style/highlight.scss';
-
+// @import './common/style/highlight.scss';
+// @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap');
 html, body {
   min-height: 100%;
   height: 100%;
@@ -158,6 +165,42 @@ html, body {
       padding-top: 64px;
       background: #fff;
       border-right: 1px solid rgb(240, 240, 240);
+      padding: 64px 15px 0;
+      box-sizing: content-box;
+    }
+    & > article {
+      padding-top: 64px;
+      padding-left: 50px;
+    }
+  }
+}
+
+.aside {
+  &-menu-label {
+    padding: 8px 16px 12px 20px;
+    // color: rgba(0, 0, 0, .45);
+    color: #5c6d95;
+    font-weight: 600;
+    font-size: 15px;
+    position: relative;
+    // border-bottom: 1px solid #f0f0f0;
+  }
+  &-submenu-title {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 16px 0 40px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #a3aab3;
+    transition: color .3s ease;
+    border-radius: 6px;
+    &.active {
+      color: #5c6d95;
+      background: #ebf3f9;
+    }
+    &:hover {
+      color: #5c6d95;
+      transition: color .3s ease;
     }
   }
 }
