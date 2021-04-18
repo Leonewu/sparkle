@@ -145,32 +145,39 @@ html, body {
   & > header {
     width: 100%;
     height: 64px;
-    background: #fcfcfd;
-    border-bottom: 1px solid #e9e9ea;
+    // background: #fcfcfd;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
     padding: 20px;
     box-shadow: 0 8px 24px -2px rgb(0 0 0 / 5%);
+    z-index: 2;
   }
   & > section {
     width: 100%;
     // background: #f8f9fa;
     background: #fff;
-    max-height: calc(100% - 66px);
-    height: calc(100% - 66px);
+    max-height: 100%;
+    height: 100%;
+    padding-top: 64px;
     box-sizing: border-box;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
     & > aside {
+      position: fixed;
+      left: 0;
+      top: 64px;
       width: 180px;
-      padding-top: 64px;
+      // padding-top: 64px;
       background: #fff;
       border-right: 1px solid rgb(240, 240, 240);
       padding: 64px 15px 0;
+      height: 100%;
+      max-height: 100%;
       box-sizing: content-box;
     }
     & > article {
       padding-top: 64px;
-      padding-left: 50px;
+      padding-left: 230px;
     }
   }
 }
