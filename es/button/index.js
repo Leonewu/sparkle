@@ -10,7 +10,7 @@ var render = function () {
 
   return _c('div', {
     staticClass: "wrapper"
-  }, [_vm._v(" button component ")]);
+  }, [_vm._v(" button component test ")]);
 };
 
 var staticRenderFns = [];
@@ -18,7 +18,7 @@ render._withStripped = true;
 var _default = {
   render,
   staticRenderFns,
-  _scopeId: "data-v-6738b558",
+  _scopeId: "data-v-4f3be68a",
   name: 'Button',
 
   data() {
