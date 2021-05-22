@@ -1,8 +1,34 @@
 # 打包方案
 
-- 生成 js 主文件入口 (index.js)
+## 方案对比
+
+- element-ui 方案：webpack
+- nutui 方案：webpack
+- vant 方案：手写打包
+- antd 方案：手写打包，gulp
+- element-plus 方案：rollup
+
+webpack 的缺点很明显：会打包出 webpack 的 require 运行时  
+手写的成本会比较高：但是你能知道具体的某个打包阶段发生的事情，更加地自由，而且可以用 js 去管理 css 和 scss 依赖，这样可以绝对地减少 css 的冗余。一般来说，组件库需要打包出 css 和 scss 文件，如果 a 组件引入了 b 组件，那么 a 组件编译出来的 css 文件是肯定会包含 b 组件的 css 文件的，如果项目中同时引用了 a 和 b，这时候就出现了 css 样式重复了  
+rollup 是两者折中的一个方案，不用手写编译那么麻烦，也没有 webpack 运行时代码，除了 css 样式可能存在着一丁点的冗余，没有其他问题  
+因此，手写编译才是最终的解决方案
+
+## 最终方案
+
+### 编译
+
+- 定义好目录规范，方便目录解析
+- 组件不引入样式文件 (因为始终都是要分出来的，所以干脆就不引入)
+- 生成 js 主文件入口 (index.js) 和 css 主文件入口
 - 生成 scss 和 css 主文件入口 (index.scss,index.css)
 - 生成 css/scss 依赖管理目录 (css.js,scss.js)
+- 生成每个组件的 js 和 css/scss 样式文件
+- css 统一使用 px，需要 rem 的话由外部去 px2rem 转换
+
+#### 为什么不要在组件内引入样式文件
+
+为了主题定制，如果组件内引入样式，编译出来的组件文件中就包含了样式代码，那就无法时间主题定制。  
+所以，就算在组件内引入样式代码，编译的时候也需要 extract 出来
 
 ## 为什么要这样做
 
@@ -18,67 +44,36 @@
 
 ## 增加的开发成本
 
-- 自己要组建内部依赖关系，通过依赖关系，管理模块之间的样式依赖
+- 自己要分析组件间的依赖关系，包括 css/scss 依赖，生成 css/scss 依赖管理文件
 
 ## 最终方案打包出来的目录
 
+打包产物有es（基于 esModule 规范的 es5 代码目录），lib（基于 commonJs 规范的 es5 代码目录），umd文件
+
 ```
-lib
+lib(基于 commonjs 规范的 es5 代码)
 |----- index.js(无css的入口文件)
 |----- index.css(压缩后的css入口文件)
 |----- index.scss(sass入口源文件，主题定制需要引入这个文件)
-|----- starry-ui.js(引入css的入口文件，用style-loader处理，用于script标签引入)
-|----- starry-ui.min.js(引入css并且压缩后的入口文件，用style-loader处理，用于script标签引入)
 |----- style(放置公共的scss和css依赖，button/style/*.js的依赖都放在这里面)
 |----- |------ common.scss(源文件)
 |----- |------ common.css(已经压缩)
 |----- button
 |----- |------ index.js(组件入口)
-|----- |------ index.scss(组件scss源文件，貌似不需要)
+|----- |------ index.scss(组件scss源文件)
+|----- |------ index.css(组件css源文件)
 |----- |------ style(管理less和css依赖的js文件目录)
 |----- |------ |------ css.js(管理css依赖，用于按需加载引入)
 |----- |------ |------ scss.js(管理scss依赖，用于主题定制并且按需加载)
 ```
-
-源码中，不显式引入样式文件
-
-## 简单版方案
-
-简单版是开发组件的时候，在组件内引入 scss 文件，之后都交给 webpack 处理  
-webpack 的思路很简单，就是递归依赖，但是对于按需加载这种需求，仅仅使用 webpack 是满足不了的，会出现许多冗余的 css，解决办法就是不引入 css，用户引入 css 的时候通过 babel-plugin-import 自动引入，这样就用不了 webpack 了
-
-```
-lib
-|----- index.js(有css的入口文件)
-|----- button(组件按需加载引入路径)
-|------|----- index.js(组件入口)
-|------|----- index.css(组件的css)
-```
-
-## 实现思路
-
-### 手写 webpack plugin，结合 webpack 处理
-
-1. webpack 的基本概念就是 entry 和 module，如果使用 webpack 编译，那肯定要在 entry 加入 css denpendencies（css.js 和 scss.js），这是比较符合 webpack 的做法
-2. 背景: webpack 的 entry 不支持文本字符串，只支持路径写法，所以只能生成文件再添加 entry
-3. 通过 compiler.hooks.entryOption （或者其他钩子），在开始编译前生成 css denpendencies（css.js 和 scss.js），添加到 entry 中，交给 webpack 编译，编译完成后，将文件删除  
-很明显不可取，这样用不用 webpack plugin 都一样，另外如果编译时间长，那文件目录会一直存在这些 css denpendencies 文件，太恶心了
-
-### 使用 gulp
-
-比起手写，可以使用 gulp 的插件，如 babel，scss 等，缺点就是要装一堆插件，试了一遍，解析 vue 文件甚至比用 fs 还麻烦
-
-### 用 fs 手写
-
-fs-extra + babel.transform + sass.transform + vue-template-compiler ，有点麻烦，特别是 vue 文件的处理，能不用就不用
 
 ## vue-loader & vueLoaderPlugin
 
 ### vueLoaderPlugin 的准备工作
 
 - 获取项目 webpack 配置的 rules 项，然后复制 rules，添加上对 ?vue&lang=xx...query 参数的文件的路径解析
-- 为 vue文件配置一个公共的 loader(lib/pitchr.js)
-- 将 [pitcher, ...clonedRules, ...rules] 作为 webapck 新的 rules
+- 为 vue文件配置一个公共的 loader(lib/pitcher.js)
+- 将 [pitcher, ...clonedRules, ...rules] 作为 webapack 新的 rules
 
 ### 大致的解析路线
 
